@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeDeskNI — Trades Paperwork, Done For You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:   #f7f4ee;
+  --white:   #ffffff;
+  --ink:     #1c1b18;
+  --ink-mid: #4a4840;
+  --ink-low: #9a9690;
+  --rule:    #ddd9d0;
+  --green:   #1e5c3a;
+  --green-2: #2a7a50;
+  --green-bg:#eef5f0;
+  --amber:   #b8671a;
+  --red:     #b83232;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  background: var(--ink);
+  padding: 0 56px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.logo sup {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--green-2);
+  vertical-align: super;
+  margin-left: 2px;
+}
+.nav-r { display: flex; align-items: center; gap: 28px; }
+.nav-r a {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-r a:hover { color: rgba(255,255,255,0.9); }
+.nav-login {
+  border: 1px solid rgba(255,255,255,0.18) !important;
+  padding: 7px 18px;
+  border-radius: 4px;
+  color: rgba(255,255,255,0.75) !important;
+}
+.nav-login:hover { background: rgba(255,255,255,0.07) !important; color: var(--white) !important; }
+
+/* HERO */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  min-height: calc(100vh - 60px);
+  max-height: 820px;
+}
+.hero-l {
+  background: var(--ink);
+  padding: 80px 64px 80px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hero-kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-2);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-kicker::before { content: ''; display: block; width: 28px; height: 1px; background: var(--green-2); }
+.hero-h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(44px, 5.5vw, 72px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 32px;
+}
+.hero-h1 em { font-style: italic; color: var(--green-2); }
+.hero-p {
+  font-size: 17px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.75;
+  max-width: 440px;
+  margin-bottom: 48px;
+}
+.hero-actions { display: flex; gap: 14px; align-items: center; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.18s;
+  cursor: pointer;
+  border: none;
+}
+.btn-green { background: var(--green); color: var(--white); padding: 13px 26px; }
+.btn-green:hover { background: var(--green-2); }
+.btn-ghost {
+  background: transparent;
+  color: rgba(255,255,255,0.55);
+  padding: 13px 20px;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.32); }
+.hero-bottom {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-top: 52px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  margin-top: 48px;
+}
+.hero-stat-val {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--white);
+  line-height: 1;
+}
+.hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 3px; }
+.hero-divider { width: 1px; height: 32px; background: rgba(255,255,255,0.08); }
+
+/* Hero right — conversation */
+.hero-r {
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 52px 44px;
+  border-left: 1px solid var(--rule);
+}
+.conv-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  margin-bottom: 22px;
+}
+.conv { display: flex; flex-direction: column; gap: 5px; }
+.msg-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.msg-label.r { text-align: right; }
+.msg {
+  max-width: 88%;
+  padding: 11px 15px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.msg-them {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-bottom-left-radius: 4px;
+  color: var(--ink);
+  align-self: flex-start;
+}
+.msg-us {
+  background: var(--green);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+.doc-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-top: 10px;
+}
+.doc-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.doc-card-name { font-size: 13px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 6px; }
+.doc-ready {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+  background: var(--green-bg);
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+.doc-lines { display: flex; flex-direction: column; gap: 5px; }
+.doc-line { height: 7px; border-radius: 4px; background: var(--rule); }
+.doc-line.w60 { width: 60%; } .doc-line.w80 { width: 80%; }
+.doc-line.w100 { width: 100%; } .doc-line.w40 { width: 40%; }
+.time-badge {
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green);
+  background: var(--green-bg);
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* SECTION PATTERN */
+.wrap { max-width: 1180px; margin: 0 auto; }
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+/* HOW IT WORKS */
+.hiw { padding: 104px 56px; }
+.hiw-h {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 64px;
+  max-width: 540px;
+}
+.hiw-h em { font-style: italic; color: var(--green); }
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.step {
+  padding: 44px 40px;
+  border-right: 1px solid var(--rule);
+}
+.step:last-child { border-right: none; }
+.step-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink-low);
+  margin-bottom: 24px;
+}
+.step-icon { font-size: 28px; margin-bottom: 18px; display: block; }
+.step h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.step p { font-size: 14px; color: var(--ink-mid); line-height: 1.7; }
+
+/* SERVICES */
+.services-band { background: var(--ink); padding: 104px 56px; }
+.sl-dark { color: rgba(255,255,255,0.22) !important; }
+.sl-dark::after { background: rgba(255,255,255,0.07) !important; }
+.services-h {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  margin-bottom: 64px;
+}
+.services-h em { font-style: italic; color: var(--green-2); }
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.svc { background: var(--ink); padding: 36px 30px; transition: background 0.2s; }
+.svc:hover { background: #232320; }
+.svc-icon { font-size: 26px; margin-bottom: 16px; display: block; }
+.svc h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.svc p { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.65; }
+
+/* PRICING */
+.pricing-section { padding: 104px 56px; }
+.pricing-h {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.pricing-sub { font-size: 16px; color: var(--ink-mid); margin-bottom: 64px; }
+.pricing-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.p-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 44px;
+}
+.p-card.dark { background: var(--ink); border-color: var(--ink); }
+.p-region {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  margin-bottom: 20px;
+}
+.p-card.dark .p-region { color: rgba(255,255,255,0.28); }
+.p-price {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 64px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.p-card.dark .p-price { color: var(--white); }
+.p-cadence { font-size: 14px; color: var(--ink-low); margin-bottom: 36px; }
+.p-card.dark .p-cadence { color: rgba(255,255,255,0.28); }
+.p-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--rule);
+}
+.p-card.dark .p-features { border-color: rgba(255,255,255,0.07); }
+.p-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--ink-mid); line-height: 1.5; }
+.p-card.dark .p-features li { color: rgba(255,255,255,0.52); }
+.p-check { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.p-card.dark .p-check { color: var(--green-2); }
+.btn-full { width: 100%; justify-content: center; padding: 14px; font-size: 15px; border-radius: 6px; }
+.btn-ink { background: var(--ink); color: var(--white); }
+.btn-ink:hover { background: #2c2b28; }
+.btn-white-solid { background: var(--white); color: var(--ink); }
+.btn-white-solid:hover { background: var(--cream); }
+.p-note { text-align: center; font-size: 12px; color: var(--ink-low); margin-top: 14px; }
+.p-card.dark .p-note { color: rgba(255,255,255,0.24); }
+.pricing-footer { margin-top: 28px; text-align: center; font-size: 14px; color: var(--ink-low); }
+
+/* FAQ */
+.faq-section {
+  border-top: 1px solid var(--rule);
+  padding: 104px 56px;
+}
+.faq-grid { display: grid; grid-template-columns: 260px 1fr; gap: 80px; margin-top: 60px; }
+.faq-sticky { position: sticky; top: 80px; align-self: flex-start; }
+.faq-sticky-h {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.faq-sticky p { font-size: 14px; color: var(--ink-low); line-height: 1.7; margin-bottom: 20px; }
+.faq-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green);
+  text-decoration: none;
+}
+.faq-wa:hover { color: var(--green-2); }
+.faq-list { display: flex; flex-direction: column; }
+.faq-item { border-bottom: 1px solid var(--rule); }
+.faq-q {
+  padding: 22px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  user-select: none;
+  line-height: 1.4;
+  transition: color 0.15s;
+}
+.faq-q:hover { color: var(--green); }
+.faq-plus {
+  width: 20px; height: 20px;
+  flex-shrink: 0;
+  position: relative;
+  color: var(--ink-low);
+  transition: transform 0.25s, color 0.15s;
+}
+.faq-plus::before, .faq-plus::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  border-radius: 2px;
+}
+.faq-plus::before { width: 100%; height: 2px; top: 50%; transform: translateY(-50%); }
+.faq-plus::after  { height: 100%; width: 2px; left: 50%; transform: translateX(-50%); }
+.faq-item.open .faq-plus { transform: rotate(45deg); color: var(--green); }
+.faq-a {
+  display: none;
+  padding-bottom: 22px;
+  font-size: 15px;
+  color: var(--ink-mid);
+  line-height: 1.75;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* CTA STRIP */
+.cta-strip {
+  background: var(--green);
+  padding: 80px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+.cta-strip h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(28px, 3.5vw, 46px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--white);
+  max-width: 540px;
+}
+.cta-strip h2 em { font-style: italic; opacity: 0.7; }
+.cta-r { flex-shrink: 0; text-align: right; }
+.cta-r p { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 12px; }
+
+/* PORTAL */
+.portal { background: #f0ede6; border-top: 1px solid var(--rule); padding: 104px 56px; }
+.portal-grid {
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: 80px;
+  align-items: start;
+  margin-top: 60px;
+}
+.portal-h {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(32px, 3.5vw, 48px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.portal-h em { font-style: italic; color: var(--green); }
+.portal-sub { font-size: 16px; color: var(--ink-mid); line-height: 1.7; margin-bottom: 44px; max-width: 400px; }
+.perks { display: flex; flex-direction: column; gap: 22px; }
+.perk { display: flex; gap: 15px; align-items: flex-start; }
+.perk-ico {
+  width: 40px; height: 40px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.perk h4 { font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 2px; }
+.perk p { font-size: 13px; color: var(--ink-low); line-height: 1.6; }
+
+/* Login card */
+.lcard {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+}
+.lcard-head { padding: 26px 30px; border-bottom: 1px solid var(--rule); }
+.lcard-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.lcard-sub { font-size: 13px; color: var(--ink-low); }
+.lcard-body { padding: 30px; }
+.frow { margin-bottom: 17px; }
+.frow label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  margin-bottom: 6px;
+}
+.frow input {
+  width: 100%;
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  padding: 11px 14px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--cream);
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.frow input:focus { border-color: var(--green); background: var(--white); }
+.login-btn {
+  width: 100%;
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 13px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.login-btn:hover { background: var(--green-2); }
+.login-or {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--ink-low); font-size: 12px; margin: 18px 0;
+}
+.login-or::before, .login-or::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+.wa-link {
+  width: 100%;
+  background: transparent;
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  padding: 12px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.wa-link:hover { border-color: #25d366; color: #1a7a40; background: #f0fdf4; }
+.login-note { text-align: center; font-size: 12px; color: var(--ink-low); margin-top: 14px; }
+.login-note a { color: var(--green); text-decoration: none; }
+.lerr {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--red);
+  margin-bottom: 16px;
+  display: none;
+}
+
+/* Dashboard */
+.pdash { display: none; }
+.pdash.show { display: block; }
+.dash-head {
+  background: var(--ink);
+  padding: 22px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dash-greeting {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--white);
+}
+.dash-greeting em { font-style: italic; color: var(--green-2); }
+.dash-logout {
+  font-size: 12px; color: rgba(255,255,255,0.28);
+  cursor: pointer; background: none; border: none;
+  font-family: 'Instrument Sans', sans-serif;
+  text-decoration: underline; transition: color 0.15s;
+}
+.dash-logout:hover { color: rgba(255,255,255,0.55); }
+.dash-body { padding: 26px 30px; }
+.dash-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 20px; }
+.ds {
+  background: var(--cream);
+  border-radius: 7px;
+  padding: 14px 16px;
+}
+.ds-l { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-low); margin-bottom: 4px; }
+.ds-v {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.ds-v.g { color: var(--green); }
+.dash-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.da {
+  background: var(--cream);
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.da:hover { border-color: var(--green); background: var(--green-bg); }
+.da-ico {
+  width: 34px; height: 34px;
+  background: var(--white);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.da-lbl { font-weight: 600; font-size: 13px; }
+.da-desc { font-size: 11px; color: var(--ink-low); margin-top: 1px; }
+
+/* FOOTER */
+footer {
+  background: var(--ink);
+  padding: 42px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.fl { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: rgba(255,255,255,0.6); letter-spacing: -0.01em; }
+.flinks { display: flex; gap: 22px; }
+.flinks a { font-size: 12px; color: rgba(255,255,255,0.28); text-decoration: none; transition: color 0.15s; }
+.flinks a:hover { color: rgba(255,255,255,0.6); }
+.fcopy { font-size: 12px; color: rgba(255,255,255,0.18); }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .nav-r a:not(.nav-login) { display: none; }
+  .hero { grid-template-columns: 1fr; max-height: none; }
+  .hero-r { display: none; }
+  .hero-l { padding: 56px 24px; min-height: auto; }
+  .hiw, .pricing-section, .faq-section, .portal { padding: 72px 24px; }
+  .services-band { padding: 72px 24px; }
+  .cta-strip { flex-direction: column; padding: 60px 24px; text-align: center; }
+  .cta-strip h2 { max-width: 100%; }
+  .cta-r { text-align: center; }
+  .steps { grid-template-columns: 1fr; }
+  .step { border-right: none !important; border-bottom: 1px solid var(--rule); }
+  .step:last-child { border-bottom: none; }
+  .svc-grid { grid-template-columns: 1fr 1fr; }
+  .pricing-cards { grid-template-columns: 1fr; }
+  .faq-grid { grid-template-columns: 1fr; gap: 40px; }
+  .faq-sticky { position: static; }
+  .portal-grid { grid-template-columns: 1fr; gap: 48px; }
+  footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 24px; }
+  .flinks { flex-wrap: wrap; justify-content: center; }
+  .hero-bottom { flex-wrap: wrap; }
+  .dash-acts { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">TradeDeskNI<sup>NI &amp; ROI</sup></a>
+  <div class="nav-r">
+    <a href="#how-it-works">How it works</a>
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#portal" class="nav-login">Client login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-l">
+    <div>
+      <div class="hero-kicker">For tradespeople across NI &amp; Ireland</div>
+      <h1 class="hero-h1">Your paperwork,<br><em>handled.</em></h1>
+      <p class="hero-p">Send a WhatsApp. Get a professional quote, invoice or RAMS back within the hour. No software to learn, no faff — just the document, ready to go.</p>
+      <div class="hero-actions">
+        <a href="#portal" class="btn btn-green">Start free trial &rarr;</a>
+        <a href="#how-it-works" class="btn btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div>
+      <div class="hero-bottom">
+        <div>
+          <div class="hero-stat-val">&lt;1hr</div>
+          <div class="hero-stat-label">Turnaround time</div>
+        </div>
+        <div class="hero-divider"></div>
+        <div>
+          <div class="hero-stat-val">14 days</div>
+          <div class="hero-stat-label">Free trial</div>
+        </div>
+        <div class="hero-divider"></div>
+        <div>
+          <div class="hero-stat-val">No contract</div>
+          <div class="hero-stat-label">Cancel any time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div class="conv-label">A typical job</div>
+    <div class="conv">
+      <div class="msg-label">You (WhatsApp)</div>
+      <div class="msg msg-them">Rory — invoice for Seamus Gallagher, 8 Millbrook Rd Sligo. Boiler service + new stat. €420 all in.</div>
+      <div style="height:8px;"></div>
+      <div class="msg-label r">TradeDeskNI · 28 minutes later</div>
+      <div class="msg msg-us">Done — invoice attached, ready to forward to Seamus.</div>
+      <div class="doc-card">
+        <div class="doc-card-top">
+          <div class="doc-card-name">🧾 Invoice #0063 — Gallagher</div>
+          <div class="doc-ready">Ready</div>
+        </div>
+        <div class="doc-lines">
+          <div class="doc-line w100"></div>
+          <div class="doc-line w80"></div>
+          <div class="doc-line w60"></div>
+          <div class="doc-line w40"></div>
+        </div>
+      </div>
+      <div class="time-badge">⚡ Delivered in 28 minutes</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="hiw wrap">
+    <div class="section-label">How it works</div>
+    <h2 class="hiw-h">Three steps.<br>You barely notice <em>two of them.</em></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">Step 01</div>
+        <span class="step-icon">💬</span>
+        <h3>Send the job details</h3>
+        <p>WhatsApp Rory the basics — customer name, what you did, what you want to charge. Voice note, few lines of text, whatever's quickest. Two minutes max.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">Step 02</div>
+        <span class="step-icon">⚙️</span>
+        <h3>We build the document</h3>
+        <p>A professional, branded document comes back with your name on it — formatted properly and ready to send. You don't open a laptop.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">Step 03</div>
+        <span class="step-icon">📤</span>
+        <h3>Download and send</h3>
+        <p>Your document's in your portal within the hour. Download it, forward it to the customer, get on with the next job.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-band" id="services">
+  <div class="wrap">
+    <div class="section-label sl-dark">What we cover</div>
+    <h2 class="services-h">Every document a tradesperson<br><em>actually needs.</em></h2>
+    <div class="svc-grid">
+      <div class="svc"><span class="svc-icon">📋</span><h3>Quotes</h3><p>Professional quotes out fast, so you win the job before someone else prices it cheaper.</p></div>
+      <div class="svc"><span class="svc-icon">🧾</span><h3>Invoices</h3><p>Branded invoices the same day the job's done. Get paid faster. Look sharper.</p></div>
+      <div class="svc"><span class="svc-icon">⚠️</span><h3>RAMS</h3><p>Risk assessments and method statements done properly — not cobbled together the night before a job.</p></div>
+      <div class="svc"><span class="svc-icon">📄</span><h3>Job Reports</h3><p>Completion reports, service records, certification letters — whatever the job requires.</p></div>
+      <div class="svc"><span class="svc-icon">💰</span><h3>Debt Chasers</h3><p>When a customer isn't paying, we write the follow-up. Firm, professional, and it gets results.</p></div>
+      <div class="svc"><span class="svc-icon">📊</span><h3>Service Records</h3><p>Boiler services, inspections, PAT testing — all recorded correctly and ready to hand over.</p></div>
+      <div class="svc"><span class="svc-icon">✉️</span><h3>Customer Letters</h3><p>Appointment confirmations, warranty letters, follow-ups — handled so you don't have to think about it.</p></div>
+      <div class="svc"><span class="svc-icon">🔧</span><h3>Anything else</h3><p>Got something that isn't on this list? Just ask. If it's trades paperwork, we can handle it.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="wrap">
+    <div class="section-label">Pricing</div>
+    <h2 class="pricing-h">Straightforward pricing.<br>No hidden anything.</h2>
+    <p class="pricing-sub">One flat monthly fee. Unlimited documents. No contract. Try it free for two weeks before you pay a penny.</p>
+    <div class="pricing-cards">
+      <div class="p-card">
+        <div class="p-region">🇬🇧 Northern Ireland</div>
+        <div class="p-price">£250</div>
+        <div class="p-cadence">per month &middot; no contract</div>
+        <ul class="p-features">
+          <li><span class="p-check">✓</span>Unlimited quotes, invoices &amp; RAMS</li>
+          <li><span class="p-check">✓</span>Job reports &amp; service records</li>
+          <li><span class="p-check">✓</span>Debt chaser letters</li>
+          <li><span class="p-check">✓</span>Documents back within 1 hour</li>
+          <li><span class="p-check">✓</span>Your branding on every document</li>
+          <li><span class="p-check">✓</span>WhatsApp direct line to Rory</li>
+          <li><span class="p-check">✓</span>Cancel any time with one message</li>
+        </ul>
+        <a href="#portal" class="btn btn-ink btn-full">Start your free trial &rarr;</a>
+        <p class="p-note">First two weeks completely free — no card needed</p>
+      </div>
+      <div class="p-card dark">
+        <div class="p-region">🇮🇪 Republic of Ireland</div>
+        <div class="p-price">€250</div>
+        <div class="p-cadence">per month &middot; no contract</div>
+        <ul class="p-features">
+          <li><span class="p-check">✓</span>Unlimited quotes, invoices &amp; RAMS</li>
+          <li><span class="p-check">✓</span>Job reports &amp; service records</li>
+          <li><span class="p-check">✓</span>Debt chaser letters</li>
+          <li><span class="p-check">✓</span>Documents back within 1 hour</li>
+          <li><span class="p-check">✓</span>Your branding on every document</li>
+          <li><span class="p-check">✓</span>WhatsApp direct line to Rory</li>
+          <li><span class="p-check">✓</span>Cancel any time with one message</li>
+        </ul>
+        <a href="#portal" class="btn btn-green btn-full">Start your free trial &rarr;</a>
+        <p class="p-note">First two weeks completely free — no card needed</p>
+      </div>
+    </div>
+    <p class="pricing-footer">No setup fees. No per-document charges. If it's not working for you, one message cancels it.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="section-label">Questions</div>
+    <div class="faq-grid">
+      <div class="faq-sticky">
+        <h3 class="faq-sticky-h">Got a question?</h3>
+        <p>Most answers are below. If yours isn't, WhatsApp Rory directly — usually back within the hour.</p>
+        <a href="https://wa.me/447775696701" target="_blank" class="faq-wa">💬 WhatsApp Rory</a>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this.parentElement)">What information do I actually need to give you?<div class="faq-plus"></div></div>
+          <div class="faq-a">As little as you have. Customer name, address, what you did, what you're charging. A voice note works fine — most clients send one on the drive home and have the invoice waiting when they get in. The more detail you give us, the more accurate the document, but we can always work with the basics.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this.parentElement)">How fast do I actually get the document back?<div class="faq-plus"></div></div>
+          <div class="faq-a">Within the hour during working hours — Monday to Friday, 8am to 8pm. Most documents come back in 20 to 30 minutes. For urgent jobs outside those hours, WhatsApp Rory directly and we'll do our best.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this.parentElement)">Will it look like I made it myself?<div class="faq-plus"></div></div>
+          <div class="faq-a">Yes. Every document goes out with your business name, logo if you have one, and your contact details. Your customers won't know we're involved. It looks like you produced it yourself — which is exactly the point.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this.parentElement)">What trades do you work with?<div class="faq-plus"></div></div>
+          <div class="faq-a">Electricians, plumbers, gas engineers, roofers, joiners, painters and decorators — any trade that generates quotes, invoices and compliance paperwork. If you're not sure whether we cover your trade, just send a WhatsApp and we'll tell you straight.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this.parentElement)">What happens after the free trial?<div class="faq-plus"></div></div>
+          <div class="faq-a">After two weeks, it's £250/month in NI or €250/month in the Republic. No contract — cancel any time with a single message. We won't chase you or lock you in. If it's not saving you time, there's no reason to stay.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this.parentElement)">Is there a limit on how many documents I can get?<div class="faq-plus"></div></div>
+          <div class="faq-a">No limit. The monthly fee covers everything. Most clients use it for 20–40 documents a month but there's no cap and no extra charges for a busy month.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this.parentElement)">Do I need to download any software?<div class="faq-plus"></div></div>
+          <div class="faq-a">Nothing. You already have WhatsApp — that's all you need. The client portal is just a website. No app, no account setup, no faff. Send a message, get a document back.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>Stop doing invoices<br>at <em>half ten at night.</em></h2>
+  <div class="cta-r">
+    <a href="#portal" class="btn btn-white-solid" style="font-size:15px;padding:14px 30px;">Start free trial &rarr;</a>
+    <p>Two weeks free &middot; No contract &middot; NI &amp; Ireland</p>
+  </div>
+</div>
+
+<!-- PORTAL -->
+<section class="portal" id="portal">
+  <div class="wrap">
+    <div class="section-label">Client portal</div>
+    <div class="portal-grid">
+      <div>
+        <h2 class="portal-h">Already a client?<br><em>Log in here.</em></h2>
+        <p class="portal-sub">Submit jobs, download your documents, track your trial, and reach Rory directly when you need something urgent.</p>
+        <div class="perks">
+          <div class="perk">
+            <div class="perk-ico">📤</div>
+            <div><h4>Submit jobs in seconds</h4><p>Fill in the form and your document will be back within the hour.</p></div>
+          </div>
+          <div class="perk">
+            <div class="perk-ico">📂</div>
+            <div><h4>All your documents in one place</h4><p>Every finished document saved and ready to download any time.</p></div>
+          </div>
+          <div class="perk">
+            <div class="perk-ico">💬</div>
+            <div><h4>Direct line to Rory</h4><p>Urgent job or a question? WhatsApp Rory directly from your portal.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <!-- Login -->
+        <div class="lcard" id="loginCard">
+          <div class="lcard-head">
+            <div class="lcard-title">Client login</div>
+            <div class="lcard-sub">Your email and the access code Rory sent you</div>
+          </div>
+          <div class="lcard-body">
+            <div class="lerr" id="lerr">Wrong email or code. WhatsApp Rory if you need help logging in.</div>
+            <div class="frow">
+              <label>Email address</label>
+              <input type="email" id="lEmail" placeholder="your@email.com">
+            </div>
+            <div class="frow">
+              <label>Access code</label>
+              <input type="text" id="lCode" placeholder="e.g. NEIL2025" style="letter-spacing:0.06em;font-weight:600;text-transform:uppercase;">
+            </div>
+            <button class="login-btn" onclick="doLogin()">Log in to portal</button>
+            <div class="login-or">or</div>
+            <a href="https://wa.me/447775696701?text=Hi%20Rory%2C%20I%27d%20like%20access%20to%20the%20client%20portal" target="_blank" class="wa-link">💬 Message Rory to get access</a>
+            <p class="login-note">Not a client yet? <a href="#pricing">Start your free trial above.</a></p>
+          </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="lcard pdash" id="pdash">
+          <div class="dash-head">
+            <div class="dash-greeting">Welcome back, <em id="dName">Neil</em></div>
+            <button class="dash-logout" onclick="doLogout()">Log out</button>
+          </div>
+          <div class="dash-body">
+            <div class="dash-stats">
+              <div class="ds"><div class="ds-l">Docs made</div><div class="ds-v g" id="dDocs">0</div></div>
+              <div class="ds"><div class="ds-l">Trial days left</div><div class="ds-v" id="dDays">14</div></div>
+              <div class="ds"><div class="ds-l">Turnaround</div><div class="ds-v g">&lt;1hr</div></div>
+            </div>
+            <div class="dash-acts">
+              <a href="tradedesk-portal.html" class="da"><div class="da-ico">📤</div><div><div class="da-lbl">Submit a job</div><div class="da-desc">Doc back within the hour</div></div></a>
+              <a href="tradedesk-portal.html" class="da"><div class="da-ico">📂</div><div><div class="da-lbl">My documents</div><div class="da-desc">Download completed docs</div></div></a>
+              <a href="https://wa.me/447775696701?text=Urgent%20job%20—" target="_blank" class="da"><div class="da-ico">🚨</div><div><div class="da-lbl">Urgent job</div><div class="da-desc">WhatsApp Rory directly</div></div></a>
+              <a href="https://wa.me/447775696701?text=Hi%20Rory%2C%20chasing%20unpaid%20invoice" target="_blank" class="da"><div class="da-ico">💰</div><div><div class="da-lbl">Chase an invoice</div><div class="da-desc">Follow up a late payment</div></div></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">TradeDeskNI</div>
+  <div class="flinks">
+    <a href="#how-it-works">How it works</a>
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#portal">Client login</a>
+    <a href="https://wa.me/447775696701" target="_blank">WhatsApp</a>
+  </div>
+  <div class="fcopy">&copy; 2025 TradeDeskNI</div>
+</footer>
+
+<script>
+function toggleFaq(item) {
+  const open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!open) item.classList.add('open');
+}
+
+const CLIENTS = [
+  { email: 'neil@neilwalshplumbing.com', code: 'NEIL2025', name: 'Neil Walsh', docs: 0, trialStart: new Date().toISOString() },
+  { email: 'demo@tradedeskni.co.uk',     code: 'DEMO2025', name: 'Demo Client', docs: 3, trialStart: new Date().toISOString() },
+];
+
+function doLogin() {
+  const email  = document.getElementById('lEmail').value.trim().toLowerCase();
+  const code   = document.getElementById('lCode').value.trim().toUpperCase();
+  const err    = document.getElementById('lerr');
+  const client = CLIENTS.find(c => c.email === email && c.code === code);
+  if (client) {
+    err.style.display = 'none';
+    sessionStorage.setItem('td_u', JSON.stringify(client));
+    showDash(client);
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+function showDash(c) {
+  document.getElementById('loginCard').style.display = 'none';
+  document.getElementById('pdash').classList.add('show');
+  document.getElementById('dName').textContent = c.name.split(' ')[0];
+  document.getElementById('dDocs').textContent = c.docs || 0;
+  const days = Math.max(0, 14 - Math.floor((Date.now() - new Date(c.trialStart)) / 86400000));
+  document.getElementById('dDays').textContent = days;
+}
+
+function doLogout() {
+  sessionStorage.removeItem('td_u');
+  document.getElementById('loginCard').style.display = 'block';
+  document.getElementById('pdash').classList.remove('show');
+}
+
+['lEmail','lCode'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+});
+
+const saved = sessionStorage.getItem('td_u');
+if (saved) { try { showDash(JSON.parse(saved)); } catch(e){} }
+</script>
+
+</body>
+</html>
