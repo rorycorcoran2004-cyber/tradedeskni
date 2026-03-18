@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeDeskNI — Client Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:    #f7f4ee;
+  --white:    #ffffff;
+  --ink:      #1c1b18;
+  --ink-mid:  #4a4840;
+  --ink-low:  #9a9690;
+  --rule:     #ddd9d0;
+  --green:    #1e5c3a;
+  --green-2:  #2a7a50;
+  --green-bg: #eef5f0;
+  --red:      #b83232;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── NAV ── */
+nav {
+  background: var(--ink);
+  padding: 0 48px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 19px;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.logo sup {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--green-2);
+  vertical-align: super;
+  margin-left: 2px;
+}
+.nav-r {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav-client {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+}
+.nav-client strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+.nav-wa {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+  background: #25d366;
+  padding: 7px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.nav-wa:hover { background: #1da851; }
+
+/* ── TOP BAR ── */
+.top-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  padding: 28px 48px 24px;
+}
+.top-bar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.top-greeting {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.top-greeting em { font-style: italic; color: var(--green); }
+.top-sub { font-size: 14px; color: var(--ink-low); }
+
+.trial-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--green-bg);
+  border: 1px solid rgba(30,92,58,0.15);
+  border-radius: 8px;
+  padding: 14px 20px;
+  flex-shrink: 0;
+}
+.trial-val {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: var(--green);
+  line-height: 1;
+}
+.trial-label {
+  font-size: 12px;
+  color: var(--green-2);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 48px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.card + .card { margin-top: 20px; }
+.card-head {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.card-sub { font-size: 12px; color: var(--ink-low); margin-top: 2px; }
+.card-body { padding: 28px; }
+
+/* ── SECTION LABEL ── */
+.slabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  margin-bottom: 12px;
+}
+
+/* ── DOC TYPE SELECTOR ── */
+.doc-types {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.doc-type {
+  border: 1.5px solid var(--rule);
+  border-radius: 7px;
+  padding: 14px 10px;
+  cursor: pointer;
+  background: var(--cream);
+  text-align: center;
+  transition: all 0.15s;
+}
+.doc-type:hover { border-color: var(--green); }
+.doc-type.active {
+  border-color: var(--green);
+  background: var(--green-bg);
+}
+.doc-type-icon { font-size: 20px; margin-bottom: 6px; }
+.doc-type-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  display: block;
+}
+.doc-type.active .doc-type-name { color: var(--green); }
+
+/* ── FORM ── */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.frow { margin-bottom: 16px; }
+.frow:last-of-type { margin-bottom: 0; }
+.frow label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  margin-bottom: 6px;
+}
+.frow input,
+.frow textarea {
+  width: 100%;
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--cream);
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+  line-height: 1.5;
+}
+.frow input:focus,
+.frow textarea:focus {
+  border-color: var(--green);
+  background: var(--white);
+}
+.frow textarea { resize: vertical; min-height: 110px; }
+
+.submit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+.submit-note {
+  font-size: 12px;
+  color: var(--ink-low);
+  line-height: 1.5;
+  max-width: 260px;
+}
+.btn-submit {
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-submit:hover { background: var(--green-2); }
+
+/* ── DOCUMENTS LIST ── */
+.doc-empty {
+  padding: 48px 28px;
+  text-align: center;
+  color: var(--ink-low);
+}
+.doc-empty-icon { font-size: 32px; margin-bottom: 10px; }
+.doc-empty-text { font-size: 14px; }
+
+.doc-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.1s;
+}
+.doc-row:last-child { border-bottom: none; }
+.doc-row:hover { background: var(--cream); }
+.doc-icon-box {
+  width: 38px; height: 38px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+  background: var(--cream);
+  border: 1px solid var(--rule);
+}
+.doc-info { flex: 1; min-width: 0; }
+.doc-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.doc-meta { font-size: 12px; color: var(--ink-low); margin-top: 2px; }
+.doc-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.doc-badge.ready { background: var(--green-bg); color: var(--green); }
+.doc-badge.processing { background: #fef8ec; color: #a06020; }
+.doc-dl {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-mid);
+  padding: 6px 14px;
+  border: 1.5px solid var(--rule);
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  background: var(--white);
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.doc-dl:hover { border-color: var(--green); color: var(--green); }
+.doc-dl.dim { opacity: 0.35; pointer-events: none; }
+
+/* ── RIGHT COLUMN ── */
+
+/* Plan card */
+.plan-block {
+  background: var(--ink);
+  border-radius: 7px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.plan-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 6px;
+}
+.plan-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: -0.01em;
+}
+.plan-price {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--green-2);
+  margin-top: 2px;
+}
+.plan-trial {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+}
+
+.billing-rows { display: flex; flex-direction: column; gap: 10px; }
+.b-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.b-label { color: var(--ink-low); }
+.b-val { font-weight: 600; color: var(--ink); }
+.b-val.green { color: var(--green); }
+.b-divider { height: 1px; background: var(--rule); margin: 4px 0; }
+
+/* Quick actions */
+.quick-list { display: flex; flex-direction: column; gap: 8px; }
+.quick-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border: 1.5px solid var(--rule);
+  border-radius: 7px;
+  background: var(--cream);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.15s;
+}
+.quick-item:hover { border-color: var(--green); background: var(--green-bg); }
+.qi-icon {
+  width: 34px; height: 34px;
+  border-radius: 6px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.qi-label { font-weight: 600; font-size: 13px; }
+.qi-desc { font-size: 11px; color: var(--ink-low); margin-top: 1px; }
+.qi-arrow { margin-left: auto; color: var(--ink-low); font-size: 13px; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 440px;
+  width: 92%;
+  text-align: center;
+}
+.modal-icon { font-size: 44px; margin-bottom: 16px; }
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.modal-body {
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.modal-btn {
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 12px 32px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.modal-btn:hover { background: var(--green-2); }
+
+/* ── HOW IT WORKS GUIDE ── */
+.hiw-steps { display: flex; flex-direction: column; gap: 18px; text-align: left; margin-bottom: 28px; }
+.hiw-step { display: flex; gap: 14px; align-items: flex-start; }
+.hiw-num {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--white);
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.hiw-step h4 { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 3px; }
+.hiw-step p { font-size: 13px; color: var(--ink-low); line-height: 1.6; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  nav { padding: 0 20px; }
+  .top-bar { padding: 24px 20px 20px; }
+  .top-bar-inner { flex-direction: column; align-items: flex-start; }
+  .main { grid-template-columns: 1fr; padding: 28px 20px; }
+  .doc-types { grid-template-columns: repeat(2, 1fr); }
+  .form-grid { grid-template-columns: 1fr; }
+  .submit-row { flex-direction: column; align-items: flex-start; }
+  .btn-submit { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">TradeDeskNI<sup>NI &amp; ROI</sup></a>
+  <div class="nav-r">
+    <div class="nav-client">Logged in as <strong id="navName">Neil Walsh</strong></div>
+    <a href="https://wa.me/447775696701" target="_blank" class="nav-wa">💬 WhatsApp Rory</a>
+  </div>
+</nav>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <div>
+      <div class="top-greeting">Good to have you, <em id="firstName">Neil.</em></div>
+      <div class="top-sub">Send your job details below and we'll have the document back within the hour.</div>
+    </div>
+    <div class="trial-pill">
+      <div>
+        <div class="trial-val" id="daysLeft">14</div>
+        <div class="trial-label">trial days<br>remaining</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT -->
+  <div>
+
+    <!-- Submit job -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Submit a job</div>
+          <div class="card-sub">Fill in what you can — we'll handle the rest</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="slabel">What do you need?</div>
+        <div class="doc-types">
+          <div class="doc-type active" onclick="selectType(this,'quote')">
+            <div class="doc-type-icon">📋</div>
+            <span class="doc-type-name">Quote</span>
+          </div>
+          <div class="doc-type" onclick="selectType(this,'invoice')">
+            <div class="doc-type-icon">🧾</div>
+            <span class="doc-type-name">Invoice</span>
+          </div>
+          <div class="doc-type" onclick="selectType(this,'rams')">
+            <div class="doc-type-icon">⚠️</div>
+            <span class="doc-type-name">RAMS</span>
+          </div>
+          <div class="doc-type" onclick="selectType(this,'report')">
+            <div class="doc-type-icon">📄</div>
+            <span class="doc-type-name">Job Report</span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="frow">
+            <label>Customer name</label>
+            <input type="text" id="fCustomer" placeholder="e.g. John Murphy">
+          </div>
+          <div class="frow">
+            <label>Address / job reference</label>
+            <input type="text" id="fAddress" placeholder="e.g. 14 Oak Ave, Sligo">
+          </div>
+        </div>
+
+        <div class="frow">
+          <label>Job description</label>
+          <textarea id="fDesc" placeholder="Tell me what was done or needs quoting. As much or as little as you have — a voice note transcript is fine too."></textarea>
+        </div>
+
+        <div class="form-grid">
+          <div class="frow">
+            <label>Amount (optional)</label>
+            <input type="text" id="fValue" placeholder="e.g. €380">
+          </div>
+          <div class="frow">
+            <label>Anything else to include?</label>
+            <input type="text" id="fNotes" placeholder="e.g. 12 month warranty, urgent">
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <div class="submit-note">Mon–Fri, 8am–8pm. Urgent jobs — WhatsApp Rory directly.</div>
+          <button class="btn-submit" onclick="submitJob()">Send job →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Documents -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Your documents</div>
+          <div class="card-sub">Download completed documents here</div>
+        </div>
+        <div style="font-family:'Playfair Display',serif;font-weight:900;font-size:24px;letter-spacing:-0.02em;color:var(--green);" id="docCountBadge">0</div>
+      </div>
+      <div id="docList">
+        <div class="doc-empty">
+          <div class="doc-empty-icon">📂</div>
+          <div class="doc-empty-text">No documents yet — submit your first job above</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT -->
+  <div>
+
+    <!-- Plan -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Your plan</div>
+      </div>
+      <div class="card-body">
+        <div class="plan-block">
+          <div class="plan-label">Current plan</div>
+          <div class="plan-name">Standard</div>
+          <div class="plan-price" id="planPrice">£250 / month</div>
+          <div class="plan-trial">⏳ Free trial active</div>
+        </div>
+        <div class="billing-rows">
+          <div class="b-row">
+            <span class="b-label">Trial started</span>
+            <span class="b-val" id="trialStartDate">—</span>
+          </div>
+          <div class="b-row">
+            <span class="b-label">Trial ends</span>
+            <span class="b-val" id="trialEndDate">—</span>
+          </div>
+          <div class="b-divider"></div>
+          <div class="b-row">
+            <span class="b-label">Documents this month</span>
+            <span class="b-val" id="docCount">0</span>
+          </div>
+          <div class="b-row">
+            <span class="b-label">Amount due now</span>
+            <span class="b-val green">Nothing (trial)</span>
+          </div>
+          <div class="b-divider"></div>
+          <div class="b-row">
+            <span class="b-label">No contract</span>
+            <span class="b-val green">✓ Cancel any time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-head">
+        <div class="card-title">Quick actions</div>
+      </div>
+      <div class="card-body" style="padding:16px;">
+        <div class="quick-list">
+          <a href="https://wa.me/447775696701?text=Hi%20Rory%2C%20urgent%20job" target="_blank" class="quick-item">
+            <div class="qi-icon">🚨</div>
+            <div>
+              <div class="qi-label">Urgent job</div>
+              <div class="qi-desc">WhatsApp Rory for fast turnaround</div>
+            </div>
+            <div class="qi-arrow">→</div>
+          </a>
+          <a href="https://wa.me/447775696701?text=Hi%20Rory%2C%20I%20need%20a%20chaser%20for%20an%20unpaid%20invoice" target="_blank" class="quick-item">
+            <div class="qi-icon">💰</div>
+            <div>
+              <div class="qi-label">Chase an invoice</div>
+              <div class="qi-desc">We'll write the follow-up for you</div>
+            </div>
+            <div class="qi-arrow">→</div>
+          </a>
+          <a href="https://wa.me/447775696701" target="_blank" class="quick-item">
+            <div class="qi-icon">❓</div>
+            <div>
+              <div class="qi-label">Ask Rory a question</div>
+              <div class="qi-desc">Usually replies within the hour</div>
+            </div>
+            <div class="qi-arrow">→</div>
+          </a>
+          <div class="quick-item" onclick="document.getElementById('howModal').classList.add('open')">
+            <div class="qi-icon">📖</div>
+            <div>
+              <div class="qi-label">How it works</div>
+              <div class="qi-desc">Getting the most out of TradeDeskNI</div>
+            </div>
+            <div class="qi-arrow">→</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Success modal -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-icon">✓</div>
+    <div class="modal-title">Job received</div>
+    <div class="modal-body">We've got the details. Your document will be ready within the hour and will appear in the list below — you can download and send it straight to the customer from there.</div>
+    <button class="modal-btn" onclick="document.getElementById('successModal').classList.remove('open')">Got it</button>
+  </div>
+</div>
+
+<!-- How it works modal -->
+<div class="modal-overlay" id="howModal">
+  <div class="modal" style="text-align:left;max-width:480px;">
+    <div class="modal-icon" style="text-align:center;">⚡</div>
+    <div class="modal-title" style="text-align:center;">How it works</div>
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-num">1</div>
+        <div>
+          <h4>Send the job details</h4>
+          <p>Use the form above or WhatsApp Rory the info. Even a rough description is fine — the more detail, the better the document.</p>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">2</div>
+        <div>
+          <h4>We build the document</h4>
+          <p>A professional quote, invoice or report comes back with your business name on it, ready to send. Usually within 30 minutes.</p>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">3</div>
+        <div>
+          <h4>Download and send</h4>
+          <p>Download it from your documents list below and forward it straight to the customer. Done.</p>
+        </div>
+      </div>
+    </div>
+    <button class="modal-btn" style="width:100%;" onclick="document.getElementById('howModal').classList.remove('open')">Got it</button>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'tdni_portal_v2';
+let state = {
+  clientName: 'Neil Walsh',
+  region: 'ni',
+  trialStart: null,
+  documents: [],
+  docType: 'quote'
+};
+
+async function load() {
+  try {
+    const r = await window.storage.get(STORAGE_KEY);
+    if (r && r.value) {
+      state = { ...state, ...JSON.parse(r.value) };
+    } else {
+      state.trialStart = new Date().toISOString().split('T')[0];
+      await persist();
+    }
+  } catch(e) {
+    state.trialStart = new Date().toISOString().split('T')[0];
+  }
+  render();
+}
+
+async function persist() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function render() {
+  const first = state.clientName.split(' ')[0];
+  document.getElementById('navName').textContent = state.clientName;
+  document.getElementById('firstName').textContent = first + '.';
+
+  // Trial
+  const start = state.trialStart ? new Date(state.trialStart) : new Date();
+  const end = new Date(start); end.setDate(end.getDate() + 14);
+  const days = Math.max(0, Math.ceil((end - new Date()) / 86400000));
+  document.getElementById('daysLeft').textContent = days;
+  document.getElementById('trialStartDate').textContent = fmtDate(start);
+  document.getElementById('trialEndDate').textContent = fmtDate(end);
+
+  // Price
+  document.getElementById('planPrice').textContent = state.region === 'roi' ? '€250 / month' : '£250 / month';
+
+  // Docs
+  const n = state.documents.length;
+  document.getElementById('docCount').textContent = n;
+  document.getElementById('docCountBadge').textContent = n;
+  renderDocs();
+}
+
+function fmtDate(d) {
+  return (d instanceof Date ? d : new Date(d)).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function renderDocs() {
+  const list = document.getElementById('docList');
+  if (!state.documents.length) {
+    list.innerHTML = `<div class="doc-empty"><div class="doc-empty-icon">📂</div><div class="doc-empty-text">No documents yet — submit your first job above</div></div>`;
+    return;
+  }
+  const icons = { quote:'📋', invoice:'🧾', rams:'⚠️', report:'📄' };
+  const labels = { quote:'Quote', invoice:'Invoice', rams:'RAMS', report:'Job Report' };
+  list.innerHTML = [...state.documents].reverse().map(d => `
+    <div class="doc-row">
+      <div class="doc-icon-box">${icons[d.type] || '📄'}</div>
+      <div class="doc-info">
+        <div class="doc-name">${labels[d.type] || 'Document'} — ${d.customer}</div>
+        <div class="doc-meta">${d.date}</div>
+      </div>
+      <span class="doc-badge ${d.status}">${d.status === 'ready' ? 'Ready' : 'Processing'}</span>
+      <a class="doc-dl ${d.status !== 'ready' ? 'dim' : ''}" href="${d.url || '#'}" ${d.status === 'ready' ? 'download' : ''}>Download</a>
+    </div>`).join('');
+}
+
+function selectType(el, type) {
+  document.querySelectorAll('.doc-type').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  state.docType = type;
+}
+
+function submitJob() {
+  const customer = document.getElementById('fCustomer').value.trim();
+  const desc = document.getElementById('fDesc').value.trim();
+  if (!customer || !desc) {
+    alert('Please fill in the customer name and job description.');
+    return;
+  }
+  const labels = { quote:'Quote', invoice:'Invoice', rams:'RAMS', report:'Job Report' };
+  state.documents.push({
+    id: Math.random().toString(36).slice(2),
+    type: state.docType,
+    customer,
+    date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short' }),
+    status: 'processing',
+    url: null
+  });
+  // Reset form
+  ['fCustomer','fAddress','fDesc','fValue','fNotes'].forEach(id => document.getElementById(id).value = '');
+  persist();
+  render();
+  document.getElementById('successModal').classList.add('open');
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+});
+
+load();
+</script>
+</body>
+</html>

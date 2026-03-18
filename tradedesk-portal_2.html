@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeDeskNI — Client Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f4f0;
+  --surface: #ffffff;
+  --ink: #1a1a1a;
+  --mid: #6b6b6b;
+  --faint: #e8e6e0;
+  --border: #d4d0c8;
+  --accent: #e8401c;
+  --accent-light: #fff0ed;
+  --accent-dark: #c43215;
+  --green: #1a7a4a;
+  --green-light: #e8f5ee;
+  --yellow: #f5a623;
+  --yellow-light: #fef7e8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.client-name {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+}
+.client-name strong {
+  color: #fff;
+  font-weight: 600;
+}
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #25d366;
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.whatsapp-btn:hover { background: #1da851; }
+.whatsapp-icon { font-size: 15px; }
+
+/* ── HERO STRIP ── */
+.hero {
+  background: var(--accent);
+  padding: 28px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hero-left h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+.hero-left p {
+  margin-top: 8px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+.hero-stats {
+  display: flex;
+  gap: 32px;
+}
+.hero-stat {
+  text-align: center;
+}
+.hero-stat-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 36px;
+  color: #fff;
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+/* ── LAYOUT ── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 32px;
+}
+.col-left { display: flex; flex-direction: column; gap: 28px; }
+.col-right { display: flex; flex-direction: column; gap: 28px; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.card-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--faint);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.card-subtitle {
+  font-size: 12px;
+  color: var(--mid);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.card-body { padding: 24px; }
+
+/* ── JOB FORM ── */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-row { margin-bottom: 16px; }
+.form-row:last-child { margin-bottom: 0; }
+.form-row label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 6px;
+}
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  padding: 10px 14px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  border-color: var(--accent);
+  background: #fff;
+}
+.form-row textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+.form-row select { cursor: pointer; }
+
+.doc-type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.doc-type-btn {
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  cursor: pointer;
+  background: var(--bg);
+  text-align: left;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.doc-type-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+.doc-type-btn.selected { border-color: var(--accent); background: var(--accent-light); }
+.doc-type-btn .dt-icon { font-size: 20px; }
+.doc-type-btn .dt-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.doc-type-btn .dt-desc {
+  font-size: 11px;
+  color: var(--mid);
+  margin-top: 1px;
+}
+.doc-type-btn.selected .dt-label { color: var(--accent); }
+
+.submit-btn {
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 15px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.submit-btn:hover { background: var(--accent-dark); }
+.submit-btn:disabled { background: var(--border); color: var(--mid); cursor: not-allowed; }
+
+.turnaround-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--mid);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.turnaround-note::before { content: '⚡'; }
+
+/* ── DOCUMENTS TABLE ── */
+.doc-list { display: flex; flex-direction: column; }
+.doc-row {
+  display: flex;
+  align-items: center;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--faint);
+  gap: 14px;
+  transition: background 0.1s;
+}
+.doc-row:last-child { border-bottom: none; }
+.doc-row:hover { background: var(--bg); }
+.doc-icon {
+  width: 38px; height: 38px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.doc-icon.quote { background: var(--yellow-light); }
+.doc-icon.invoice { background: var(--green-light); }
+.doc-icon.rams { background: #eef2ff; }
+.doc-icon.report { background: #fef0ff; }
+.doc-info { flex: 1; min-width: 0; }
+.doc-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.doc-meta {
+  font-size: 11px;
+  color: var(--mid);
+  margin-top: 2px;
+}
+.doc-status {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+.doc-status.ready { background: var(--green-light); color: var(--green); }
+.doc-status.processing { background: var(--yellow-light); color: var(--yellow); }
+.download-btn {
+  padding: 7px 14px;
+  border-radius: 5px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--ink);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+}
+.download-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.download-btn.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+/* ── BILLING CARD ── */
+.billing-plan {
+  background: var(--ink);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.billing-plan-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+.billing-plan-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 26px;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 0.03em;
+}
+.billing-plan-price {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--accent);
+  margin-top: 4px;
+}
+.billing-trial {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(240,192,64,0.15);
+  color: #f5c842;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+.billing-rows { display: flex; flex-direction: column; gap: 10px; }
+.billing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.billing-row-label { color: var(--mid); font-weight: 500; }
+.billing-row-val { font-weight: 600; color: var(--ink); }
+.billing-row-val.green { color: var(--green); }
+.billing-divider {
+  height: 1px;
+  background: var(--faint);
+  margin: 6px 0;
+}
+
+/* ── QUICK ACTIONS ── */
+.quick-actions { display: flex; flex-direction: column; gap: 8px; }
+.quick-action {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  color: var(--ink);
+}
+.quick-action:hover { border-color: var(--accent); background: var(--accent-light); }
+.qa-icon {
+  width: 36px; height: 36px;
+  border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  background: var(--faint);
+  flex-shrink: 0;
+}
+.qa-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.qa-desc { font-size: 12px; color: var(--mid); margin-top: 1px; }
+.qa-arrow { margin-left: auto; color: var(--mid); font-size: 14px; }
+
+/* ── SUCCESS TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: var(--green);
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 999;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 36px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+}
+.modal-icon { font-size: 52px; margin-bottom: 16px; }
+.modal-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+.modal-body { font-size: 15px; color: var(--mid); line-height: 1.6; margin-bottom: 24px; }
+.modal-close {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 32px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ── EMPTY DOCS ── */
+.empty-docs {
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--mid);
+}
+.empty-docs-icon { font-size: 36px; margin-bottom: 10px; }
+.empty-docs-text { font-size: 14px; font-weight: 500; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 8px;
+  padding-left: 2px;
+}
+
+@media (max-width: 768px) {
+  .main { grid-template-columns: 1fr; }
+  .col-right { order: -1; }
+  .hero { flex-direction: column; gap: 20px; }
+  .hero-stats { gap: 20px; }
+  .form-grid-2 { grid-template-columns: 1fr; }
+  .doc-type-grid { grid-template-columns: 1fr; }
+  .header { padding: 0 20px; }
+  .hero { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-dot"></div>
+    TradeDeskNI
+  </div>
+  <div class="header-right">
+    <div class="client-name">Logged in as <strong id="clientNameDisplay">Your Business</strong></div>
+    <a href="https://wa.me/447775696701" target="_blank" class="whatsapp-btn">
+      <span class="whatsapp-icon">💬</span> WhatsApp Rory
+    </a>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-left">
+    <h1>Your Paperwork<br>Done Fast</h1>
+    <p>Send job details → get professional documents back within the hour</p>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-val" id="statDocsTotal">0</div>
+      <div class="hero-stat-label">Docs Made</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">&lt;1hr</div>
+      <div class="hero-stat-label">Turnaround</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val" id="statDaysLeft">14</div>
+      <div class="hero-stat-label">Trial Days Left</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- LEFT COLUMN -->
+  <div class="col-left">
+
+    <!-- Job Submission Form -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Submit a Job</div>
+          <div class="card-subtitle">Fill in the details below — we'll have your document back within the hour</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="section-label">What do you need?</div>
+        <div class="doc-type-grid" style="margin-bottom:20px;">
+          <div class="doc-type-btn selected" onclick="selectDocType(this,'quote')">
+            <div class="dt-icon">📋</div>
+            <div>
+              <div class="dt-label">Quote</div>
+              <div class="dt-desc">Price up a job for a customer</div>
+            </div>
+          </div>
+          <div class="doc-type-btn" onclick="selectDocType(this,'invoice')">
+            <div class="dt-icon">🧾</div>
+            <div>
+              <div class="dt-label">Invoice</div>
+              <div class="dt-desc">Bill a completed job</div>
+            </div>
+          </div>
+          <div class="doc-type-btn" onclick="selectDocType(this,'rams')">
+            <div class="dt-icon">⚠️</div>
+            <div>
+              <div class="dt-label">RAMS</div>
+              <div class="dt-desc">Risk assessment & method statement</div>
+            </div>
+          </div>
+          <div class="doc-type-btn" onclick="selectDocType(this,'report')">
+            <div class="dt-icon">📄</div>
+            <div>
+              <div class="dt-label">Job Report</div>
+              <div class="dt-desc">Completion report for client</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label>Customer Name</label>
+            <input type="text" id="f-customer" placeholder="e.g. John Murphy">
+          </div>
+          <div class="form-row">
+            <label>Job Reference / Address</label>
+            <input type="text" id="f-address" placeholder="e.g. 12 Main St, Cork">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Job Description</label>
+          <textarea id="f-description" placeholder="Tell me what was done or what needs quoting — as much or as little detail as you have. Voice note transcription fine too."></textarea>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label>Your Name / Business</label>
+            <input type="text" id="f-business" placeholder="e.g. Murphy Roofing">
+          </div>
+          <div class="form-row">
+            <label>Value (optional)</label>
+            <input type="text" id="f-value" placeholder="e.g. €650">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Any Extra Notes</label>
+          <input type="text" id="f-notes" placeholder="e.g. customer wants it asap, include 12 month warranty">
+        </div>
+
+        <button class="submit-btn" onclick="submitJob()" id="submitBtn">
+          ⚡ Submit Job — Get Doc Within 1 Hour
+        </button>
+        <div class="turnaround-note">Mon–Fri 8am–8pm. Urgent jobs contact Rory on WhatsApp.</div>
+      </div>
+    </div>
+
+    <!-- Documents -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Your Documents</div>
+          <div class="card-subtitle">Download completed documents here</div>
+        </div>
+        <span id="docCount" style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:var(--accent);">0</span>
+      </div>
+      <div id="docList">
+        <div class="empty-docs">
+          <div class="empty-docs-icon">📂</div>
+          <div class="empty-docs-text">No documents yet — submit your first job above</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="col-right">
+
+    <!-- Billing -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Your Plan</div>
+      </div>
+      <div class="card-body">
+        <div class="billing-plan">
+          <div class="billing-plan-label">Current Plan</div>
+          <div class="billing-plan-name">Standard</div>
+          <div class="billing-plan-price">£250 / month</div>
+          <div class="billing-trial">⏳ Free Trial — 14 days remaining</div>
+        </div>
+        <div class="billing-rows">
+          <div class="billing-row">
+            <span class="billing-row-label">Trial started</span>
+            <span class="billing-row-val" id="trialStart">—</span>
+          </div>
+          <div class="billing-row">
+            <span class="billing-row-label">Trial ends</span>
+            <span class="billing-row-val" id="trialEnd">—</span>
+          </div>
+          <div class="billing-divider"></div>
+          <div class="billing-row">
+            <span class="billing-row-label">Documents this month</span>
+            <span class="billing-row-val" id="billingDocCount">0</span>
+          </div>
+          <div class="billing-row">
+            <span class="billing-row-label">Amount due</span>
+            <span class="billing-row-val green">£0 (trial)</span>
+          </div>
+          <div class="billing-divider"></div>
+          <div class="billing-row">
+            <span class="billing-row-label">No contract</span>
+            <span class="billing-row-val green">✓ Cancel anytime</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Quick Actions</div>
+      </div>
+      <div class="card-body" style="padding:16px;">
+        <div class="quick-actions">
+          <a href="https://wa.me/447775696701?text=Hi%20Rory%2C%20I%20need%20an%20urgent%20document" target="_blank" class="quick-action">
+            <div class="qa-icon">🚨</div>
+            <div>
+              <div class="qa-label">Urgent Job</div>
+              <div class="qa-desc">WhatsApp Rory directly for fast turnaround</div>
+            </div>
+            <div class="qa-arrow">→</div>
+          </a>
+          <a href="https://wa.me/447775696701?text=Hi%20Rory%2C%20I%20need%20a%20follow-up%20chaser%20sent%20for%20an%20unpaid%20invoice" target="_blank" class="quick-action">
+            <div class="qa-icon">💰</div>
+            <div>
+              <div class="qa-label">Chase Unpaid Invoice</div>
+              <div class="qa-desc">Send a follow-up chaser to a customer</div>
+            </div>
+            <div class="qa-arrow">→</div>
+          </a>
+          <a href="https://wa.me/447775696701?text=Hi%20Rory%2C%20I%20have%20a%20question%20about%20my%20account" target="_blank" class="quick-action">
+            <div class="qa-icon">❓</div>
+            <div>
+              <div class="qa-label">Ask Rory a Question</div>
+              <div class="qa-desc">Direct line — usually replies within the hour</div>
+            </div>
+            <div class="qa-arrow">→</div>
+          </a>
+          <div class="quick-action" onclick="showHowItWorks()">
+            <div class="qa-icon">📖</div>
+            <div>
+              <div class="qa-label">How It Works</div>
+              <div class="qa-desc">Quick guide to getting the most out of TradeDeskNI</div>
+            </div>
+            <div class="qa-arrow">→</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-icon">✅</div>
+    <div class="modal-title">Job Submitted!</div>
+    <div class="modal-body">Your job details have been received. You'll have your document back within the hour — it'll appear in <strong>Your Documents</strong> above and we'll send it to your email too.<br><br>Need it faster? WhatsApp Rory directly.</div>
+    <button class="modal-close" onclick="closeModal()">Got It</button>
+  </div>
+</div>
+
+<!-- How It Works Modal -->
+<div class="modal-overlay" id="howModal">
+  <div class="modal" style="text-align:left;max-width:520px;">
+    <div class="modal-icon" style="text-align:center;">⚡</div>
+    <div class="modal-title" style="text-align:center;">How It Works</div>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:24px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;flex-shrink:0;">1</div>
+        <div><strong style="font-size:14px;">Submit your job</strong><br><span style="font-size:13px;color:var(--mid);">Use the form above or WhatsApp Rory the details. Even a rough description is fine — the more detail the better, but don't overthink it.</span></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;flex-shrink:0;">2</div>
+        <div><strong style="font-size:14px;">We build your document</strong><br><span style="font-size:13px;color:var(--mid);">Professional, branded quote, invoice, RAMS or job report — ready within the hour during working hours.</span></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;flex-shrink:0;">3</div>
+        <div><strong style="font-size:14px;">Download and send</strong><br><span style="font-size:13px;color:var(--mid);">Download your finished document here and send it straight to your customer. Job done.</span></div>
+      </div>
+    </div>
+    <button class="modal-close" style="width:100%;" onclick="document.getElementById('howModal').classList.remove('open')">Got It</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">✓ Job submitted successfully</div>
+
+<script>
+const STORAGE_KEY = 'tradedesk_portal_data';
+
+let data = {
+  clientName: 'Your Business',
+  trialStart: null,
+  documents: [],
+  selectedDocType: 'quote'
+};
+
+// ── Storage ──
+async function loadData() {
+  try {
+    const r = await window.storage.get(STORAGE_KEY);
+    if (r && r.value) {
+      data = { ...data, ...JSON.parse(r.value) };
+    } else {
+      data.trialStart = new Date().toISOString().split('T')[0];
+      await saveData();
+    }
+  } catch(e) {
+    data.trialStart = new Date().toISOString().split('T')[0];
+  }
+  render();
+}
+
+async function saveData() {
+  try {
+    await window.storage.set(STORAGE_KEY, JSON.stringify(data));
+  } catch(e) {}
+}
+
+// ── Render ──
+function render() {
+  document.getElementById('clientNameDisplay').textContent = data.clientName;
+  renderBilling();
+  renderDocs();
+  const total = data.documents.length;
+  document.getElementById('statDocsTotal').textContent = total;
+  document.getElementById('docCount').textContent = total;
+  document.getElementById('billingDocCount').textContent = total;
+}
+
+function renderBilling() {
+  const start = data.trialStart ? new Date(data.trialStart) : new Date();
+  const end = new Date(start);
+  end.setDate(end.getDate() + 14);
+  const today = new Date();
+  const daysLeft = Math.max(0, Math.ceil((end - today) / (1000*60*60*24)));
+  document.getElementById('statDaysLeft').textContent = daysLeft;
+  document.getElementById('trialStart').textContent = formatDate(start);
+  document.getElementById('trialEnd').textContent = formatDate(end);
+}
+
+function renderDocs() {
+  const list = document.getElementById('docList');
+  if (data.documents.length === 0) {
+    list.innerHTML = `<div class="empty-docs"><div class="empty-docs-icon">📂</div><div class="empty-docs-text">No documents yet — submit your first job above</div></div>`;
+    return;
+  }
+  const typeIcons = { quote:'📋', invoice:'🧾', rams:'⚠️', report:'📄' };
+  const typeClass = { quote:'quote', invoice:'invoice', rams:'rams', report:'report' };
+  list.innerHTML = '<div class="doc-list">' + [...data.documents].reverse().map(doc => `
+    <div class="doc-row">
+      <div class="doc-icon ${typeClass[doc.type] || 'quote'}">${typeIcons[doc.type] || '📄'}</div>
+      <div class="doc-info">
+        <div class="doc-name">${doc.name}</div>
+        <div class="doc-meta">${doc.customer} · ${doc.date}</div>
+      </div>
+      <span class="doc-status ${doc.status === 'ready' ? 'ready' : 'processing'}">${doc.status === 'ready' ? 'Ready' : 'Processing'}</span>
+      <a class="download-btn ${doc.status !== 'ready' ? 'disabled' : ''}" href="${doc.url || '#'}" ${doc.status === 'ready' ? 'download' : ''}>
+        ↓ Download
+      </a>
+    </div>
+  `).join('') + '</div>';
+}
+
+function formatDate(d) {
+  if (!d) return '—';
+  const date = d instanceof Date ? d : new Date(d);
+  return date.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+
+// ── Doc type selection ──
+function selectDocType(el, type) {
+  document.querySelectorAll('.doc-type-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  data.selectedDocType = type;
+}
+
+// ── Submit ──
+function submitJob() {
+  const customer = document.getElementById('f-customer').value.trim();
+  const description = document.getElementById('f-description').value.trim();
+  const business = document.getElementById('f-business').value.trim();
+
+  if (!customer || !description) {
+    alert('Please fill in at least the customer name and job description.');
+    return;
+  }
+
+  const typeLabels = { quote:'Quote', invoice:'Invoice', rams:'RAMS', report:'Job Report' };
+  const newDoc = {
+    id: Math.random().toString(36).slice(2),
+    type: data.selectedDocType,
+    name: `${typeLabels[data.selectedDocType]} — ${customer}`,
+    customer: customer,
+    date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short' }),
+    status: 'processing',
+    url: null,
+    notes: description
+  };
+
+  data.documents.push(newDoc);
+  if (business) data.clientName = business;
+  saveData();
+  render();
+
+  // Reset form
+  document.getElementById('f-customer').value = '';
+  document.getElementById('f-address').value = '';
+  document.getElementById('f-description').value = '';
+  document.getElementById('f-value').value = '';
+  document.getElementById('f-notes').value = '';
+
+  document.getElementById('successModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('successModal').classList.remove('open');
+}
+
+function showHowItWorks() {
+  document.getElementById('howModal').classList.add('open');
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+
+loadData();
+</script>
+</body>
+</html>
