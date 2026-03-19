@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeDeskNI — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:   #f7f4ee;
+  --white:   #ffffff;
+  --ink:     #1c1b18;
+  --ink-mid: #4a4840;
+  --ink-low: #9a9690;
+  --green:   #1e5c3a;
+  --green-2: #2a7a50;
+  --green-bg:#eef5f0;
+  --border:  #e8e4dc;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--cream);color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:16px;line-height:1.5;}
+nav{background:var(--ink);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.logo{font-family:'Playfair Display',serif;font-weight:900;font-size:18px;color:var(--white);text-decoration:none;}
+.logo sup{font-family:'Instrument Sans',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--green-2);margin-left:3px;vertical-align:super;}
+.nav-r{display:flex;align-items:center;gap:20px;}
+.nav-r a{font-size:12px;font-weight:500;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.15s;}
+.nav-badge{font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-2);background:rgba(42,122,80,0.15);padding:4px 10px;border-radius:4px;}
+.login-wrap{min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:40px 24px;background:var(--ink);}
+.login-box{background:var(--cream);border-radius:16px;padding:48px;width:420px;max-width:100%;}
+.login-kicker{font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-2);margin-bottom:12px;}
+.login-title{font-family:'Playfair Display',serif;font-weight:900;font-size:32px;color:var(--ink);line-height:1.1;margin-bottom:6px;}
+.login-sub{font-size:14px;color:var(--ink-low);margin-bottom:36px;}
+.form-label{display:block;font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:6px;}
+.form-input{width:100%;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:12px 16px;color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:14px;outline:none;transition:border-color 0.15s;margin-bottom:20px;}
+.form-input:focus{border-color:var(--green);}
+.btn-green{width:100%;background:var(--green);color:var(--white);border:none;border-radius:8px;padding:14px;font-family:'Instrument Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.15s;}
+.btn-green:hover{background:var(--green-2);}
+.login-error{color:#c0392b;font-size:12px;margin-top:10px;display:none;font-weight:500;}
+.back-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--ink-low);text-decoration:none;}
+.app{display:none;}
+.layout{display:flex;min-height:calc(100vh - 56px);}
+.sidebar{width:230px;background:var(--ink);padding:28px 0;display:flex;flex-direction:column;flex-shrink:0;}
+.sidebar-section{padding:0 0 20px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-label{font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.25);padding:0 20px;margin-bottom:8px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);cursor:pointer;transition:all 0.15s;border-left:2px solid transparent;}
+.nav-item:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.03);}
+.nav-item.active{color:var(--white);border-left-color:var(--green-2);background:rgba(42,122,80,0.1);}
+.nav-icon{width:18px;text-align:center;font-size:14px;}
+.sidebar-bottom{margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,0.07);}
+.logout{font-size:12px;color:rgba(255,255,255,0.3);cursor:pointer;transition:color 0.15s;}
+.main{flex:1;padding:36px 40px;overflow-y:auto;}
+.page{display:none;}
+.page.active{display:block;}
+.page-hd{margin-bottom:32px;display:flex;align-items:flex-start;justify-content:space-between;}
+.page-kicker{font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-2);margin-bottom:6px;}
+.page-title{font-family:'Playfair Display',serif;font-weight:900;font-size:30px;color:var(--ink);line-height:1.1;}
+.page-sub{font-size:13px;color:var(--ink-low);margin-top:4px;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.stat{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 24px;}
+.stat-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-low);margin-bottom:8px;}
+.stat-val{font-family:'Playfair Display',serif;font-size:38px;font-weight:900;line-height:1;color:var(--ink);}
+.stat-val.green{color:var(--green);}
+.stat-sub{font-size:11px;color:var(--ink-low);margin-top:4px;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;overflow:hidden;}
+.card-hd{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-low);}
+.card-body{padding:20px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+table{width:100%;border-collapse:collapse;}
+th{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-low);text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);}
+td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--cream);}
+.biz{font-weight:600;color:var(--ink);}
+.contact-sm{font-size:11px;color:var(--ink-low);margin-top:1px;}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;letter-spacing:0.06em;text-transform:uppercase;}
+.badge-trial{background:#fff8e6;color:#b7860a;border:1px solid #f0d070;}
+.badge-active{background:var(--green-bg);color:var(--green);border:1px solid rgba(30,92,58,0.2);}
+.badge-paused{background:#f5f5f5;color:var(--ink-low);border:1px solid var(--border);}
+.badge-pending{background:#e8f0ff;color:#3a5fbf;border:1px solid #c0d0f0;}
+.badge-done{background:var(--green-bg);color:var(--green);border:1px solid rgba(30,92,58,0.2);}
+.badge-ni{background:#e8f0ff;color:#3a5fbf;border:1px solid #c0d0f0;font-size:9px;}
+.badge-roi{background:var(--green-bg);color:var(--green);border:1px solid rgba(30,92,58,0.2);font-size:9px;}
+.dot{width:5px;height:5px;border-radius:50%;background:currentColor;display:inline-block;}
+.btn{font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;padding:8px 18px;border-radius:7px;border:none;cursor:pointer;transition:all 0.15s;}
+.btn-primary{background:var(--green);color:var(--white);}
+.btn-primary:hover{background:var(--green-2);}
+.btn-ghost{background:transparent;color:var(--ink-mid);border:1px solid var(--border);}
+.btn-danger{background:#fef2f2;color:#c0392b;border:1px solid #f5c0c0;}
+.btn-sm{padding:5px 12px;font-size:11px;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(28,27,24,0.6);backdrop-filter:blur(3px);z-index:200;align-items:center;justify-content:center;}
+.overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:14px;padding:32px;width:540px;max-width:95vw;max-height:90vh;overflow-y:auto;border:1px solid var(--border);}
+.modal-title{font-family:'Playfair Display',serif;font-weight:900;font-size:22px;margin-bottom:24px;color:var(--ink);}
+.f-row{margin-bottom:16px;}
+.f-label{display:block;font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:5px;}
+.f-input,.f-select,.f-textarea{width:100%;background:var(--cream);border:1px solid var(--border);border-radius:7px;padding:10px 14px;color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.15s;}
+.f-input:focus,.f-select:focus,.f-textarea:focus{border-color:var(--green);background:var(--white);}
+.f-textarea{resize:vertical;min-height:80px;}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.modal-actions{display:flex;gap:10px;margin-top:24px;justify-content:flex-end;}
+.job-row{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--border);}
+.job-icon{width:36px;height:36px;border-radius:8px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;border:1px solid var(--border);}
+.job-meta{flex:1;}
+.job-biz{font-weight:600;font-size:13px;}
+.job-desc{font-size:12px;color:var(--ink-low);margin-top:2px;}
+.act-item{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.act-dot{width:7px;height:7px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+.act-text{font-size:13px;flex:1;color:var(--ink-mid);}
+.act-time{font-size:11px;color:var(--ink-low);white-space:nowrap;}
+.notice{background:var(--green-bg);border:1px solid rgba(30,92,58,0.2);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--green);margin-bottom:20px;font-weight:500;}
+.empty{text-align:center;padding:48px 20px;color:var(--ink-low);}
+.empty-icon{font-size:28px;margin-bottom:10px;}
+.empty-text{font-size:13px;}
+.admin-footer{background:var(--ink);padding:24px 40px;display:flex;align-items:center;justify-content:space-between;}
+.admin-footer-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:16px;color:var(--white);}
+.admin-footer-copy{font-size:11px;color:rgba(255,255,255,0.25);}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">TradeDeskNI<sup>NI &amp; ROI</sup></a>
+  <div class="nav-r">
+    <a href="index.html">← Back to site</a>
+    <span class="nav-badge">Admin</span>
+  </div>
+</nav>
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-kicker">TradeDeskNI</div>
+    <div class="login-title">Admin portal.</div>
+    <div class="login-sub">Your master dashboard — clients, jobs, documents and billing.</div>
+    <label class="form-label">Admin password</label>
+    <input type="password" class="form-input" id="adminPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-green" onclick="doLogin()">Sign in →</button>
+    <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+    <a href="index.html" class="back-link">← Back to tradedeskni.com</a>
+  </div>
+</div>
+<div class="app" id="mainApp">
+  <div class="layout">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Navigation</div>
+        <div class="nav-item active" onclick="showPage('dashboard',this)"><span class="nav-icon">📊</span> Dashboard</div>
+        <div class="nav-item" onclick="showPage('clients',this)"><span class="nav-icon">👷</span> Clients</div>
+        <div class="nav-item" onclick="showPage('jobs',this)"><span class="nav-icon">📋</span> Jobs Queue</div>
+        <div class="nav-item" onclick="showPage('documents',this)"><span class="nav-icon">📄</span> Documents</div>
+        <div class="nav-item" onclick="showPage('billing',this)"><span class="nav-icon">💷</span> Billing</div>
+      </div>
+      <div class="sidebar-bottom"><div class="logout" onclick="doLogout()">← Log out</div></div>
+    </div>
+    <main class="main">
+      <div class="page active" id="page-dashboard">
+        <div class="page-hd"><div class="page-hd-left"><div class="page-kicker">Overview</div><div class="page-title" id="dashGreeting">Good morning, Rory.</div><div class="page-sub" id="dashDate"></div></div></div>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-val green" id="s-active">0</div><div class="stat-sub">paying or on trial</div></div>
+          <div class="stat"><div class="stat-label">Jobs Pending</div><div class="stat-val" id="s-pending">0</div><div class="stat-sub">awaiting documents</div></div>
+          <div class="stat"><div class="stat-label">Docs Sent</div><div class="stat-val" id="s-docs">0</div><div class="stat-sub">all time</div></div>
+          <div class="stat"><div class="stat-label">Monthly Revenue</div><div class="stat-val green" id="s-revenue">£0</div><div class="stat-sub">paying clients only</div></div>
+        </div>
+        <div class="two-col">
+          <div class="card"><div class="card-hd"><div class="card-title">Recent Jobs</div></div><div class="card-body" id="recentJobs"><div class="empty"><div class="empty-icon">📭</div><div class="empty-text">No jobs yet</div></div></div></div>
+          <div class="card"><div class="card-hd"><div class="card-title">Activity</div></div><div class="card-body" id="actFeed"><div class="empty"><div class="empty-icon">💤</div><div class="empty-text">No activity yet</div></div></div></div>
+        </div>
+      </div>
+      <div class="page" id="page-clients">
+        <div class="page-hd"><div class="page-hd-left"><div class="page-kicker">Clients</div><div class="page-title">Your clients.</div><div class="page-sub">Manage all active and trial clients</div></div><button class="btn btn-primary" onclick="openAddClient()">+ Add client</button></div>
+        <div class="card"><table><thead><tr><th>Client</th><th>Trade</th><th>Region</th><th>Status</th><th>Portal code</th><th>Trial start</th><th></th></tr></thead><tbody id="clientsTable"></tbody></table><div id="clientsEmpty" class="empty" style="display:none"><div class="empty-icon">👷</div><div class="empty-text">No clients yet</div></div></div>
+      </div>
+      <div class="page" id="page-jobs">
+        <div class="page-hd"><div class="page-hd-left"><div class="page-kicker">Jobs</div><div class="page-title">Jobs queue.</div><div class="page-sub">All submitted jobs across all clients</div></div><button class="btn btn-primary" onclick="openAddJob()">+ Log job</button></div>
+        <div class="card"><table><thead><tr><th>Client</th><th>Type</th><th>Description</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody id="jobsTable"></tbody></table><div id="jobsEmpty" class="empty" style="display:none"><div class="empty-icon">📋</div><div class="empty-text">No jobs yet</div></div></div>
+      </div>
+      <div class="page" id="page-documents">
+        <div class="page-hd"><div class="page-hd-left"><div class="page-kicker">Documents</div><div class="page-title">All documents.</div><div class="page-sub">Every document produced</div></div></div>
+        <div class="card"><table><thead><tr><th>Client</th><th>Type</th><th>Notes</th><th>Date</th><th>Status</th></tr></thead><tbody id="docsTable"></tbody></table><div id="docsEmpty" class="empty" style="display:none"><div class="empty-icon">📄</div><div class="empty-text">No documents yet</div></div></div>
+      </div>
+      <div class="page" id="page-billing">
+        <div class="page-hd"><div class="page-hd-left"><div class="page-kicker">Billing</div><div class="page-title">Billing.</div><div class="page-sub">Track payments and subscriptions</div></div></div>
+        <div class="notice">All clients start on a free 14-day trial. Convert to £250/month (NI) or €250/month (ROI) after the trial ends.</div>
+        <div class="card"><table><thead><tr><th>Client</th><th>Region</th><th>Plan</th><th>Trial ends</th><th>Status</th><th>Monthly value</th></tr></thead><tbody id="billingTable"></tbody></table><div id="billingEmpty" class="empty" style="display:none"><div class="empty-icon">💷</div><div class="empty-text">No billing records yet</div></div></div>
+      </div>
+    </main>
+  </div>
+  <footer class="admin-footer"><div class="admin-footer-logo">TradeDeskNI</div><div class="admin-footer-copy">Admin portal — private access only</div></footer>
+</div>
+<div class="overlay" id="clientModal">
+  <div class="modal">
+    <div class="modal-title" id="cModalTitle">Add client</div>
+    <div class="f-grid"><div class="f-row"><label class="f-label">Business name</label><input class="f-input" id="c-biz" placeholder="e.g. Neil Walsh Plumbing"></div><div class="f-row"><label class="f-label">Contact name</label><input class="f-input" id="c-contact" placeholder="e.g. Neil"></div></div>
+    <div class="f-row"><label class="f-label">Email</label><input class="f-input" id="c-email" placeholder="e.g. neil@neilwalshplumbing.com"></div>
+    <div class="f-row"><label class="f-label">Phone / WhatsApp</label><input class="f-input" id="c-phone" placeholder="e.g. 087 123 4567"></div>
+    <div class="f-grid"><div class="f-row"><label class="f-label">Trade</label><select class="f-select" id="c-trade"><option>Plumber/Gas</option><option>Electrician</option><option>Roofer</option><option>Builder</option><option>Joiner/Carpenter</option><option>Painter/Decorator</option><option>Plasterer</option><option>Other</option></select></div><div class="f-row"><label class="f-label">Region</label><select class="f-select" id="c-region"><option value="ni">NI — £250/month</option><option value="roi">ROI — €250/month</option></select></div></div>
+    <div class="f-grid"><div class="f-row"><label class="f-label">Portal login code</label><input class="f-input" id="c-code" placeholder="e.g. NEIL2025"></div><div class="f-row"><label class="f-label">Status</label><select class="f-select" id="c-status"><option value="trial">Trial (free 2 weeks)</option><option value="active">Active (paying)</option><option value="paused">Paused</option></select></div></div>
+    <div class="f-row"><label class="f-label">Trial start date</label><input type="date" class="f-input" id="c-start"></div>
+    <div class="f-row"><label class="f-label">Notes</label><textarea class="f-textarea" id="c-notes" placeholder="How they found you, call notes..."></textarea></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('clientModal')">Cancel</button><button class="btn btn-primary" onclick="saveClient()">Save client</button></div>
+  </div>
+</div>
+<div class="overlay" id="jobModal">
+  <div class="modal">
+    <div class="modal-title">Log a job</div>
+    <div class="f-row"><label class="f-label">Client</label><select class="f-select" id="j-client"></select></div>
+    <div class="f-grid"><div class="f-row"><label class="f-label">Document type</label><select class="f-select" id="j-type"><option>Quote</option><option>Invoice</option><option>RAMS</option><option>Gas Service Record</option><option>Job Completion Report</option><option>Variation Order</option><option>Debt Chaser</option><option>Other</option></select></div><div class="f-row"><label class="f-label">Status</label><select class="f-select" id="j-status"><option value="pending">Pending — to do</option><option value="done">Done — sent</option></select></div></div>
+    <div class="f-row"><label class="f-label">Job description</label><textarea class="f-textarea" id="j-desc" placeholder="Customer name, what was done, amount..."></textarea></div>
+    <div class="f-row"><label class="f-label">Date submitted</label><input type="date" class="f-input" id="j-date"></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('jobModal')">Cancel</button><button class="btn btn-primary" onclick="saveJob()">Save job</button></div>
+  </div>
+</div>
+<script>
+const PASS='tradedesk2025',CK='tdni_clients_v2',JK='tdni_jobs_v2';
+let clients=[],jobs=[],editCId=null;
+function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
+function doLogin(){
+  if(document.getElementById('adminPass').value===PASS){
+    document.getElementById('loginWrap').style.display='none';
+    document.getElementById('mainApp').style.display='block';
+    loadData();setGreeting();seedNeil();
+  }else{document.getElementById('loginError').style.display='block';}
+}
+function doLogout(){
+  document.getElementById('loginWrap').style.display='flex';
+  document.getElementById('mainApp').style.display='none';
+  document.getElementById('adminPass').value='';
+}
+function setGreeting(){
+  const h=new Date().getHours();
+  document.getElementById('dashGreeting').textContent=(h<12?'Good morning':h<17?'Good afternoon':'Good evening')+', Rory.';
+  document.getElementById('dashDate').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
+function seedNeil(){
+  if(clients.find(c=>c.email==='neilwalshplumbing@gmail.com'))return;
+  clients.push({id:uid(),biz:'Neil Walsh Plumbing & Heating',contact:'Neil Walsh',email:'neilwalshplumbing@gmail.com',phone:'',trade:'Plumber/Gas',region:'roi',code:'NEIL2025',status:'trial',start:'2026-03-19',notes:'Replied quickly. Called back — interested, sending details.',addedAt:Date.now()});
+  saveData();
+}
+async function loadData(){
+  try{const cr=await window.storage.get(CK);if(cr)clients=JSON.parse(cr.value);}catch(e){}
+  try{const jr=await window.storage.get(JK);if(jr)jobs=JSON.parse(jr.value);}catch(e){}
+  renderAll();
+}
+async function saveData(){
+  try{await window.storage.set(CK,JSON.stringify(clients));await window.storage.set(JK,JSON.stringify(jobs));}catch(e){}
+  renderAll();
+}
+function showPage(n,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+n).classList.add('active');
+  if(el)el.classList.add('active');
+}
+function renderAll(){renderDash();renderClients();renderJobs();renderDocs();renderBilling();}
+function timeAgo(ts){const d=Date.now()-ts,m=Math.floor(d/60000),h=Math.floor(d/3600000),dy=Math.floor(d/86400000);return dy>0?dy+'d ago':h>0?h+'h ago':m>0?m+'m ago':'just now';}
+const ICONS={Quote:'📝',Invoice:'🧾',RAMS:'⛑️','Gas Service Record':'🔥','Job Completion Report':'✅','Variation Order':'🔄','Debt Chaser':'💸',Other:'📋'};
+function renderDash(){
+  document.getElementById('s-active').textContent=clients.filter(c=>['trial','active'].includes(c.status)).length;
+  document.getElementById('s-pending').textContent=jobs.filter(j=>j.status==='pending').length;
+  document.getElementById('s-docs').textContent=jobs.filter(j=>j.status==='done').length;
+  document.getElementById('s-revenue').textContent='£'+(clients.filter(c=>c.status==='active').length*250);
+  const rj=document.getElementById('recentJobs');
+  const recent=[...jobs].sort((a,b)=>(b.dateAdded||0)-(a.dateAdded||0)).slice(0,5);
+  rj.innerHTML=recent.length===0?'<div class="empty"><div class="empty-icon">📭</div><div class="empty-text">No jobs yet</div></div>':recent.map(j=>{const cl=clients.find(c=>c.id===j.clientId);return'<div class="job-row"><div class="job-icon">'+(ICONS[j.type]||'📋')+'</div><div class="job-meta"><div class="job-biz">'+(cl?cl.biz:'Unknown')+'</div><div class="job-desc">'+j.type+' — '+(j.desc||'').slice(0,50)+'</div></div><span class="badge '+(j.status==='done'?'badge-done':'badge-pending')+'">'+(j.status==='done'?'Done':'Pending')+'</span></div>';}).join('');
+  const af=document.getElementById('actFeed');
+  const acts=[];
+  clients.forEach(c=>acts.push({t:c.addedAt||Date.now(),html:'<strong>'+c.biz+'</strong> added as a client',dot:'var(--green)'}));
+  jobs.forEach(j=>{const cl=clients.find(c=>c.id===j.clientId);acts.push({t:j.dateAdded||Date.now(),html:'<strong>'+(cl?cl.biz:'Client')+'</strong> submitted a '+j.type,dot:'#3a5fbf'});});
+  acts.sort((a,b)=>b.t-a.t);
+  af.innerHTML=acts.length===0?'<div class="empty"><div class="empty-icon">💤</div><div class="empty-text">No activity yet</div></div>':acts.slice(0,8).map(a=>'<div class="act-item"><div class="act-dot" style="background:'+a.dot+'"></div><div class="act-text">'+a.html+'</div><div class="act-time">'+timeAgo(a.t)+'</div></div>').join('');
+}
+function renderClients(){
+  const tb=document.getElementById('clientsTable'),em=document.getElementById('clientsEmpty');
+  if(!clients.length){tb.innerHTML='';em.style.display='block';return;}em.style.display='none';
+  tb.innerHTML=clients.map(c=>'<tr><td><div class="biz">'+c.biz+'</div><div class="contact-sm">'+(c.contact||'')+'</div></td><td style="font-size:12px;color:var(--ink-low)">'+c.trade+'</td><td><span class="badge badge-'+c.region+'">'+c.region.toUpperCase()+'</span></td><td><span class="badge '+(c.status==='active'?'badge-active':c.status==='trial'?'badge-trial':'badge-paused')+'">'+(c.status==='active'?'Paying':c.status==='trial'?'On trial':'Paused')+'</span></td><td style="font-size:12px;font-weight:600;color:var(--green)">'+(c.code||'—')+'</td><td style="font-size:11px;color:var(--ink-low)">'+(c.start||'—')+'</td><td><div style="display:flex;gap:6px"><button class="btn btn-ghost btn-sm" onclick="editClient(\''+c.id+'\')" >Edit</button><button class="btn btn-danger btn-sm" onclick="delClient(\''+c.id+'\')">✕</button></div></td></tr>').join('');
+}
+function renderJobs(){
+  const tb=document.getElementById('jobsTable'),em=document.getElementById('jobsEmpty');
+  const sorted=[...jobs].sort((a,b)=>(b.dateAdded||0)-(a.dateAdded||0));
+  if(!sorted.length){tb.innerHTML='';em.style.display='block';return;}em.style.display='none';
+  tb.innerHTML=sorted.map(j=>{const cl=clients.find(c=>c.id===j.clientId);return'<tr><td><div class="biz">'+(cl?cl.biz:'Unknown')+'</div></td><td style="font-size:12px">'+j.type+'</td><td style="font-size:12px;color:var(--ink-low);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(j.desc||'—')+'</td><td style="font-size:11px;color:var(--ink-low)">'+(j.date||'—')+'</td><td><span class="badge '+(j.status==='done'?'badge-done':'badge-pending')+'">'+(j.status==='done'?'Done':'Pending')+'</span></td><td><div style="display:flex;gap:6px"><button class="btn btn-ghost btn-sm" onclick="toggleJob(\''+j.id+'\')">'+(j.status==='done'?'Reopen':'Mark done')+'</button><button class="btn btn-danger btn-sm" onclick="delJob(\''+j.id+'\')">✕</button></div></td></tr>';}).join('');
+}
+function renderDocs(){
+  const tb=document.getElementById('docsTable'),em=document.getElementById('docsEmpty');
+  const done=jobs.filter(j=>j.status==='done');
+  if(!done.length){tb.innerHTML='';em.style.display='block';return;}em.style.display='none';
+  tb.innerHTML=done.map(j=>{const cl=clients.find(c=>c.id===j.clientId);return'<tr><td><div class="biz">'+(cl?cl.biz:'Unknown')+'</div></td><td style="font-size:12px">'+j.type+'</td><td style="font-size:12px;color:var(--ink-low)">'+(j.desc||'—')+'</td><td style="font-size:11px;color:var(--ink-low)">'+(j.date||'—')+'</td><td><span class="badge badge-done"><span class="dot"></span> Sent</span></td></tr>';}).join('');
+}
+function renderBilling(){
+  const tb=document.getElementById('billingTable'),em=document.getElementById('billingEmpty');
+  if(!clients.length){tb.innerHTML='';em.style.display='block';return;}em.style.display='none';
+  tb.innerHTML=clients.map(c=>{const te=c.start?new Date(new Date(c.start).getTime()+14*86400000).toLocaleDateString('en-GB'):'—';const val=c.status==='active'?(c.region==='roi'?'€250':'£250'):'—';return'<tr><td><div class="biz">'+c.biz+'</div><div class="contact-sm">'+(c.email||'')+'</div></td><td><span class="badge badge-'+c.region+'">'+c.region.toUpperCase()+'</span></td><td style="font-size:12px">'+(c.region==='roi'?'€250/month':'£250/month')+'</td><td style="font-size:11px;color:var(--ink-low)">'+te+'</td><td><span class="badge '+(c.status==='active'?'badge-active':c.status==='trial'?'badge-trial':'badge-paused')+'">'+(c.status==='active'?'Paying':c.status==='trial'?'On trial':'Paused')+'</span></td><td style="font-weight:600;color:'+(c.status==='active'?'var(--green)':'var(--ink-low)')+'">'+val+'</td></tr>';}).join('');
+}
+function openAddClient(){
+  editCId=null;document.getElementById('cModalTitle').textContent='Add client';
+  ['c-biz','c-contact','c-email','c-phone','c-code','c-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('c-trade').value='Plumber/Gas';
+  document.getElementById('c-region').value='ni';
+  document.getElementById('c-status').value='trial';
+  document.getElementById('c-start').value=new Date().toISOString().split('T')[0];
+  document.getElementById('clientModal').classList.add('open');
+}
+function editClient(id){
+  const c=clients.find(x=>x.id===id);if(!c)return;editCId=id;
+  document.getElementById('cModalTitle').textContent='Edit client';
+  document.getElementById('c-biz').value=c.biz||'';document.getElementById('c-contact').value=c.contact||'';
+  document.getElementById('c-email').value=c.email||'';document.getElementById('c-phone').value=c.phone||'';
+  document.getElementById('c-trade').value=c.trade||'Plumber/Gas';document.getElementById('c-region').value=c.region||'ni';
+  document.getElementById('c-code').value=c.code||'';document.getElementById('c-status').value=c.status||'trial';
+  document.getElementById('c-start').value=c.start||'';document.getElementById('c-notes').value=c.notes||'';
+  document.getElementById('clientModal').classList.add('open');
+}
+function saveClient(){
+  const d={biz:document.getElementById('c-biz').value.trim(),contact:document.getElementById('c-contact').value.trim(),email:document.getElementById('c-email').value.trim(),phone:document.getElementById('c-phone').value.trim(),trade:document.getElementById('c-trade').value,region:document.getElementById('c-region').value,code:document.getElementById('c-code').value.trim().toUpperCase(),status:document.getElementById('c-status').value,start:document.getElementById('c-start').value,notes:document.getElementById('c-notes').value.trim()};
+  if(!d.biz)return alert('Business name required');
+  if(editCId){const i=clients.findIndex(c=>c.id===editCId);if(i!==-1)clients[i]={...clients[i],...d};}
+  else clients.push({id:uid(),addedAt:Date.now(),...d});
+  closeModal('clientModal');saveData();
+}
+function delClient(id){if(!confirm('Remove this client?'))return;clients=clients.filter(c=>c.id!==id);saveData();}
+function openAddJob(){
+  const sel=document.getElementById('j-client');
+  sel.innerHTML=clients.map(c=>'<option value="'+c.id+'">'+c.biz+'</option>').join('');
+  if(!clients.length)return alert('Add a client first');
+  document.getElementById('j-type').value='Quote';document.getElementById('j-status').value='pending';
+  document.getElementById('j-desc').value='';
+  document.getElementById('j-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('jobModal').classList.add('open');
+}
+function saveJob(){
+  const d={clientId:document.getElementById('j-client').value,type:document.getElementById('j-type').value,status:document.getElementById('j-status').value,desc:document.getElementById('j-desc').value.trim(),date:document.getElementById('j-date').value,dateAdded:Date.now()};
+  if(!d.clientId)return;jobs.push({id:uid(),...d});closeModal('jobModal');saveData();
+}
+function toggleJob(id){const j=jobs.find(x=>x.id===id);if(!j)return;j.status=j.status==='done'?'pending':'done';saveData();}
+function delJob(id){if(!confirm('Remove this job?'))return;jobs=jobs.filter(j=>j.id!==id);saveData();}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.overlay').forEach(m=>m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
+</script>
+</body>
+</html>
