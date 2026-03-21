@@ -106,26 +106,53 @@ tr:last-child td{border:none}tr:hover td{background:#F5F4EF}
             <div><label>Email</label><input id="c-email" placeholder="neil@neilwalshplumbing.com"></div>
             <div><label>Phone</label><input id="c-phone" placeholder="087 412 3388"></div>
             <div><label>WhatsApp</label><input id="c-wa" placeholder="+353874123388"></div>
-            <div><label>Trade</label><select id="c-trade"><option>Plumbing &amp; Heating</option><option>Electrical</option><option>Roofing</option><option>Plastering</option><option>Painting &amp; Decorating</option><option>Gas Engineering</option><option>Building / General</option><option>Joinery</option><option>Other</option></select></div>
-            <div><label>Region</label><select id="c-region" onchange="document.getElementById('c-currency').value=this.value==='ROI'?'€':'£'"><option value="NI">Northern Ireland (NI)</option><option value="ROI">Republic of Ireland (ROI)</option></select></div>
-            <div><label>Currency</label><select id="c-currency"><option value="£">£ GBP</option><option value="€">€ EUR</option></select></div>
+            <div><label>Trade</label>
+              <select id="c-trade">
+                <option>Plumbing & Heating</option><option>Electrical</option><option>Roofing</option>
+                <option>Plastering</option><option>Painting & Decorating</option><option>Gas Engineering</option>
+                <option>Building / General</option><option>Joinery</option><option>Other</option>
+              </select>
+            </div>
+            <div><label>Region</label>
+              <select id="c-region" onchange="document.getElementById('c-currency').value=this.value==='ROI'?'€':'£'">
+                <option value="NI">Northern Ireland (NI)</option><option value="ROI">Republic of Ireland (ROI)</option>
+              </select>
+            </div>
+            <div><label>Currency</label>
+              <select id="c-currency"><option value="£">£ GBP</option><option value="€">€ EUR</option></select>
+            </div>
             <div style="grid-column:1/-1"><label>Address</label><input id="c-addr" placeholder="14 Hazel Grove, Sligo, Co. Sligo"></div>
-            <div><label>Registration</label><input id="c-reg" placeholder="RGI-12345"></div>
-            <div><label>Notes</label><input id="c-notes" placeholder="Trial client"></div>
+            <div><label>Registration (Gas Safe / RGI / NICEIC)</label><input id="c-reg" placeholder="RGI-12345"></div>
+            <div><label>Notes</label><input id="c-notes" placeholder="Trial client, started March 2026"></div>
           </div>
-          <div style="margin-top:18px;display:flex;gap:10px"><button class="btn btn-green" onclick="saveClient()">Save Client</button><button class="btn btn-outline" onclick="toggleAddClient()">Cancel</button></div>
+          <div style="margin-top:18px;display:flex;gap:10px">
+            <button class="btn btn-green" onclick="saveClient()">Save Client</button>
+            <button class="btn btn-outline" onclick="toggleAddClient()">Cancel</button>
+          </div>
           <div id="c-status" style="font-size:13px;margin-top:10px"></div>
         </div>
-        <div class="tw"><table><thead><tr><th>Business</th><th>Contact</th><th>Trade</th><th>Region</th><th>Actions</th></tr></thead><tbody id="clients-table"><tr><td colspan="5" style="text-align:center;padding:32px;color:#6B6B5E">Loading...</td></tr></tbody></table></div>
+        <div class="tw">
+          <table><thead><tr><th>Business</th><th>Contact</th><th>Trade</th><th>Region</th><th>Actions</th></tr></thead>
+          <tbody id="clients-table"><tr><td colspan="5" style="text-align:center;padding:32px;color:#6B6B5E">Loading...</td></tr></tbody></table>
+        </div>
       </div>
 
       <div class="page" id="page-generate">
         <h2>Generate Document</h2>
         <div class="card">
           <label>Client</label><select id="g-client"><option>Loading...</option></select>
-          <label>Document Type</label><select id="g-type"><option value="quote">Quote / Estimate</option><option value="invoice">Invoice</option><option value="rams">RAMS</option><option value="gas_safety">Gas Safety Record</option><option value="coshh">COSHH Assessment</option><option value="job_report">Job Completion Report</option><option value="payslip">Payslip</option><option value="debt_chaser">Debt Chaser Letter</option><option value="completion_cert">Certificate of Completion</option><option value="variation_order">Variation Order</option></select>
-          <label>Job Details</label><textarea id="g-details" placeholder="Paste job details here..."></textarea>
-          <label>Send Email to Client?</label><select id="g-email"><option value="true">Yes — send automatically</option><option value="false">No — preview only</option></select>
+          <label>Document Type</label>
+          <select id="g-type">
+            <option value="quote">Quote / Estimate</option><option value="invoice">Invoice</option>
+            <option value="rams">RAMS</option><option value="gas_safety">Gas Safety Record</option>
+            <option value="coshh">COSHH Assessment</option><option value="job_report">Job Completion Report</option>
+            <option value="payslip">Payslip</option><option value="debt_chaser">Debt Chaser Letter</option>
+            <option value="completion_cert">Certificate of Completion</option><option value="variation_order">Variation Order</option>
+          </select>
+          <label>Job Details</label>
+          <textarea id="g-details" placeholder="Paste job details — customer name, address, work description, line items, dates..."></textarea>
+          <label>Send Email to Client?</label>
+          <select id="g-email"><option value="true">Yes — send automatically</option><option value="false">No — preview only</option></select>
           <br><br>
           <button class="btn btn-green" id="g-btn" onclick="doGenerate()">⚡ Generate Document</button>
           <span id="g-status" style="margin-left:12px;font-size:13px;color:#6B6B5E"></span>
@@ -135,7 +162,10 @@ tr:last-child td{border:none}tr:hover td{background:#F5F4EF}
 
       <div class="page" id="page-jobs">
         <h2>Job History</h2>
-        <div class="tw"><table><thead><tr><th>#</th><th>Client</th><th>Document</th><th>Status</th><th>Date</th></tr></thead><tbody id="jobs-table"><tr><td colspan="5" style="text-align:center;padding:32px;color:#6B6B5E">Loading...</td></tr></tbody></table></div>
+        <div class="tw">
+          <table><thead><tr><th>#</th><th>Client</th><th>Document</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="jobs-table"><tr><td colspan="5" style="text-align:center;padding:32px;color:#6B6B5E">Loading...</td></tr></tbody></table>
+        </div>
       </div>
 
     </div>
@@ -144,7 +174,7 @@ tr:last-child td{border:none}tr:hover td{background:#F5F4EF}
 
 <script>
 const BACKEND = 'https://tradedeskni-backend-production.up.railway.app';
-const ADMBN_PASS = 'tradedesk2025';
+const ADMIN_PASS = 'tradedesk2025';
 
 function doLogin() {
   const pw = document.getElementById('pw').value;
@@ -178,8 +208,8 @@ function show(name, el) {
 async function loadAll() {
   try {
     const [clients, jobs] = await Promise.all([
-      fetch(BACKEND+'/clients',{headers:{'o-admin-password':ADMIN_PASS}}).then(r=>r.json()),
-      fetch(BACKEND+'/jobs',{headers:{'o-admin-password':ADMIN_PASS}}).then(r=>r.json())
+      fetch(BACKEND+'/clients',{headers:{'x-admin-password':ADMIN_PASS}}).then(r=>r.json()),
+      fetch(BACKEND+'/jobs',{headers:{'x-admin-password':ADMIN_PASS}}).then(r=>r.json())
     ]);
     window._clients = clients;
     window._jobs = jobs;
@@ -187,7 +217,11 @@ async function loadAll() {
     document.getElementById('d-clients').textContent = clients.length;
     document.getElementById('d-rate').textContent = jobs.length ? Math.round(jobs.filter(j=>j.status==='completed').length/jobs.length*100)+'%' : '—';
     document.getElementById('d-types').textContent = new Set(jobs.map(j=>j.doc_type)).size;
-    document.getElementById('dash-jobs').innerHTML = jobs.slice(0,10).map(j=>`<tr><td><strong>${j.clients?.business_name||'—'}</strong></td><td>${dl(j.doc_type)}</td><td><span class="badge">✓ ${j.status}</span></td><td style="color:#6B6B5E;font-size:12px">${dt(j.created_at)}</td></tr>`).join('');
+    document.getElementById('dash-jobs').innerHTML = jobs.slice(0,10).map(j=>`<tr>
+      <td><strong>${j.clients?.business_name||'—'}</strong></td>
+      <td>${dl(j.doc_type)}</td>
+      <td><span class="badge">✓ ${j.status}</span></td>
+      <td style="color:#6B6B5E;font-size:12px">${dt(j.created_at)}</td></tr>`).join('');
     document.getElementById('g-client').innerHTML = clients.map(c=>`<option value="${c.id}">${c.business_name} (${c.region})</option>`).join('');
   } catch(e) {
     document.getElementById('status-dot').textContent = '● Offline';
@@ -197,12 +231,22 @@ async function loadAll() {
 
 function renderClients() {
   if(!window._clients) return;
-  document.getElementById('clients-table').innerHTML = window._clients.map(c=>`<tr><td><strong>${c.business_name}</strong></td><td>${c.contact_name}</td><td>${c.trade}</td><td><span class="badge">${c.region}</span></td><td><button class="btn btn-outline" style="font-size:12px;padding:6px 12px" onclick="quickGen('${c.id}')">⚩ Doc</button></td></tr>`).join('');
+  document.getElementById('clients-table').innerHTML = window._clients.map(c=>`<tr>
+    <td><strong>${c.business_name}</strong></td>
+    <td>${c.contact_name}</td>
+    <td>${c.trade}</td>
+    <td><span class="badge">${c.region}</span></td>
+    <td><button class="btn btn-outline" style="font-size:12px;padding:6px 12px" onclick="quickGen('${c.id}')">⚡ Doc</button></td></tr>`).join('');
 }
 
 function renderJobs() {
   if(!window._jobs) return;
-  document.getElementById('jobs-table').innerHTML = window._jobs.map((j,i)=>`<tr><td style="color:#6B6B5E;font-size:12px">${i+1}</td><td><strong>${j.clients?.business_name||'—'}</strong></td><td>${dl(j.doc_type)}</td><td><span class="badge">✓ completed</span></td><td style="color:#6B6B5E;font-size:12px">${dt(j.created_at)}</td></tr>`).join('');
+  document.getElementById('jobs-table').innerHTML = window._jobs.map((j,i)=>`<tr>
+    <td style="color:#6B6B5E;font-size:12px">${i+1}</td>
+    <td><strong>${j.clients?.business_name||'—'}</strong></td>
+    <td>${dl(j.doc_type)}</td>
+    <td><span class="badge">✓ completed</span></td>
+    <td style="color:#6B6B5E;font-size:12px">${dt(j.created_at)}</td></tr>`).join('');
 }
 
 function toggleAddClient() {
@@ -210,7 +254,7 @@ function toggleAddClient() {
   f.style.display = f.style.display === 'block' ? 'none' : 'block';
 }
 
-a%ync function saveClient() {
+async function saveClient() {
   const data = {
     business_name: document.getElementById('c-biz').value.trim(),
     contact_name: document.getElementById('c-contact').value.trim(),
@@ -224,17 +268,18 @@ a%ync function saveClient() {
     registration: document.getElementById('c-reg').value.trim(),
     notes: document.getElementById('c-notes').value.trim(),
   };
-  if(!data.business_name||!data.contact_name){document.getElementById('c-status').textContent='⚠️ Required fields missing';return;}
+  if(!data.business_name||!data.contact_name){document.getElementById('c-status').textContent='⚠️ Name and contact required';return;}
   try {
     const r = await fetch(BACKEND+'/clients',{method:'POST',headers:{'Content-Type':'application/json','x-admin-password':ADMIN_PASS},body:JSON.stringify(data)});
     const d = await r.json();
     if(d.id){
       document.getElementById('c-status').textContent = '✅ Client added!';
       document.getElementById('c-status').style.color = '#2D6A3F';
-      await loadAll(); renderClients();
-      setTimeout(()=>toggleAddClient(),1500);
-    } else { document.getElementById('c-status').textContent = '⥌ '+JSON.stringify(d.error); }
-  } catch(e) { document.getElementById('c-status').textContent = '⥌ '+e.message; }
+      await loadAll();
+      renderClients();
+      setTimeout(()=>toggleAddClient(), 1500);
+    } else { document.getElementById('c-status').textContent = '❌ '+JSON.stringify(d.error); }
+  } catch(e) { document.getElementById('c-status').textContent = '❌ '+e.message; }
 }
 
 function quickGen(id) {
@@ -251,20 +296,32 @@ function doGenerate() {
   const btn = document.getElementById('g-btn');
   btn.disabled = true;
   document.getElementById('g-status').textContent = '⏳ Generating... (~20 seconds)';
-  fetch(BACKEND+'/generate',{method:'POST',headers:{'Content-Type':'application/json','x-admin-password':ADMIN_PASS},body:JSON.stringify({client_id:cid,doc_type:type,job_details:details,send_email:email})})
-  .then(r=>r.json()).then(d=>{
+  document.getElementById('g-status').style.color = '#6B6B5E';
+  fetch(BACKEND+'/generate',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-admin-password':ADMIN_PASS},
+    body:JSON.stringify({client_id:cid,doc_type:type,job_details:details,send_email:email})
+  }).then(r=>r.json()).then(d=>{
     btn.disabled=false;
     if(d.success){
-      document.getElementById('g-status').textContent = '✅ Generated!'+(d.sent?'[ Email sent!':'');
-      document.getElementById('g-status').style.color='#2D6A3F';
-      if(d.html){const h=d.html.replace(/^```html\s*/i,'').replace(/^```\s*/,'').replace(/\s*```$/,'').trim();document.getElementById('g-preview').innerHTML='<div class="card" style="margin-top:20px"><iframe srcdoc="'+h.replace(/"/g,'&quot;')+'" style="width:100%;height:850px;border:none;border-radius:6px"></iframe></div>';window.scrollTo(0,document.body.scrollHeight);}
+      document.getElementById('g-status').textContent = '✅ Generated!'+(d.sent?' Email sent!':'');
+      document.getElementById('g-status').style.color = '#2D6A3F';
+      if(d.html){
+        const h=d.html.replace(/^```html\s*/i,'').replace(/^```\s*/,'').replace(/\s*```$/,'').trim();
+        document.getElementById('g-preview').innerHTML='<div class="card" style="margin-top:20px"><iframe srcdoc="'+h.replace(/"/g,'&quot;')+'" style="width:100%;height:850px;border:none;border-radius:6px"></iframe></div>';
+        window.scrollTo(0,document.body.scrollHeight);
+      }
       loadAll();
     } else {
       document.getElementById('g-status').textContent = '❌ '+(d.error||'Failed');
-      document.getElementById('g-status').style.color='#c0392b';
+      document.getElementById('g-status').style.color = '#c0392b';
       btn.disabled=false;
     }
-  }).catch(e=>{document.getElementById('g-status').textContent='❌ '+e.message;btn.disabled=false;});
+  }).catch(e=>{
+    document.getElementById('g-status').textContent = '❌ '+e.message;
+    document.getElementById('g-status').style.color = '#c0392b';
+    btn.disabled=false;
+  });
 }
 </script>
 </body>
