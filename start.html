@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Free Trial — TradeDeskNI</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#F5F4EF;color:#1C1C14;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+nav{background:#1C1C14;padding:0 40px;height:52px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:'Playfair Display',serif;font-size:18px;color:#fff;}
+.green-bar{height:3px;background:#2D6A3F;}
+.hero{background:#1C1C14;padding:60px 24px 52px;text-align:center;position:relative;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(45,106,63,.18) 0%,transparent 65%);}
+.hero h1{font-family:'Playfair Display',serif;font-size:44px;color:#fff;margin-bottom:12px;position:relative;}
+.hero h1 span{color:#2D6A3F;}
+.hero p{font-size:15px;color:rgba(255,255,255,.45);max-width:440px;margin:0 auto;font-weight:300;position:relative;}
+.badges{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;position:relative;}
+.badge{background:rgba(45,106,63,.2);border:1px solid rgba(45,106,63,.35);color:#4a9e60;padding:5px 14px;border-radius:18px;font-size:12px;}
+.page{display:grid;grid-template-columns:1fr 400px;gap:48px;max-width:960px;margin:0 auto;padding:48px 24px 80px;align-items:start;}
+.form-card{background:#fff;border-radius:14px;padding:36px;border:1.5px solid #e0dfd8;box-shadow:0 4px 24px rgba(0,0,0,.06);}
+.form-card h2{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:6px;}
+.form-card .sub{font-size:13px;color:#6B6B5E;margin-bottom:28px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:11px;font-weight:600;color:#6B6B5E;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.field input,.field select{width:100%;padding:11px 14px;border:1.5px solid #e0dfd8;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;color:#1C1C14;outline:none;transition:border-color .2s;}
+.field input:focus,.field select:focus{border-color:#2D6A3F;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.divider{height:1px;background:#e0dfd8;margin:20px 0;}
+.submit-btn{width:100%;padding:15px;background:#2D6A3F;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Playfair Display',serif;transition:background .2s;}
+.submit-btn:hover{background:#245733;}
+.submit-btn:disabled{background:#ccc;cursor:not-allowed;}
+.fine{font-size:12px;color:#9B9B8E;text-align:center;margin-top:12px;line-height:1.6;}
+.status{font-size:14px;text-align:center;margin-top:14px;padding:12px;border-radius:7px;display:none;}
+.status.ok{background:#e8f4ec;color:#2D6A3F;display:block;}
+.status.err{background:#fce8e8;color:#c0392b;display:block;}
+.success-card{display:none;background:#fff;border-radius:14px;padding:48px 36px;text-align:center;border:1.5px solid #e0dfd8;}
+.success-card.show{display:block;}
+.success-icon{font-size:52px;margin-bottom:18px;}
+.success-card h2{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:10px;}
+.success-card p{font-size:14px;color:#6B6B5E;line-height:1.7;max-width:340px;margin:0 auto 24px;}
+.back-btn{display:inline-block;padding:12px 28px;background:#1C1C14;color:#fff;border-radius:7px;font-size:14px;font-weight:600;}
+.side-card{background:#1C1C14;border-radius:14px;padding:32px;position:sticky;top:24px;}
+.side-card h3{font-family:'Playfair Display',serif;font-size:20px;color:#fff;margin-bottom:20px;}
+.side-feat{display:flex;gap:12px;margin-bottom:18px;align-items:flex-start;}
+.side-feat-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+.side-feat-text h4{font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;}
+.side-feat-text p{font-size:12px;color:rgba(255,255,255,.4);line-height:1.5;}
+.side-divider{height:1px;background:rgba(255,255,255,.08);margin:20px 0;}
+.side-price{text-align:center;}
+.side-price-val{font-family:'Playfair Display',serif;font-size:40px;color:#2D6A3F;font-weight:700;}
+.side-price-lbl{font-size:12px;color:rgba(255,255,255,.35);margin-top:4px;}
+.side-free{background:rgba(45,106,63,.2);border:1px solid rgba(45,106,63,.3);color:#4a9e60;padding:8px 16px;border-radius:20px;font-size:12px;margin-top:12px;display:inline-block;}
+@media(max-width:700px){.page{grid-template-columns:1fr;}.grid2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">TradeDeskNI</a>
+  <span style="color:rgba(255,255,255,.35);font-size:12px;">Free trial signup</span>
+</nav>
+<div class="green-bar"></div>
+
+<div class="hero">
+  <h1>Start your <span>free trial</span></h1>
+  <p>Two weeks free, no card needed. Fill in your details below and we'll have you set up within the hour.</p>
+  <div class="badges">
+    <span class="badge">✓ 2 weeks free</span>
+    <span class="badge">✓ No contract</span>
+    <span class="badge">✓ Cancel anytime</span>
+    <span class="badge">✓ NI &amp; ROI</span>
+  </div>
+</div>
+
+<div class="page">
+
+  <div>
+    <div class="form-card" id="formCard">
+      <h2>Your details</h2>
+      <p class="sub">Takes 2 minutes. We'll be in touch on WhatsApp to confirm you're set up.</p>
+
+      <div class="grid2">
+        <div class="field"><label>Business Name *</label><input id="f-biz" placeholder="Walsh Plumbing & Heating"></div>
+        <div class="field"><label>Your Name *</label><input id="f-name" placeholder="Ciaran Brennan"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Email *</label><input id="f-email" type="email" placeholder="neil@brennanplumbing.com"></div>
+        <div class="field"><label>WhatsApp / Phone *</label><input id="f-phone" placeholder="087 412 3388"></div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>Your Trade *</label>
+          <select id="f-trade">
+            <option value="">Select trade...</option>
+            <option>Plumbing &amp; Heating</option>
+            <option>Gas Engineering</option>
+            <option>Electrical</option>
+            <option>Roofing</option>
+            <option>Plastering</option>
+            <option>Painting &amp; Decorating</option>
+            <option>Building / General</option>
+            <option>Joinery</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Region *</label>
+          <select id="f-region" onchange="updateCurrency()">
+            <option value="">Select region...</option>
+            <option value="NI">Northern Ireland</option>
+            <option value="ROI">Republic of Ireland</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Town / Address</label><input id="f-addr" placeholder="Sligo, Co. Sligo"></div>
+      <div class="field"><label>Registration Number <span style="font-weight:400;text-transform:none;letter-spacing:0">(Gas Safe / RGI / NICEIC)</span></label><input id="f-reg" placeholder="e.g. RGI-12345"></div>
+
+      <div class="divider"></div>
+
+      <button class="submit-btn" id="f-btn" onclick="submitForm()">Start my free trial →</button>
+      <p class="fine">No card required · No contract · First 2 weeks completely free</p>
+      <div class="status" id="f-status"></div>
+    </div>
+
+    <div class="success-card" id="successCard">
+      <div class="success-icon">🎉</div>
+      <h2>You're in, [name]!</h2>
+      <p>We've got your details. Expect a WhatsApp from us within the hour to confirm you're set up and ready to go.</p>
+      <p style="margin-top:12px;font-size:13px;color:#9B9B8E;">Your free trial starts today. First document is on us.</p>
+      <a href="/" class="back-btn" style="margin-top:24px;">Back to homepage</a>
+    </div>
+  </div>
+
+  <div class="side-card">
+    <h3>What you're getting</h3>
+    <div class="side-feat">
+      <div class="side-feat-icon">⚡</div>
+      <div class="side-feat-text"><h4>Documents in 17 seconds</h4><p>Send job details, get a professional branded document straight back</p></div>
+    </div>
+    <div class="side-feat">
+      <div class="side-feat-icon">📋</div>
+      <div class="side-feat-text"><h4>10 document types</h4><p>Quotes, invoices, RAMS, gas safety records, COSHH, payslips and more</p></div>
+    </div>
+    <div class="side-feat">
+      <div class="side-feat-icon">🇬🇧🇮🇪</div>
+      <div class="side-feat-text"><h4>Covers NI &amp; ROI</h4><p>Gas Safe, RGI, NICEIC, RECI — all recognised. Correct currency per region.</p></div>
+    </div>
+    <div class="side-feat">
+      <div class="side-feat-icon">🔒</div>
+      <div class="side-feat-text"><h4>No contract</h4><p>Cancel any time with a single message. No questions asked.</p></div>
+    </div>
+    <div class="side-divider"></div>
+    <div class="side-price">
+      <div class="side-price-val" id="priceDisplay">£250</div>
+      <div class="side-price-lbl">per month after free trial</div>
+      <div class="side-free">First 2 weeks completely free</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const BACKEND = 'https://tradedeskni-backend-production.up.railway.app';
+
+function updateCurrency(){
+  const region = document.getElementById('f-region').value;
+  document.getElementById('priceDisplay').textContent = region === 'ROI' ? '€250' : '£250';
+}
+
+function submitForm(){
+  const biz = document.getElementById('f-biz').value.trim();
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const trade = document.getElementById('f-trade').value;
+  const region = document.getElementById('f-region').value;
+  const addr = document.getElementById('f-addr').value.trim();
+  const reg = document.getElementById('f-reg').value.trim();
+  const status = document.getElementById('f-status');
+
+  if(!biz||!name||!email||!phone||!trade||!region){
+    status.className='status err';
+    status.textContent='Please fill in all required fields.';
+    return;
+  }
+
+  const btn = document.getElementById('f-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  status.style.display = 'none';
+
+  fetch(BACKEND+'/clients', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-admin-password': 'tradedesk2025' },
+    body: JSON.stringify({
+      business_name: biz,
+      contact_name: name,
+      email: email,
+      phone: phone,
+      whatsapp: phone,
+      trade: trade,
+      region: region,
+      currency: region === 'ROI' ? '€' : '£',
+      address: addr,
+      registration: reg,
+      notes: 'Self-signup via tradedeskni.com/start — ' + new Date().toLocaleDateString('en-GB')
+    })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if(d.id){
+      document.getElementById('formCard').style.display = 'none';
+      const sc = document.getElementById('successCard');
+      sc.querySelector('h2').textContent = 'You\'re in, ' + name.split(' ')[0] + '!';
+      sc.classList.add('show');
+    } else {
+      throw new Error(d.error || 'Something went wrong');
+    }
+  })
+  .catch(e => {
+    status.className = 'status err';
+    status.textContent = 'Something went wrong — WhatsApp us directly to get set up.';
+    btn.disabled = false;
+    btn.textContent = 'Start my free trial →';
+  });
+}
+</script>
+</body>
+</html>
