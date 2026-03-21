@@ -4,1082 +4,621 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TradeDeskNI — Trades Paperwork, Done For You</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --cream:   #f7f4ee;
-  --white:   #ffffff;
-  --ink:     #1c1b18;
-  --ink-mid: #4a4840;
-  --ink-low: #9a9690;
-  --rule:    #ddd9d0;
-  --green:   #1e5c3a;
-  --green-2: #2a7a50;
-  --green-bg:#eef5f0;
-  --amber:   #b8671a;
-  --red:     #b83232;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--cream);
-  color: var(--ink);
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 16px;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1C1C14;background:#F5F4EF;}
+a{text-decoration:none;color:inherit;}
 
-/* NAV */
-nav {
-  background: var(--ink);
-  padding: 0 56px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.logo {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: 20px;
-  color: var(--white);
-  text-decoration: none;
-  letter-spacing: -0.01em;
-}
-.logo sup {
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--green-2);
-  vertical-align: super;
-  margin-left: 2px;
-}
-.nav-r { display: flex; align-items: center; gap: 28px; }
-.nav-r a {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.45);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-.nav-r a:hover { color: rgba(255,255,255,0.9); }
-.nav-login {
-  border: 1px solid rgba(255,255,255,0.18) !important;
-  padding: 7px 18px;
-  border-radius: 4px;
-  color: rgba(255,255,255,0.75) !important;
-}
-.nav-login:hover { background: rgba(255,255,255,0.07) !important; color: var(--white) !important; }
+nav{background:#1C1C14;padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Playfair Display',serif;font-size:20px;color:#fff;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-size:13px;color:rgba(255,255,255,.5);transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-cta{background:#2D6A3F;color:#fff!important;padding:8px 20px;border-radius:6px;font-weight:600;}
+.green-bar{height:3px;background:#2D6A3F;}
 
 /* HERO */
-.hero {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  min-height: calc(100vh - 60px);
-  max-height: 820px;
-}
-.hero-l {
-  background: var(--ink);
-  padding: 80px 64px 80px 56px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.hero-kicker {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--green-2);
-  margin-bottom: 32px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.hero-kicker::before { content: ''; display: block; width: 28px; height: 1px; background: var(--green-2); }
-.hero-h1 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: clamp(44px, 5.5vw, 72px);
-  line-height: 1.0;
-  letter-spacing: -0.02em;
-  color: var(--white);
-  margin-bottom: 32px;
-}
-.hero-h1 em { font-style: italic; color: var(--green-2); }
-.hero-p {
-  font-size: 17px;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.75;
-  max-width: 440px;
-  margin-bottom: 48px;
-}
-.hero-actions { display: flex; gap: 14px; align-items: center; }
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: all 0.18s;
-  cursor: pointer;
-  border: none;
-}
-.btn-green { background: var(--green); color: var(--white); padding: 13px 26px; }
-.btn-green:hover { background: var(--green-2); }
-.btn-ghost {
-  background: transparent;
-  color: rgba(255,255,255,0.55);
-  padding: 13px 20px;
-  border: 1px solid rgba(255,255,255,0.14);
-}
-.btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.32); }
-.hero-bottom {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  padding-top: 52px;
-  border-top: 1px solid rgba(255,255,255,0.07);
-  margin-top: 48px;
-}
-.hero-stat-val {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 26px;
-  color: var(--white);
-  line-height: 1;
-}
-.hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 3px; }
-.hero-divider { width: 1px; height: 32px; background: rgba(255,255,255,0.08); }
+.hero{background:#1C1C14;padding:96px 40px 80px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(45,106,63,.18) 0%,transparent 65%);}
+.hero-tag{font-size:11px;letter-spacing:3px;color:#2D6A3F;text-transform:uppercase;font-weight:600;margin-bottom:20px;position:relative;}
+.hero h1{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;color:#fff;line-height:1.06;max-width:780px;margin:0 auto 20px;position:relative;}
+.hero h1 span{color:#2D6A3F;}
+.hero p{font-size:18px;color:rgba(255,255,255,.45);max-width:500px;margin:0 auto 34px;font-weight:300;line-height:1.65;position:relative;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+.btn-green{background:#2D6A3F;color:#fff;padding:15px 32px;border-radius:7px;font-size:14px;font-weight:600;transition:background .2s;}
+.btn-green:hover{background:#245733;}
+.btn-outline{background:rgba(255,255,255,.07);color:#fff;padding:15px 32px;border-radius:7px;font-size:14px;border:1px solid rgba(255,255,255,.18);}
+.hero-trust{display:flex;justify-content:center;gap:28px;margin-top:38px;flex-wrap:wrap;position:relative;}
+.ti{font-size:13px;color:rgba(255,255,255,.38);display:flex;align-items:center;gap:6px;}
+.ti::before{content:'✓';color:#2D6A3F;font-weight:700;}
 
-/* Hero right — conversation */
-.hero-r {
-  background: var(--cream);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 52px 44px;
-  border-left: 1px solid var(--rule);
-}
-.conv-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-low);
-  margin-bottom: 22px;
-}
-.conv { display: flex; flex-direction: column; gap: 5px; }
-.msg-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-low);
-  margin-top: 10px;
-  margin-bottom: 4px;
-}
-.msg-label.r { text-align: right; }
-.msg {
-  max-width: 88%;
-  padding: 11px 15px;
-  border-radius: 14px;
-  font-size: 14px;
-  line-height: 1.55;
-}
-.msg-them {
-  background: var(--white);
-  border: 1px solid var(--rule);
-  border-bottom-left-radius: 4px;
-  color: var(--ink);
-  align-self: flex-start;
-}
-.msg-us {
-  background: var(--green);
-  color: var(--white);
-  border-bottom-right-radius: 4px;
-  align-self: flex-end;
-}
-.doc-card {
-  background: var(--white);
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  padding: 16px 18px;
-  margin-top: 10px;
-}
-.doc-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-.doc-card-name { font-size: 13px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 6px; }
-.doc-ready {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--green);
-  background: var(--green-bg);
-  padding: 3px 9px;
-  border-radius: 20px;
-}
-.doc-lines { display: flex; flex-direction: column; gap: 5px; }
-.doc-line { height: 7px; border-radius: 4px; background: var(--rule); }
-.doc-line.w60 { width: 60%; } .doc-line.w80 { width: 80%; }
-.doc-line.w100 { width: 100%; } .doc-line.w40 { width: 40%; }
-.time-badge {
-  margin-top: 14px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--green);
-  background: var(--green-bg);
-  padding: 8px 14px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
+/* CHAT MOCK */
+.chat-section{background:#F5F4EF;padding:80px 40px;}
+.chat-inner{max-width:1020px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.chat-text h2{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;line-height:1.2;margin-bottom:14px;}
+.chat-text h2 span{color:#2D6A3F;}
+.chat-text p{font-size:15px;color:#6B6B5E;line-height:1.7;margin-bottom:28px;}
+.chat-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.cs{background:#fff;border-radius:10px;padding:18px;border:1.5px solid #e0dfd8;}
+.csv{font-family:'Playfair Display',serif;font-size:30px;color:#2D6A3F;font-weight:700;}
+.csl{font-size:11px;color:#9B9B8E;margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.chat-mock{background:#fff;border-radius:16px;padding:20px;box-shadow:0 8px 40px rgba(0,0,0,.08);border:1.5px solid #e0dfd8;}
+.ch{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid #f0efe8;margin-bottom:16px;}
+.chav{width:36px;height:36px;border-radius:50%;background:#2D6A3F;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.chn{font-size:13px;font-weight:600;}
+.chs{font-size:10px;color:#2D6A3F;}
+.cb{border-radius:12px;padding:11px 15px;font-size:13px;line-height:1.6;max-width:86%;margin-bottom:7px;}
+.cb-in{background:#f0efe8;border-radius:12px 12px 12px 0;}
+.cb-out{background:#2D6A3F;color:#fff;margin-left:auto;border-radius:12px 12px 0 12px;}
+.cbt{font-size:9px;color:#9B9B8E;text-align:right;margin-top:2px;}
+.cb-tag{display:inline-flex;align-items:center;gap:5px;background:#e8f4ec;color:#2D6A3F;padding:7px 12px;border-radius:7px;font-size:11px;font-weight:600;margin-top:5px;}
 
-/* SECTION PATTERN */
-.wrap { max-width: 1180px; margin: 0 auto; }
-.section-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-low);
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+/* INTERACTIVE DEMO */
+.demo-section{background:#1C1C14;padding:80px 40px;}
+.section-label{font-size:11px;letter-spacing:3px;color:#2D6A3F;text-transform:uppercase;font-weight:600;text-align:center;margin-bottom:12px;}
+.section-title{font-family:'Playfair Display',serif;font-size:40px;color:#fff;text-align:center;margin-bottom:10px;}
+.section-sub{font-size:15px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:40px;}
+
+/* SLIDE DECK */
+.deck{max-width:940px;margin:0 auto;}
+.deck-slides{position:relative;background:#111209;border-radius:14px;border:1.5px solid rgba(45,106,63,.3);overflow:hidden;height:420px;}
+.ds{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .6s ease;padding:40px;}
+.ds.active{opacity:1;}
+/* Slide 1 */
+.ds1{flex-direction:column;text-align:center;}
+.ds1-title{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:#fff;line-height:1.05;}
+.ds1-title span{color:#2D6A3F;}
+.ds1-sub{font-size:16px;color:rgba(255,255,255,.4);margin-top:14px;font-weight:300;}
+.ds1-pains{margin-top:28px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.dp{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:6px 14px;font-size:12px;color:rgba(255,255,255,.5);}
+.dp::before{content:'✕ ';color:#e74c3c;font-size:10px;}
+/* Slide 2 */
+.ds2{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;}
+.ds2-side{display:flex;flex-direction:column;justify-content:center;padding:40px;}
+.ds2-side.l{background:#160a0a;border-right:1px solid rgba(231,76,60,.15);}
+.ds2-side.r{background:#0a160a;}
+.dslbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;font-weight:600;}
+.dslbl.red{color:#e74c3c;}.dslbl.grn{color:#4a9e60;}
+.ds2-title{font-family:'Playfair Display',serif;font-size:26px;color:#fff;line-height:1.25;margin-bottom:20px;}
+.ds2-list{list-style:none;}
+.ds2-list li{font-size:12px;color:rgba(255,255,255,.6);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;gap:8px;}
+.ds2-stat{font-family:'Playfair Display',serif;font-size:68px;font-weight:900;color:#2D6A3F;line-height:1;margin:12px 0 4px;}
+.ds2-stlbl{font-size:12px;color:rgba(255,255,255,.4);}
+/* Slide 3 */
+.ds3{flex-direction:column;}
+.ds3-title{font-family:'Playfair Display',serif;font-size:36px;color:#fff;text-align:center;margin-bottom:36px;}
+.ds3-steps{display:flex;align-items:center;justify-content:center;gap:0;width:100%;}
+.ds3-box{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:11px;padding:24px 18px;text-align:center;width:160px;flex-shrink:0;position:relative;}
+.ds3-box.hi{background:rgba(45,106,63,.12);border-color:#2D6A3F;}
+.ds3-ico{font-size:28px;margin-bottom:10px;}
+.ds3-ttl{font-size:11px;font-weight:600;color:#fff;margin-bottom:4px;}
+.ds3-sub{font-size:10px;color:rgba(255,255,255,.35);line-height:1.4;}
+.ds3-arr{font-size:20px;color:#2D6A3F;width:28px;text-align:center;flex-shrink:0;}
+.ds3-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#2D6A3F;color:#fff;font-size:9px;padding:2px 8px;border-radius:14px;white-space:nowrap;}
+/* Slide 4 */
+.ds4{display:grid;grid-template-columns:1fr 50px 1fr;gap:0;align-items:start;padding:32px 40px;}
+.wa-m{background:#0a180a;border:1.5px solid rgba(45,106,63,.25);border-radius:13px;padding:16px;}
+.wa-h{display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:12px;}
+.wa-av{width:32px;height:32px;border-radius:50%;background:#2D6A3F;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.wa-n{font-size:12px;font-weight:600;color:#fff;}
+.wa-s{font-size:10px;color:#4a9e60;}
+.wa-b{background:#182e18;border-radius:10px 10px 10px 0;padding:10px 13px;font-size:11px;color:rgba(255,255,255,.7);line-height:1.55;border:1px solid rgba(45,106,63,.15);}
+.wa-t{font-size:9px;color:rgba(255,255,255,.25);text-align:right;margin-top:3px;}
+.da-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.da-ico{font-size:24px;color:#2D6A3F;animation:pa 1.5s infinite;}
+@keyframes pa{0%,100%{opacity:.3}50%{opacity:1}}
+.da-t{font-size:9px;color:#4a9e60;font-family:monospace;}
+.doc-m{background:#fff;border-radius:10px;padding:16px;}
+.doc-h{background:#1C1C14;padding:10px 13px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.doc-br{color:#fff;font-family:'Playfair Display',serif;font-size:12px;font-weight:700;}
+.doc-ty{background:#2D6A3F;color:#fff;font-size:8px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:1px;}
+.doc-r{height:2px;background:#2D6A3F;margin-bottom:10px;}
+.doc-rw{display:flex;justify-content:space-between;margin-bottom:7px;}
+.doc-l{font-size:8px;color:#999;text-transform:uppercase;letter-spacing:.5px;}
+.doc-v{font-size:10px;color:#333;font-weight:600;}
+.doc-tb{width:100%;border-collapse:collapse;font-size:9px;margin:8px 0;}
+.doc-tb th{background:#1C1C14;color:#fff;padding:4px 6px;text-align:left;}
+.doc-tb td{padding:3px 6px;border-bottom:1px solid #eee;color:#444;}
+.doc-tot{display:flex;justify-content:flex-end;margin-top:7px;}
+.doc-totb{background:#2D6A3F;color:#fff;padding:5px 12px;border-radius:4px;font-size:11px;font-weight:700;}
+/* Slide 5 */
+.ds5{flex-direction:column;}
+.ds5-title{font-family:'Playfair Display',serif;font-size:34px;color:#fff;text-align:center;margin-bottom:6px;}
+.ds5-sub{font-size:13px;color:rgba(255,255,255,.35);text-align:center;margin-bottom:28px;}
+.ds5-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:100%;}
+.dc{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.07);border-radius:9px;padding:16px 10px;text-align:center;}
+.dci{font-size:22px;margin-bottom:7px;}
+.dcn{font-size:10px;font-weight:600;color:#fff;margin-bottom:2px;}
+.dcd{font-size:9px;color:rgba(255,255,255,.3);line-height:1.3;}
+/* Slide 6 */
+.ds6{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;}
+.ds6-side{display:flex;flex-direction:column;justify-content:center;padding:40px;}
+.ds6-side.l{background:#090e09;border-right:1px solid rgba(255,255,255,.06);}
+.ds6-side.r{background:#09090e;}
+.ds6-flag{font-size:36px;margin-bottom:10px;}
+.ds6-reg{font-family:'Playfair Display',serif;font-size:26px;color:#fff;margin-bottom:4px;}
+.ds6-price{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:#2D6A3F;line-height:1;margin:14px 0 4px;}
+.ds6-per{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:20px;}
+.ds6-feats{list-style:none;}
+.ds6-feats li{font-size:12px;color:rgba(255,255,255,.6);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:8px;}
+.ds6-feats li::before{content:'✓';color:#2D6A3F;font-weight:700;}
+
+/* Deck controls */
+.deck-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:20px;}
+.deck-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:9px 22px;border-radius:6px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.deck-btn:hover{background:rgba(255,255,255,.14);}
+.deck-dots{display:flex;gap:7px;}
+.ddot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:all .3s;}
+.ddot.active{background:#2D6A3F;width:22px;border-radius:4px;}
+.deck-counter{font-size:11px;color:rgba(255,255,255,.3);font-family:monospace;letter-spacing:1px;}
 
 /* HOW IT WORKS */
-.hiw { padding: 104px 56px; }
-.hiw-h {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: clamp(34px, 4vw, 52px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  margin-bottom: 64px;
-  max-width: 540px;
-}
-.hiw-h em { font-style: italic; color: var(--green); }
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  background: var(--white);
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  overflow: hidden;
-}
-.step {
-  padding: 44px 40px;
-  border-right: 1px solid var(--rule);
-}
-.step:last-child { border-right: none; }
-.step-n {
-  font-family: 'Playfair Display', serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--ink-low);
-  margin-bottom: 24px;
-}
-.step-icon { font-size: 28px; margin-bottom: 18px; display: block; }
-.step h3 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 21px;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  margin-bottom: 12px;
-  line-height: 1.2;
-}
-.step p { font-size: 14px; color: var(--ink-mid); line-height: 1.7; }
+.how-section{padding:80px 40px;background:#F5F4EF;}
+.how-title{font-family:'Playfair Display',serif;font-size:38px;text-align:center;margin-bottom:48px;color:#1C1C14;}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:860px;margin:0 auto;}
+.step{background:#fff;border:1.5px solid #e0dfd8;border-radius:12px;padding:32px 26px;text-align:center;}
+.step-n{font-family:'Playfair Display',serif;font-size:42px;color:rgba(45,106,63,.25);font-weight:700;line-height:1;margin-bottom:14px;}
+.step-i{font-size:28px;margin-bottom:12px;}
+.step h3{font-size:15px;font-weight:600;margin-bottom:8px;}
+.step p{font-size:13px;color:#6B6B5E;line-height:1.6;}
 
-/* SERVICES */
-.services-band { background: var(--ink); padding: 104px 56px; }
-.sl-dark { color: rgba(255,255,255,0.22) !important; }
-.sl-dark::after { background: rgba(255,255,255,0.07) !important; }
-.services-h {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: clamp(34px, 4vw, 52px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  color: var(--white);
-  margin-bottom: 64px;
-}
-.services-h em { font-style: italic; color: var(--green-2); }
-.svc-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.svc { background: var(--ink); padding: 36px 30px; transition: background 0.2s; }
-.svc:hover { background: #232320; }
-.svc-icon { font-size: 26px; margin-bottom: 16px; display: block; }
-.svc h3 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 17px;
-  color: var(--white);
-  margin-bottom: 8px;
-}
-.svc p { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.65; }
+/* DOCS */
+.docs-section{background:#1C1C14;padding:80px 40px;}
+.docs-title{font-family:'Playfair Display',serif;font-size:38px;color:#fff;text-align:center;margin-bottom:8px;}
+.docs-sub{font-size:14px;color:rgba(255,255,255,.35);text-align:center;margin-bottom:40px;}
+.docs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;max-width:1060px;margin:0 auto;}
+.doc-card{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:11px;padding:22px 14px;text-align:center;transition:border-color .2s;}
+.doc-card:hover{border-color:#2D6A3F;}
+.doc-card-i{font-size:28px;margin-bottom:9px;}
+.doc-card-n{font-size:11px;font-weight:600;color:#fff;margin-bottom:3px;}
+.doc-card-d{font-size:9px;color:rgba(255,255,255,.3);line-height:1.4;}
 
 /* PRICING */
-.pricing-section { padding: 104px 56px; }
-.pricing-h {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: clamp(34px, 4vw, 52px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  margin-bottom: 12px;
-}
-.pricing-sub { font-size: 16px; color: var(--ink-mid); margin-bottom: 64px; }
-.pricing-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.p-card {
-  background: var(--white);
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  padding: 44px;
-}
-.p-card.dark { background: var(--ink); border-color: var(--ink); }
-.p-region {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-low);
-  margin-bottom: 20px;
-}
-.p-card.dark .p-region { color: rgba(255,255,255,0.28); }
-.p-price {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: 64px;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-.p-card.dark .p-price { color: var(--white); }
-.p-cadence { font-size: 14px; color: var(--ink-low); margin-bottom: 36px; }
-.p-card.dark .p-cadence { color: rgba(255,255,255,0.28); }
-.p-features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 36px;
-  padding-bottom: 36px;
-  border-bottom: 1px solid var(--rule);
-}
-.p-card.dark .p-features { border-color: rgba(255,255,255,0.07); }
-.p-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--ink-mid); line-height: 1.5; }
-.p-card.dark .p-features li { color: rgba(255,255,255,0.52); }
-.p-check { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-.p-card.dark .p-check { color: var(--green-2); }
-.btn-full { width: 100%; justify-content: center; padding: 14px; font-size: 15px; border-radius: 6px; }
-.btn-ink { background: var(--ink); color: var(--white); }
-.btn-ink:hover { background: #2c2b28; }
-.btn-white-solid { background: var(--white); color: var(--ink); }
-.btn-white-solid:hover { background: var(--cream); }
-.p-note { text-align: center; font-size: 12px; color: var(--ink-low); margin-top: 14px; }
-.p-card.dark .p-note { color: rgba(255,255,255,0.24); }
-.pricing-footer { margin-top: 28px; text-align: center; font-size: 14px; color: var(--ink-low); }
+.pricing-section{padding:80px 40px;background:#F5F4EF;}
+.pricing-title{font-family:'Playfair Display',serif;font-size:38px;text-align:center;margin-bottom:8px;color:#1C1C14;}
+.pricing-sub{font-size:14px;color:#6B6B5E;text-align:center;margin-bottom:40px;}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:720px;margin:0 auto;}
+.pc{background:#fff;border:1.5px solid #e0dfd8;border-radius:14px;padding:36px 30px;}
+.pc-flag{font-size:34px;margin-bottom:10px;}
+.pc-reg{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px;}
+.pc-price{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:#2D6A3F;line-height:1;margin:14px 0 5px;}
+.pc-per{font-size:12px;color:#9B9B8E;margin-bottom:22px;}
+.pc-feats{list-style:none;margin-bottom:24px;}
+.pc-feats li{font-size:13px;color:#4a4a40;padding:7px 0;border-bottom:1px solid #f0efe8;display:flex;gap:9px;}
+.pc-feats li::before{content:'✓';color:#2D6A3F;font-weight:700;flex-shrink:0;}
+.pc-btn{display:block;width:100%;padding:13px;background:#2D6A3F;color:#fff;border-radius:7px;text-align:center;font-size:14px;font-weight:600;}
+.pc-note{font-size:11px;color:#9B9B8E;text-align:center;margin-top:10px;}
 
 /* FAQ */
-.faq-section {
-  border-top: 1px solid var(--rule);
-  padding: 104px 56px;
-}
-.faq-grid { display: grid; grid-template-columns: 260px 1fr; gap: 80px; margin-top: 60px; }
-.faq-sticky { position: sticky; top: 80px; align-self: flex-start; }
-.faq-sticky-h {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 24px;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-  color: var(--ink);
-  margin-bottom: 14px;
-}
-.faq-sticky p { font-size: 14px; color: var(--ink-low); line-height: 1.7; margin-bottom: 20px; }
-.faq-wa {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--green);
-  text-decoration: none;
-}
-.faq-wa:hover { color: var(--green-2); }
-.faq-list { display: flex; flex-direction: column; }
-.faq-item { border-bottom: 1px solid var(--rule); }
-.faq-q {
-  padding: 22px 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--ink);
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  user-select: none;
-  line-height: 1.4;
-  transition: color 0.15s;
-}
-.faq-q:hover { color: var(--green); }
-.faq-plus {
-  width: 20px; height: 20px;
-  flex-shrink: 0;
-  position: relative;
-  color: var(--ink-low);
-  transition: transform 0.25s, color 0.15s;
-}
-.faq-plus::before, .faq-plus::after {
-  content: '';
-  position: absolute;
-  background: currentColor;
-  border-radius: 2px;
-}
-.faq-plus::before { width: 100%; height: 2px; top: 50%; transform: translateY(-50%); }
-.faq-plus::after  { height: 100%; width: 2px; left: 50%; transform: translateX(-50%); }
-.faq-item.open .faq-plus { transform: rotate(45deg); color: var(--green); }
-.faq-a {
-  display: none;
-  padding-bottom: 22px;
-  font-size: 15px;
-  color: var(--ink-mid);
-  line-height: 1.75;
-}
-.faq-item.open .faq-a { display: block; }
+.faq-section{background:#1C1C14;padding:80px 40px;}
+.faq-title{font-family:'Playfair Display',serif;font-size:38px;color:#fff;text-align:center;margin-bottom:40px;}
+.faq-list{max-width:660px;margin:0 auto;}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.08);}
+.faq-q{padding:18px 0;font-size:14px;font-weight:500;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+.faq-q::after{content:'+';font-size:18px;color:#2D6A3F;}
+.faq-item.open .faq-q::after{content:'−';}
+.faq-a{display:none;padding:0 0 18px;font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;}
+.faq-item.open .faq-a{display:block;}
 
-/* CTA STRIP */
-.cta-strip {
-  background: var(--green);
-  padding: 80px 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-}
-.cta-strip h2 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: clamp(28px, 3.5vw, 46px);
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  color: var(--white);
-  max-width: 540px;
-}
-.cta-strip h2 em { font-style: italic; opacity: 0.7; }
-.cta-r { flex-shrink: 0; text-align: right; }
-.cta-r p { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 12px; }
+/* CTA */
+.cta-section{background:#2D6A3F;padding:80px 40px;text-align:center;}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:44px;color:#fff;margin-bottom:12px;}
+.cta-section p{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:30px;max-width:400px;margin-left:auto;margin-right:auto;}
+.cta-btn-white{background:#fff;color:#2D6A3F;padding:15px 34px;border-radius:7px;font-size:14px;font-weight:600;display:inline-block;}
 
-/* PORTAL */
-.portal { background: #f0ede6; border-top: 1px solid var(--rule); padding: 104px 56px; }
-.portal-grid {
-  display: grid;
-  grid-template-columns: 1fr 460px;
-  gap: 80px;
-  align-items: start;
-  margin-top: 60px;
-}
-.portal-h {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: clamp(32px, 3.5vw, 48px);
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  color: var(--ink);
-  margin-bottom: 14px;
-}
-.portal-h em { font-style: italic; color: var(--green); }
-.portal-sub { font-size: 16px; color: var(--ink-mid); line-height: 1.7; margin-bottom: 44px; max-width: 400px; }
-.perks { display: flex; flex-direction: column; gap: 22px; }
-.perk { display: flex; gap: 15px; align-items: flex-start; }
-.perk-ico {
-  width: 40px; height: 40px;
-  background: var(--white);
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
-}
-.perk h4 { font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 2px; }
-.perk p { font-size: 13px; color: var(--ink-low); line-height: 1.6; }
+footer{background:#111209;padding:28px 40px;display:flex;justify-content:space-between;align-items:center;}
+.fb{font-family:'Playfair Display',serif;font-size:16px;color:#fff;}
+.fl{display:flex;gap:22px;}
+.fl a{font-size:12px;color:rgba(255,255,255,.3);}
+.fc{font-size:12px;color:rgba(255,255,255,.2);}
 
-/* Login card */
-.lcard {
-  background: var(--white);
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
-}
-.lcard-head { padding: 26px 30px; border-bottom: 1px solid var(--rule); }
-.lcard-title {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 21px;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  margin-bottom: 3px;
-}
-.lcard-sub { font-size: 13px; color: var(--ink-low); }
-.lcard-body { padding: 30px; }
-.frow { margin-bottom: 17px; }
-.frow label {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-low);
-  margin-bottom: 6px;
-}
-.frow input {
-  width: 100%;
-  border: 1.5px solid var(--rule);
-  border-radius: 6px;
-  padding: 11px 14px;
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 15px;
-  color: var(--ink);
-  background: var(--cream);
-  outline: none;
-  transition: border-color 0.15s, background 0.15s;
-}
-.frow input:focus { border-color: var(--green); background: var(--white); }
-.login-btn {
-  width: 100%;
-  background: var(--green);
-  color: var(--white);
-  border: none;
-  border-radius: 6px;
-  padding: 13px;
-  font-family: 'Instrument Sans', sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.login-btn:hover { background: var(--green-2); }
-.login-or {
-  display: flex; align-items: center; gap: 12px;
-  color: var(--ink-low); font-size: 12px; margin: 18px 0;
-}
-.login-or::before, .login-or::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
-.wa-link {
-  width: 100%;
-  background: transparent;
-  border: 1.5px solid var(--rule);
-  border-radius: 6px;
-  padding: 12px;
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-decoration: none;
-  transition: all 0.15s;
-}
-.wa-link:hover { border-color: #25d366; color: #1a7a40; background: #f0fdf4; }
-.login-note { text-align: center; font-size: 12px; color: var(--ink-low); margin-top: 14px; }
-.login-note a { color: var(--green); text-decoration: none; }
-.lerr {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-size: 13px;
-  color: var(--red);
-  margin-bottom: 16px;
-  display: none;
-}
-
-/* Dashboard */
-.pdash { display: none; }
-.pdash.show { display: block; }
-.dash-head {
-  background: var(--ink);
-  padding: 22px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.dash-greeting {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 17px;
-  color: var(--white);
-}
-.dash-greeting em { font-style: italic; color: var(--green-2); }
-.dash-logout {
-  font-size: 12px; color: rgba(255,255,255,0.28);
-  cursor: pointer; background: none; border: none;
-  font-family: 'Instrument Sans', sans-serif;
-  text-decoration: underline; transition: color 0.15s;
-}
-.dash-logout:hover { color: rgba(255,255,255,0.55); }
-.dash-body { padding: 26px 30px; }
-.dash-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 20px; }
-.ds {
-  background: var(--cream);
-  border-radius: 7px;
-  padding: 14px 16px;
-}
-.ds-l { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-low); margin-bottom: 4px; }
-.ds-v {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 24px;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-.ds-v.g { color: var(--green); }
-.dash-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.da {
-  background: var(--cream);
-  border: 1.5px solid var(--rule);
-  border-radius: 8px;
-  padding: 15px;
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--ink);
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.da:hover { border-color: var(--green); background: var(--green-bg); }
-.da-ico {
-  width: 34px; height: 34px;
-  background: var(--white);
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; flex-shrink: 0;
-}
-.da-lbl { font-weight: 600; font-size: 13px; }
-.da-desc { font-size: 11px; color: var(--ink-low); margin-top: 1px; }
-
-/* FOOTER */
-footer {
-  background: var(--ink);
-  padding: 42px 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-.fl { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: rgba(255,255,255,0.6); letter-spacing: -0.01em; }
-.flinks { display: flex; gap: 22px; }
-.flinks a { font-size: 12px; color: rgba(255,255,255,0.28); text-decoration: none; transition: color 0.15s; }
-.flinks a:hover { color: rgba(255,255,255,0.6); }
-.fcopy { font-size: 12px; color: rgba(255,255,255,0.18); }
-
-/* RESPONSIVE */
-@media (max-width: 960px) {
-  nav { padding: 0 24px; }
-  .nav-r a:not(.nav-login) { display: none; }
-  .hero { grid-template-columns: 1fr; max-height: none; }
-  .hero-r { display: none; }
-  .hero-l { padding: 56px 24px; min-height: auto; }
-  .hiw, .pricing-section, .faq-section, .portal { padding: 72px 24px; }
-  .services-band { padding: 72px 24px; }
-  .cta-strip { flex-direction: column; padding: 60px 24px; text-align: center; }
-  .cta-strip h2 { max-width: 100%; }
-  .cta-r { text-align: center; }
-  .steps { grid-template-columns: 1fr; }
-  .step { border-right: none !important; border-bottom: 1px solid var(--rule); }
-  .step:last-child { border-bottom: none; }
-  .svc-grid { grid-template-columns: 1fr 1fr; }
-  .pricing-cards { grid-template-columns: 1fr; }
-  .faq-grid { grid-template-columns: 1fr; gap: 40px; }
-  .faq-sticky { position: static; }
-  .portal-grid { grid-template-columns: 1fr; gap: 48px; }
-  footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 24px; }
-  .flinks { flex-wrap: wrap; justify-content: center; }
-  .hero-bottom { flex-wrap: wrap; }
-  .dash-acts { grid-template-columns: 1fr; }
+@media(max-width:768px){
+  .hero h1{font-size:38px;}
+  .chat-inner,.ds2,.ds4,.ds6,.pricing-grid{grid-template-columns:1fr;}
+  .steps,.docs-grid,.ds5-grid,.ds3-steps{grid-template-columns:repeat(2,1fr);}
+  .ds3-arr{display:none;}
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="#" class="logo">TradeDeskNI<sup>NI &amp; ROI</sup></a>
-  <div class="nav-r">
-    <a href="#how-it-works">How it works</a>
-    <a href="#services">Services</a>
+  <div class="nav-brand">TradeDeskNI</div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#docs">Documents</a>
     <a href="#pricing">Pricing</a>
-    <a href="#portal" class="nav-login">Client login</a>
+    <a href="/admin.html">Admin</a>
+    <a href="/start.html" class="nav-cta">Start free →</a>
   </div>
 </nav>
+<div class="green-bar"></div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-l">
-    <div>
-      <div class="hero-kicker">For tradespeople across NI &amp; Ireland</div>
-      <h1 class="hero-h1">Your paperwork,<br><em>handled.</em></h1>
-      <p class="hero-p">Send a WhatsApp. Get a professional quote, invoice or RAMS back within the hour. No software to learn, no faff — just the document, ready to go.</p>
-      <div class="hero-actions">
-        <a href="#portal" class="btn btn-green">Start free trial &rarr;</a>
-        <a href="#how-it-works" class="btn btn-ghost">See how it works</a>
+  <div class="hero-tag">For sole traders across NI &amp; ROI</div>
+  <h1>Trades paperwork,<br><span>handled for you.</span></h1>
+  <p>Send the job details. Get a professional quote, invoice, RAMS or gas safety record back within seconds. No software to learn.</p>
+  <div class="hero-btns">
+    <a href="/start.html" class="btn-green">Start free trial — 2 weeks free</a>
+    <a href="#demo" class="btn-outline">See how it works</a>
+  </div>
+  <div class="hero-trust">
+    <span class="ti">No contract</span>
+    <span class="ti">First 2 weeks free</span>
+    <span class="ti">NI &amp; ROI</span>
+    <span class="ti">Documents in seconds</span>
+  </div>
+</section>
+
+<!-- CHAT MOCK -->
+<section class="chat-section">
+  <div class="chat-inner">
+    <div class="chat-text">
+      <h2>Send a message.<br><span>Document comes back.</span></h2>
+      <p>WhatsApp the job details — customer name, address, what you did, what you're charging. A professional branded document comes back in seconds, ready to forward.</p>
+      <div class="chat-stats">
+        <div class="cs"><div class="csv">17s</div><div class="csl">Average turnaround</div></div>
+        <div class="cs"><div class="csv">10</div><div class="csl">Document types</div></div>
+        <div class="cs"><div class="csv">100%</div><div class="csl">Success rate</div></div>
+        <div class="cs"><div class="csv">0</div><div class="csl">Contracts required</div></div>
       </div>
     </div>
-    <div>
-      <div class="hero-bottom">
-        <div>
-          <div class="hero-stat-val">&lt;1hr</div>
-          <div class="hero-stat-label">Turnaround time</div>
-        </div>
-        <div class="hero-divider"></div>
-        <div>
-          <div class="hero-stat-val">14 days</div>
-          <div class="hero-stat-label">Free trial</div>
-        </div>
-        <div class="hero-divider"></div>
-        <div>
-          <div class="hero-stat-val">No contract</div>
-          <div class="hero-stat-label">Cancel any time</div>
-        </div>
+    <div class="chat-mock">
+      <div class="ch">
+        <div class="chav">🔧</div>
+        <div><div class="chn">Brennan Heating & Plumbing</div><div class="chs">● Active now</div></div>
+      </div>
+      <div class="cb cb-in">
+        Quote for Mr Murphy, 22 Church St, Sligo.<br>
+        New Worcester 30i combi — remove back boiler, full flush, new stat.<br>
+        Labour 2 days, boiler €950, materials €120.
+        <div class="cbt">17:23</div>
+      </div>
+      <div class="cb cb-out">
+        Done ✓ Quote attached, ready to forward.
+        <div class="cb-tag">📋 TDNI-QT-2026-0047 · €1,570 · Ready</div>
+        <div class="cbt" style="color:rgba(255,255,255,.4)">17:23 · 17 seconds later</div>
       </div>
     </div>
   </div>
-  <div class="hero-r">
-    <div class="conv-label">A typical job</div>
-    <div class="conv">
-      <div class="msg-label">You (WhatsApp)</div>
-      <div class="msg msg-them">Rory — invoice for Seamus Gallagher, 8 Millbrook Rd Sligo. Boiler service + new stat. €420 all in.</div>
-      <div style="height:8px;"></div>
-      <div class="msg-label r">TradeDeskNI · 28 minutes later</div>
-      <div class="msg msg-us">Done — invoice attached, ready to forward to Seamus.</div>
-      <div class="doc-card">
-        <div class="doc-card-top">
-          <div class="doc-card-name">🧾 Invoice #0063 — Gallagher</div>
-          <div class="doc-ready">Ready</div>
-        </div>
-        <div class="doc-lines">
-          <div class="doc-line w100"></div>
-          <div class="doc-line w80"></div>
-          <div class="doc-line w60"></div>
-          <div class="doc-line w40"></div>
+</section>
+
+<!-- INTERACTIVE SLIDES DEMO -->
+<section class="demo-section" id="demo">
+  <div class="section-label">Interactive overview</div>
+  <h2 class="section-title">See the full picture</h2>
+  <p class="section-sub">Click through the slides to understand exactly how TradeDeskNI works</p>
+
+  <div class="deck">
+    <div class="deck-slides" id="deckSlides">
+
+      <!-- Slide 1: Hook -->
+      <div class="ds ds1 active" id="deck-1">
+        <div style="font-family:'Playfair Display',serif;font-size:13px;color:#2D6A3F;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">TradeDeskNI</div>
+        <div class="ds1-title">Your paperwork,<br><span>done in seconds.</span></div>
+        <div class="ds1-sub">Professional documents for tradespeople across NI and ROI</div>
+        <div class="ds1-pains">
+          <span class="dp">Typing quotes by hand</span>
+          <span class="dp">Chasing invoices</span>
+          <span class="dp">Late-night admin</span>
+          <span class="dp">RAMS holding up jobs</span>
         </div>
       </div>
-      <div class="time-badge">⚡ Delivered in 28 minutes</div>
+
+      <!-- Slide 2: Problem vs Solution -->
+      <div class="ds ds2" id="deck-2">
+        <div class="ds2-side l">
+          <div class="dslbl red">The Problem</div>
+          <div class="ds2-title">Tradespeople are brilliant on the tools.<br>Drowning in admin.</div>
+          <ul class="ds2-list">
+            <li><span>&#8987;</span> 4–6 hours per week on paperwork</li>
+            <li><span>&#128184;</span> Unprofessional quotes cost jobs</li>
+            <li><span>&#128565;</span> RAMS and COSHH holding up contracts</li>
+          </ul>
+        </div>
+        <div class="ds2-side r">
+          <div class="dslbl grn">The Solution</div>
+          <div class="ds2-title">TradeDeskNI handles all of it. Automatically.</div>
+          <div class="ds2-stat">17s</div>
+          <div class="ds2-stlbl">Average document generation time</div>
+        </div>
+      </div>
+
+      <!-- Slide 3: How It Works -->
+      <div class="ds ds3" id="deck-3">
+        <div class="ds3-title">How it works</div>
+        <div class="ds3-steps">
+          <div class="ds3-box"><div class="ds3-ico">📱</div><div class="ds3-ttl">Send job details</div><div class="ds3-sub">Plain English, no forms</div></div>
+          <div class="ds3-arr">→</div>
+          <div class="ds3-box"><div class="ds3-ico">⚡</div><div class="ds3-ttl">System receives it</div><div class="ds3-sub">Auto detected</div></div>
+          <div class="ds3-arr">→</div>
+          <div class="ds3-box hi"><div class="ds3-badge">~17 seconds</div><div class="ds3-ico">⚙️</div><div class="ds3-ttl">Document built</div><div class="ds3-sub">Branded &amp; complete</div></div>
+          <div class="ds3-arr">→</div>
+          <div class="ds3-box"><div class="ds3-ico">📧</div><div class="ds3-ttl">Emailed to client</div><div class="ds3-sub">Straight to inbox</div></div>
+          <div class="ds3-arr">→</div>
+          <div class="ds3-box"><div class="ds3-ico">✅</div><div class="ds3-ttl">You get on with work</div><div class="ds3-sub">Logged and done</div></div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Live Demo Mock -->
+      <div class="ds ds4" id="deck-4">
+        <div class="wa-m">
+          <div class="wa-h">
+            <div class="wa-av">🔧</div>
+            <div><div class="wa-n">Brennan Heating & Plumbing</div><div class="wa-s">● Online</div></div>
+          </div>
+          <div class="wa-b">
+            Quote for Mr Murphy, 22 Church St.<br>
+            Worcester 30i combi — remove back boiler, full flush, stat.<br>
+            Labour 2 days, boiler €950, materials €120.
+            <div class="wa-t">17:23 ✓✓</div>
+          </div>
+        </div>
+        <div class="da-mid">
+          <div class="da-ico">⚡</div>
+          <div class="da-t" id="demoT">0.0s</div>
+        </div>
+        <div class="doc-m">
+          <div class="doc-h"><div class="doc-br">TradeDeskNI</div><div class="doc-ty">QUOTE</div></div>
+          <div class="doc-r"></div>
+          <div class="doc-rw">
+            <div><div class="doc-l">From</div><div class="doc-v">Brennan Heating & Plumbing</div></div>
+            <div><div class="doc-l">Ref</div><div class="doc-v">TDNI-QT-2026-0047</div></div>
+          </div>
+          <div class="doc-rw" style="margin-top:5px">
+            <div><div class="doc-l">For</div><div class="doc-v">Mr Murphy, Church St</div></div>
+            <div><div class="doc-l">Date</div><div class="doc-v">21 Mar 2026</div></div>
+          </div>
+          <table class="doc-tb">
+            <tr><th>Description</th><th>Qty</th><th>Amt</th></tr>
+            <tr><td>Labour – 2 days</td><td>2</td><td>€500</td></tr>
+            <tr><td>Worcester Bosch 30i</td><td>1</td><td>€950</td></tr>
+            <tr><td>Materials</td><td>1</td><td>€120</td></tr>
+          </table>
+          <div class="doc-tot"><div class="doc-totb">TOTAL: €1,570</div></div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Document Types -->
+      <div class="ds ds5" id="deck-5">
+        <div class="ds5-title">10 document types. All included.</div>
+        <div class="ds5-sub">Every piece of paperwork your trade could need</div>
+        <div class="ds5-grid">
+          <div class="dc"><div class="dci">📋</div><div class="dcn">Quote</div><div class="dcd">Branded quotes</div></div>
+          <div class="dc"><div class="dci">🧾</div><div class="dcn">Invoice</div><div class="dcd">Same-day invoicing</div></div>
+          <div class="dc"><div class="dci">⚠️</div><div class="dcn">RAMS</div><div class="dcd">Risk assessments</div></div>
+          <div class="dc"><div class="dci">🔥</div><div class="dcn">Gas Safety</div><div class="dcd">Gas Safe / RGI</div></div>
+          <div class="dc"><div class="dci">🧪</div><div class="dcn">COSHH</div><div class="dcd">Substance docs</div></div>
+          <div class="dc"><div class="dci">🏁</div><div class="dcn">Job Report</div><div class="dcd">Completion sign-off</div></div>
+          <div class="dc"><div class="dci">💰</div><div class="dcn">Payslip</div><div class="dcd">NI &amp; ROI subbies</div></div>
+          <div class="dc"><div class="dci">📬</div><div class="dcn">Debt Chaser</div><div class="dcd">1st, 2nd, final</div></div>
+          <div class="dc"><div class="dci">🎖️</div><div class="dcn">Cert of Completion</div><div class="dcd">With warranty</div></div>
+          <div class="dc"><div class="dci">📝</div><div class="dcn">Variation Order</div><div class="dcd">Extra works docs</div></div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Pricing -->
+      <div class="ds ds6" id="deck-6">
+        <div class="ds6-side l">
+          <div class="ds6-flag">🇬🇧</div>
+          <div class="ds6-reg">Northern Ireland</div>
+          <div class="ds6-price">£250</div>
+          <div class="ds6-per">per month</div>
+          <ul class="ds6-feats">
+            <li>Gas Safe NI recognised</li>
+            <li>NICEIC electrical compliance</li>
+            <li>Sterling pricing on all docs</li>
+            <li>No contract — cancel anytime</li>
+          </ul>
+        </div>
+        <div class="ds6-side r">
+          <div class="ds6-flag">🇮🇪</div>
+          <div class="ds6-reg">Republic of Ireland</div>
+          <div class="ds6-price">€250</div>
+          <div class="ds6-per">per month</div>
+          <ul class="ds6-feats">
+            <li>RGI &amp; RECI recognised</li>
+            <li>VAT 23% applied automatically</li>
+            <li>Euro pricing on all docs</li>
+            <li>No contract — cancel anytime</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Controls -->
+    <div class="deck-controls">
+      <button class="deck-btn" id="prevBtn" onclick="deckNav(-1)">← Prev</button>
+      <div class="deck-dots" id="deckDots"></div>
+      <div class="deck-counter" id="deckCounter">01 / 06</div>
+      <button class="deck-btn" id="nextBtn" onclick="deckNav(1)">Next →</button>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section id="how-it-works">
-  <div class="hiw wrap">
-    <div class="section-label">How it works</div>
-    <h2 class="hiw-h">Three steps.<br>You barely notice <em>two of them.</em></h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-n">Step 01</div>
-        <span class="step-icon">💬</span>
-        <h3>Send the job details</h3>
-        <p>WhatsApp Rory the basics — customer name, what you did, what you want to charge. Voice note, few lines of text, whatever's quickest. Two minutes max.</p>
-      </div>
-      <div class="step">
-        <div class="step-n">Step 02</div>
-        <span class="step-icon">⚙️</span>
-        <h3>We build the document</h3>
-        <p>A professional, branded document comes back with your name on it — formatted properly and ready to send. You don't open a laptop.</p>
-      </div>
-      <div class="step">
-        <div class="step-n">Step 03</div>
-        <span class="step-icon">📤</span>
-        <h3>Download and send</h3>
-        <p>Your document's in your portal within the hour. Download it, forward it to the customer, get on with the next job.</p>
-      </div>
+<section class="how-section" id="how">
+  <div class="section-label" style="color:#2D6A3F;">Simple process</div>
+  <h2 class="how-title">Three steps.<br>You barely notice two of them.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-i">💬</div>
+      <h3>Send the job details</h3>
+      <p>WhatsApp the basics — customer, address, what you did, what you're charging. Voice note works fine.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-i">⚙️</div>
+      <h3>We build the document</h3>
+      <p>A professional branded document comes back in seconds. You don't open a laptop.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-i">📤</div>
+      <h3>Forward and get paid</h3>
+      <p>Document goes to your client's inbox. Branded with your name, ready to sign.</p>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section class="services-band" id="services">
-  <div class="wrap">
-    <div class="section-label sl-dark">What we cover</div>
-    <h2 class="services-h">Every document a tradesperson<br><em>actually needs.</em></h2>
-    <div class="svc-grid">
-      <div class="svc"><span class="svc-icon">📋</span><h3>Quotes</h3><p>Professional quotes out fast, so you win the job before someone else prices it cheaper.</p></div>
-      <div class="svc"><span class="svc-icon">🧾</span><h3>Invoices</h3><p>Branded invoices the same day the job's done. Get paid faster. Look sharper.</p></div>
-      <div class="svc"><span class="svc-icon">⚠️</span><h3>RAMS</h3><p>Risk assessments and method statements done properly — not cobbled together the night before a job.</p></div>
-      <div class="svc"><span class="svc-icon">📄</span><h3>Job Reports</h3><p>Completion reports, service records, certification letters — whatever the job requires.</p></div>
-      <div class="svc"><span class="svc-icon">💰</span><h3>Debt Chasers</h3><p>When a customer isn't paying, we write the follow-up. Firm, professional, and it gets results.</p></div>
-      <div class="svc"><span class="svc-icon">📊</span><h3>Service Records</h3><p>Boiler services, inspections, PAT testing — all recorded correctly and ready to hand over.</p></div>
-      <div class="svc"><span class="svc-icon">✉️</span><h3>Customer Letters</h3><p>Appointment confirmations, warranty letters, follow-ups — handled so you don't have to think about it.</p></div>
-      <div class="svc"><span class="svc-icon">🔧</span><h3>Anything else</h3><p>Got something that isn't on this list? Just ask. If it's trades paperwork, we can handle it.</p></div>
-    </div>
+<!-- DOCS -->
+<section class="docs-section" id="docs">
+  <div class="section-label">Full coverage</div>
+  <h2 class="docs-title">10 document types.<br>All included.</h2>
+  <p class="docs-sub">Every piece of paperwork a sole trader could need — covered</p>
+  <div class="docs-grid">
+    <div class="doc-card"><div class="doc-card-i">📋</div><div class="doc-card-n">Quote / Estimate</div><div class="doc-card-d">Professional quotes in seconds</div></div>
+    <div class="doc-card"><div class="doc-card-i">🧾</div><div class="doc-card-n">Invoice</div><div class="doc-card-d">Itemised with payment terms</div></div>
+    <div class="doc-card"><div class="doc-card-i">⚠️</div><div class="doc-card-n">RAMS</div><div class="doc-card-d">Risk assessment &amp; method statements</div></div>
+    <div class="doc-card"><div class="doc-card-i">🔥</div><div class="doc-card-n">Gas Safety Record</div><div class="doc-card-d">Gas Safe NI / RGI ROI</div></div>
+    <div class="doc-card"><div class="doc-card-i">🧪</div><div class="doc-card-n">COSHH Assessment</div><div class="doc-card-d">Substance handling docs</div></div>
+    <div class="doc-card"><div class="doc-card-i">🏁</div><div class="doc-card-n">Job Completion</div><div class="doc-card-d">Sign-off with materials log</div></div>
+    <div class="doc-card"><div class="doc-card-i">💰</div><div class="doc-card-n">Payslip</div><div class="doc-card-d">NI &amp; ROI subbies</div></div>
+    <div class="doc-card"><div class="doc-card-i">📬</div><div class="doc-card-n">Debt Chaser</div><div class="doc-card-d">1st, 2nd and final demands</div></div>
+    <div class="doc-card"><div class="doc-card-i">🎖️</div><div class="doc-card-n">Cert of Completion</div><div class="doc-card-d">Prestige certs with warranty</div></div>
+    <div class="doc-card"><div class="doc-card-i">📝</div><div class="doc-card-n">Variation Order</div><div class="doc-card-d">Extra works approval docs</div></div>
   </div>
 </section>
 
 <!-- PRICING -->
 <section class="pricing-section" id="pricing">
-  <div class="wrap">
-    <div class="section-label">Pricing</div>
-    <h2 class="pricing-h">Straightforward pricing.<br>No hidden anything.</h2>
-    <p class="pricing-sub">One flat monthly fee. Unlimited documents. No contract. Try it free for two weeks before you pay a penny.</p>
-    <div class="pricing-cards">
-      <div class="p-card">
-        <div class="p-region">🇬🇧 Northern Ireland</div>
-        <div class="p-price">£250</div>
-        <div class="p-cadence">per month &middot; no contract</div>
-        <ul class="p-features">
-          <li><span class="p-check">✓</span>Unlimited quotes, invoices &amp; RAMS</li>
-          <li><span class="p-check">✓</span>Job reports &amp; service records</li>
-          <li><span class="p-check">✓</span>Debt chaser letters</li>
-          <li><span class="p-check">✓</span>Documents back within 1 hour</li>
-          <li><span class="p-check">✓</span>Your branding on every document</li>
-          <li><span class="p-check">✓</span>WhatsApp direct line to Rory</li>
-          <li><span class="p-check">✓</span>Cancel any time with one message</li>
-        </ul>
-        <a href="#portal" class="btn btn-ink btn-full">Start your free trial &rarr;</a>
-        <p class="p-note">First two weeks completely free — no card needed</p>
-      </div>
-      <div class="p-card dark">
-        <div class="p-region">🇮🇪 Republic of Ireland</div>
-        <div class="p-price">€250</div>
-        <div class="p-cadence">per month &middot; no contract</div>
-        <ul class="p-features">
-          <li><span class="p-check">✓</span>Unlimited quotes, invoices &amp; RAMS</li>
-          <li><span class="p-check">✓</span>Job reports &amp; service records</li>
-          <li><span class="p-check">✓</span>Debt chaser letters</li>
-          <li><span class="p-check">✓</span>Documents back within 1 hour</li>
-          <li><span class="p-check">✓</span>Your branding on every document</li>
-          <li><span class="p-check">✓</span>WhatsApp direct line to Rory</li>
-          <li><span class="p-check">✓</span>Cancel any time with one message</li>
-        </ul>
-        <a href="#portal" class="btn btn-green btn-full">Start your free trial &rarr;</a>
-        <p class="p-note">First two weeks completely free — no card needed</p>
-      </div>
+  <div class="section-label" style="color:#2D6A3F;">Pricing</div>
+  <h2 class="pricing-title">One flat fee.<br>Unlimited documents.</h2>
+  <p class="pricing-sub">No setup fees. No per-document charges. No contract.</p>
+  <div class="pricing-grid">
+    <div class="pc">
+      <div class="pc-flag">🇬🇧</div>
+      <div class="pc-reg">Northern Ireland</div>
+      <div class="pc-price">£250</div>
+      <div class="pc-per">per month · no contract</div>
+      <ul class="pc-feats">
+        <li>Unlimited quotes, invoices &amp; RAMS</li>
+        <li>Gas Safe NI recognised</li>
+        <li>NICEIC electrical compliance</li>
+        <li>Documents in seconds</li>
+        <li>Your branding on every document</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="/start.html" class="pc-btn">Start free trial →</a>
+      <p class="pc-note">First 2 weeks free — no card needed</p>
     </div>
-    <p class="pricing-footer">No setup fees. No per-document charges. If it's not working for you, one message cancels it.</p>
+    <div class="pc">
+      <div class="pc-flag">🇮🇪</div>
+      <div class="pc-reg">Republic of Ireland</div>
+      <div class="pc-price">€250</div>
+      <div class="pc-per">per month · no contract</div>
+      <ul class="pc-feats">
+        <li>Unlimited quotes, invoices &amp; RAMS</li>
+        <li>RGI &amp; RECI recognised</li>
+        <li>VAT 23% applied automatically</li>
+        <li>Documents in seconds</li>
+        <li>Your branding on every document</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="/start.html" class="pc-btn">Start free trial →</a>
+      <p class="pc-note">First 2 weeks free — no card needed</p>
+    </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="faq-section" id="faq">
-  <div class="wrap">
-    <div class="section-label">Questions</div>
-    <div class="faq-grid">
-      <div class="faq-sticky">
-        <h3 class="faq-sticky-h">Got a question?</h3>
-        <p>Most answers are below. If yours isn't, WhatsApp Rory directly — usually back within the hour.</p>
-        <a href="https://wa.me/447775696701" target="_blank" class="faq-wa">💬 WhatsApp Rory</a>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this.parentElement)">What information do I actually need to give you?<div class="faq-plus"></div></div>
-          <div class="faq-a">As little as you have. Customer name, address, what you did, what you're charging. A voice note works fine — most clients send one on the drive home and have the invoice waiting when they get in. The more detail you give us, the more accurate the document, but we can always work with the basics.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this.parentElement)">How fast do I actually get the document back?<div class="faq-plus"></div></div>
-          <div class="faq-a">Within the hour during working hours — Monday to Friday, 8am to 8pm. Most documents come back in 20 to 30 minutes. For urgent jobs outside those hours, WhatsApp Rory directly and we'll do our best.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this.parentElement)">Will it look like I made it myself?<div class="faq-plus"></div></div>
-          <div class="faq-a">Yes. Every document goes out with your business name, logo if you have one, and your contact details. Your customers won't know we're involved. It looks like you produced it yourself — which is exactly the point.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this.parentElement)">What trades do you work with?<div class="faq-plus"></div></div>
-          <div class="faq-a">Electricians, plumbers, gas engineers, roofers, joiners, painters and decorators — any trade that generates quotes, invoices and compliance paperwork. If you're not sure whether we cover your trade, just send a WhatsApp and we'll tell you straight.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this.parentElement)">What happens after the free trial?<div class="faq-plus"></div></div>
-          <div class="faq-a">After two weeks, it's £250/month in NI or €250/month in the Republic. No contract — cancel any time with a single message. We won't chase you or lock you in. If it's not saving you time, there's no reason to stay.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this.parentElement)">Is there a limit on how many documents I can get?<div class="faq-plus"></div></div>
-          <div class="faq-a">No limit. The monthly fee covers everything. Most clients use it for 20–40 documents a month but there's no cap and no extra charges for a busy month.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this.parentElement)">Do I need to download any software?<div class="faq-plus"></div></div>
-          <div class="faq-a">Nothing. You already have WhatsApp — that's all you need. The client portal is just a website. No app, no account setup, no faff. Send a message, get a document back.</div>
-        </div>
-      </div>
+<section class="faq-section">
+  <div class="section-label">Questions</div>
+  <h2 class="faq-title">Common questions</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">What information do I need to provide?</div>
+      <div class="faq-a">Customer name, address, what you did, what you're charging. A voice note works fine — most clients send one on the drive home and the document is waiting when they get back.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">How fast do I actually get the document?</div>
+      <div class="faq-a">Around 17 seconds on average. The system runs continuously so documents come back at any time of day.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">Will it look like I produced it myself?</div>
+      <div class="faq-a">Yes. Every document goes out with your business name and contact details. Your customers won't know we're involved.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">What trades do you cover?</div>
+      <div class="faq-a">Plumbers, gas engineers, electricians, roofers, plasterers, painters and decorators, joiners — any trade that generates quotes, invoices and compliance paperwork.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">Is there a limit on documents?</div>
+      <div class="faq-a">No limit. The monthly fee covers everything — no caps, no extra charges for a busy month.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">What happens after the free trial?</div>
+      <div class="faq-a">After 2 weeks it's £250/month in NI or €250/month in the Republic. No contract — cancel any time with a single message.</div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<div class="cta-strip">
-  <h2>Stop doing invoices<br>at <em>half ten at night.</em></h2>
-  <div class="cta-r">
-    <a href="#portal" class="btn btn-white-solid" style="font-size:15px;padding:14px 30px;">Start free trial &rarr;</a>
-    <p>Two weeks free &middot; No contract &middot; NI &amp; Ireland</p>
-  </div>
-</div>
-
-<!-- PORTAL -->
-<section class="portal" id="portal">
-  <div class="wrap">
-    <div class="section-label">Client portal</div>
-    <div class="portal-grid">
-      <div>
-        <h2 class="portal-h">Already a client?<br><em>Log in here.</em></h2>
-        <p class="portal-sub">Submit jobs, download your documents, track your trial, and reach Rory directly when you need something urgent.</p>
-        <div class="perks">
-          <div class="perk">
-            <div class="perk-ico">📤</div>
-            <div><h4>Submit jobs in seconds</h4><p>Fill in the form and your document will be back within the hour.</p></div>
-          </div>
-          <div class="perk">
-            <div class="perk-ico">📂</div>
-            <div><h4>All your documents in one place</h4><p>Every finished document saved and ready to download any time.</p></div>
-          </div>
-          <div class="perk">
-            <div class="perk-ico">💬</div>
-            <div><h4>Direct line to Rory</h4><p>Urgent job or a question? WhatsApp Rory directly from your portal.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <!-- Login -->
-        <div class="lcard" id="loginCard">
-          <div class="lcard-head">
-            <div class="lcard-title">Client login</div>
-            <div class="lcard-sub">Your email and the access code Rory sent you</div>
-          </div>
-          <div class="lcard-body">
-            <div class="lerr" id="lerr">Wrong email or code. WhatsApp Rory if you need help logging in.</div>
-            <div class="frow">
-              <label>Email address</label>
-              <input type="email" id="lEmail" placeholder="your@email.com">
-            </div>
-            <div class="frow">
-              <label>Access code</label>
-              <input type="text" id="lCode" placeholder="e.g. NEIL2025" style="letter-spacing:0.06em;font-weight:600;text-transform:uppercase;">
-            </div>
-            <button class="login-btn" onclick="doLogin()">Log in to portal</button>
-            <div class="login-or">or</div>
-            <a href="https://wa.me/447775696701?text=Hi%20Rory%2C%20I%27d%20like%20access%20to%20the%20client%20portal" target="_blank" class="wa-link">💬 Message Rory to get access</a>
-            <p class="login-note">Not a client yet? <a href="#pricing">Start your free trial above.</a></p>
-          </div>
-        </div>
-
-        <!-- Dashboard -->
-        <div class="lcard pdash" id="pdash">
-          <div class="dash-head">
-            <div class="dash-greeting">Welcome back, <em id="dName">Neil</em></div>
-            <button class="dash-logout" onclick="doLogout()">Log out</button>
-          </div>
-          <div class="dash-body">
-            <div class="dash-stats">
-              <div class="ds"><div class="ds-l">Docs made</div><div class="ds-v g" id="dDocs">0</div></div>
-              <div class="ds"><div class="ds-l">Trial days left</div><div class="ds-v" id="dDays">14</div></div>
-              <div class="ds"><div class="ds-l">Turnaround</div><div class="ds-v g">&lt;1hr</div></div>
-            </div>
-            <div class="dash-acts">
-              <a href="tradedesk-portal.html" class="da"><div class="da-ico">📤</div><div><div class="da-lbl">Submit a job</div><div class="da-desc">Doc back within the hour</div></div></a>
-              <a href="tradedesk-portal.html" class="da"><div class="da-ico">📂</div><div><div class="da-lbl">My documents</div><div class="da-desc">Download completed docs</div></div></a>
-              <a href="https://wa.me/447775696701?text=Urgent%20job%20—" target="_blank" class="da"><div class="da-ico">🚨</div><div><div class="da-lbl">Urgent job</div><div class="da-desc">WhatsApp Rory directly</div></div></a>
-              <a href="https://wa.me/447775696701?text=Hi%20Rory%2C%20chasing%20unpaid%20invoice" target="_blank" class="da"><div class="da-ico">💰</div><div><div class="da-lbl">Chase an invoice</div><div class="da-desc">Follow up a late payment</div></div></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<section class="cta-section">
+  <h2>Start your free trial today.</h2>
+  <p>Two weeks free. No card required. No contract.</p>
+  <a href="/start.html" class="cta-btn-white">Get started →</a>
 </section>
 
 <footer>
-  <div class="fl">TradeDeskNI</div>
-  <div class="flinks">
-    <a href="#how-it-works">How it works</a>
-    <a href="#services">Services</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#faq">FAQ</a>
-    <a href="#portal">Client login</a>
-    <a href="https://wa.me/447775696701" target="_blank">WhatsApp</a>
-  </div>
-  <div class="fcopy">&copy; 2025 TradeDeskNI</div>
+  <div class="fb">TradeDeskNI</div>
+  <div class="fl"><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="/admin.html">Admin</a></div>
+  <div class="fc">© 2026 TradeDeskNI · NI &amp; ROI</div>
 </footer>
 
 <script>
-function toggleFaq(item) {
-  const open = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-  if (!open) item.classList.add('open');
+// Deck
+let cur = 0;
+const total = 6;
+const dotsEl = document.getElementById('deckDots');
+for(let i=0;i<total;i++){
+  const d=document.createElement('div');
+  d.className='ddot'+(i===0?' active':'');
+  d.onclick=()=>goDeck(i);
+  dotsEl.appendChild(d);
 }
-
-const CLIENTS = [
-  { email: 'neil@neilwalshplumbing.com', code: 'NEIL2025', name: 'Neil Walsh', docs: 0, trialStart: new Date().toISOString() },
-  { email: 'demo@tradedeskni.co.uk',     code: 'DEMO2025', name: 'Demo Client', docs: 3, trialStart: new Date().toISOString() },
-];
-
-function doLogin() {
-  const email  = document.getElementById('lEmail').value.trim().toLowerCase();
-  const code   = document.getElementById('lCode').value.trim().toUpperCase();
-  const err    = document.getElementById('lerr');
-  const client = CLIENTS.find(c => c.email === email && c.code === code);
-  if (client) {
-    err.style.display = 'none';
-    sessionStorage.setItem('td_u', JSON.stringify(client));
-    showDash(client);
-  } else {
-    err.style.display = 'block';
+function goDeck(idx){
+  document.getElementById('deck-'+(cur+1)).classList.remove('active');
+  document.querySelectorAll('.ddot')[cur].classList.remove('active');
+  cur=idx;
+  document.getElementById('deck-'+(cur+1)).classList.add('active');
+  document.querySelectorAll('.ddot')[cur].classList.add('active');
+  document.getElementById('deckCounter').textContent=(cur+1<10?'0'+(cur+1):cur+1)+' / 06';
+  if(cur===3) startDemoTimer();
+}
+function deckNav(dir){
+  const n=(cur+dir+total)%total;
+  goDeck(n);
+}
+document.addEventListener('keydown',e=>{
+  const sec=document.getElementById('demo');
+  const rect=sec.getBoundingClientRect();
+  if(rect.top<window.innerHeight&&rect.bottom>0){
+    if(e.key==='ArrowRight') deckNav(1);
+    if(e.key==='ArrowLeft') deckNav(-1);
   }
-}
-
-function showDash(c) {
-  document.getElementById('loginCard').style.display = 'none';
-  document.getElementById('pdash').classList.add('show');
-  document.getElementById('dName').textContent = c.name.split(' ')[0];
-  document.getElementById('dDocs').textContent = c.docs || 0;
-  const days = Math.max(0, 14 - Math.floor((Date.now() - new Date(c.trialStart)) / 86400000));
-  document.getElementById('dDays').textContent = days;
-}
-
-function doLogout() {
-  sessionStorage.removeItem('td_u');
-  document.getElementById('loginCard').style.display = 'block';
-  document.getElementById('pdash').classList.remove('show');
-}
-
-['lEmail','lCode'].forEach(id => {
-  document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 });
+let dti;
+function startDemoTimer(){
+  let t=0; clearInterval(dti);
+  dti=setInterval(()=>{
+    t+=0.1;
+    const el=document.getElementById('demoT');
+    if(el) el.textContent=t.toFixed(1)+'s';
+    if(t>=17) clearInterval(dti);
+  },100);
+}
 
-const saved = sessionStorage.getItem('td_u');
-if (saved) { try { showDash(JSON.parse(saved)); } catch(e){} }
+// FAQ
+function toggleFaq(item){
+  const open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!open) item.classList.add('open');
+}
 </script>
-
 </body>
 </html>
