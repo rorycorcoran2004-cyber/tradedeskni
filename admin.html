@@ -163,7 +163,7 @@ tr:last-child td{border:none}tr:hover td{background:#F5F4EF}
       <div class="page" id="page-jobs">
         <h2>Job History</h2>
         <div class="tw">
-          <table><thead><tr><th>#</th><th>Client</th><th>Document</th><th>Status</th><th>Date</th><th>Doc</th></tr></thead>
+          <table><thead><tr><th>#</th><th>Client</th><th>Document</th><th>Status</th><th>Date</th><th>Doc</th><th>Paid</th></tr></thead>
           <tbody id="jobs-table"><tr><td colspan="5" style="text-align:center;padding:32px;color:#6B6B5E">Loading...</td></tr></tbody></table>
         </div>
       </div>
@@ -247,7 +247,8 @@ function renderJobs() {
     <td>${dl(j.doc_type)}</td>
     <td><span class="badge">✓ completed</span></td>
     <td style="color:#6B6B5E;font-size:12px">${dt(j.created_at)}</td>
-    <td>${j.doc_html?`<button onclick="viewDoc('${j.id}')" class="btn btn-outline" style="font-size:11px;padding:5px 12px">&#128065; View</button>`:'<span style="color:#ccc;font-size:11px">—</span>'}</td></tr>`).join('');
+    <td>${j.doc_html?`<button onclick="viewDoc('${j.id}')" class="btn btn-outline" style="font-size:11px;padding:5px 12px">&#128065; View</button>`:'<span style="color:#ccc;font-size:11px">—</span>'}</td>
+    <td>${j.doc_type==='invoice'?(j.paid?'<span style="color:#2D6A3F;font-size:12px;font-weight:600">✓ Paid</span>':`<button onclick="markPaid('${j.id}')" class="btn btn-outline" style="font-size:11px;padding:5px 12px;border-color:#e0dfd8;color:#6B6B5E">Mark Paid</button>`):'<span style="color:#e0dfd8;font-size:11px">—</span>'}</td></tr>`).join('');
 }
 
 function viewDoc(jobId) {
@@ -256,6 +257,13 @@ function viewDoc(jobId) {
   const w = window.open('','_blank');
   w.document.write(job.doc_html);
   w.document.close();
+}
+
+async function markPaid(jobId) {
+  try {
+    const r = await fetch(BACKEND+'/jobs/'+jobId+'/paid', {method:'PUT', headers:{'x-admin-password':ADMIN_PASS}});
+    if(r.ok) { await loadAll(); }
+  } catch(e) { alert('Error marking as paid'); }
 }
 
 function toggleAddClient() {
@@ -331,6 +339,112 @@ function doGenerate() {
     document.getElementById('g-status').style.color = '#c0392b';
     btn.disabled=false;
   });
+}
+
+// ============ REMINDERS TAB ============
+async function loadReminders() {
+  try {
+    const r = await fetch(BACKEND+'/reminders', {headers:{'x-admin-password':ADMIN_PASS}});
+    window._reminders = await r.json();
+    renderReminders();
+  } catch(e) { console.error('Reminders load failed:', e); }
+}
+
+function renderReminders() {
+  const el = document.getElementById('reminders-content');
+  if(!el) return;
+  const rem = window._reminders || [];
+  const today = new Date();
+  el.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px">Recurring Reminders</h2>
+      <button class="btn" onclick="showAddReminder()" style="font-size:13px;padding:8px 18px">+ Add Reminder</button>
+    </div>
+    ${rem.length===0?'<div style="text-align:center;padding:60px;color:#9B9B8E;font-size:14px">No reminders set up yet. Add one below.</div>':
+    '<div style="display:grid;gap:12px">'+rem.map(r=>{
+      const due = new Date(r.next_due);
+      const overdue = due < today;
+      const daysUntil = Math.ceil((due-today)/(1000*60*60*24));
+      return `<div style="background:#fff;border-radius:10px;border:1.5px solid ${overdue?'#f5c6c0':'#e0dfd8'};padding:18px 20px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-weight:600;font-size:14px;margin-bottom:3px">${r.title}</div>
+          <div style="font-size:12px;color:#6B6B5E;margin-bottom:3px">${r.clients?.business_name||'—'} · Every ${r.recurrence_months} month${r.recurrence_months>1?'s':''}</div>
+          ${r.description?`<div style="font-size:12px;color:#9B9B8E">${r.description}</div>`:''}
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;text-align:right">
+          <div>
+            <div style="font-size:12px;font-weight:600;color:${overdue?'#c0392b':daysUntil<=7?'#e67e22':'#2D6A3F'}">${overdue?'Overdue':daysUntil===0?'Due today':'Due in '+daysUntil+' day'+(daysUntil>1?'s':'')}</div>
+            <div style="font-size:11px;color:#9B9B8E">${due.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>
+          </div>
+          <button onclick="deleteReminder('${r.id}')" style="background:none;border:none;cursor:pointer;color:#ccc;font-size:18px;padding:4px" title="Delete">✕</button>
+        </div>
+      </div>`;
+    }).join('')+'</div>'}
+    <div id="add-reminder-form" style="display:none;background:#fff;border-radius:10px;border:1.5px solid #2D6A3F;padding:24px;margin-top:20px">
+      <h3 style="font-family:'Playfair Display',serif;font-size:16px;margin-bottom:16px">New Recurring Reminder</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div>
+          <label style="font-size:12px;color:#6B6B5E;display:block;margin-bottom:4px">Client</label>
+          <select id="rem-client" style="width:100%;border:1.5px solid #e0dfd8;border-radius:6px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px">
+            <option value="">Select client...</option>
+            ${(window._clients||[]).map(c=>`<option value="${c.id}">${c.business_name}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#6B6B5E;display:block;margin-bottom:4px">Recurrence</label>
+          <select id="rem-months" style="width:100%;border:1.5px solid #e0dfd8;border-radius:6px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px">
+            <option value="1">Monthly</option>
+            <option value="3">Every 3 months</option>
+            <option value="6">Every 6 months</option>
+            <option value="12" selected>Annual</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:12px;color:#6B6B5E;display:block;margin-bottom:4px">Reminder Title</label>
+        <input id="rem-title" type="text" placeholder="e.g. Annual Boiler Service — Mrs Murphy" style="width:100%;border:1.5px solid #e0dfd8;border-radius:6px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div>
+          <label style="font-size:12px;color:#6B6B5E;display:block;margin-bottom:4px">Description (optional)</label>
+          <input id="rem-desc" type="text" placeholder="e.g. Customer number: 07812..." style="width:100%;border:1.5px solid #e0dfd8;border-radius:6px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#6B6B5E;display:block;margin-bottom:4px">First Due Date</label>
+          <input id="rem-date" type="date" style="width:100%;border:1.5px solid #e0dfd8;border-radius:6px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px">
+        </div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button onclick="saveReminder()" class="btn" style="font-size:13px;padding:9px 20px">Save Reminder</button>
+        <button onclick="document.getElementById('add-reminder-form').style.display='none'" style="background:none;border:1.5px solid #e0dfd8;border-radius:6px;padding:9px 20px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif">Cancel</button>
+      </div>
+    </div>`;
+}
+
+function showAddReminder() {
+  document.getElementById('add-reminder-form').style.display='block';
+  document.getElementById('add-reminder-form').scrollIntoView({behavior:'smooth'});
+}
+
+async function saveReminder() {
+  const client_id = document.getElementById('rem-client').value;
+  const title = document.getElementById('rem-title').value.trim();
+  const next_due = document.getElementById('rem-date').value;
+  const recurrence_months = parseInt(document.getElementById('rem-months').value);
+  const description = document.getElementById('rem-desc').value.trim();
+  if(!client_id||!title||!next_due) return alert('Please fill in client, title, and due date.');
+  try {
+    const r = await fetch(BACKEND+'/reminders', {method:'POST', headers:{'Content-Type':'application/json','x-admin-password':ADMIN_PASS}, body:JSON.stringify({client_id,title,description,recurrence_months,next_due})});
+    if(r.ok) { await loadReminders(); }
+  } catch(e) { alert('Error saving reminder'); }
+}
+
+async function deleteReminder(id) {
+  if(!confirm('Delete this reminder?')) return;
+  try {
+    await fetch(BACKEND+'/reminders/'+id, {method:'DELETE', headers:{'x-admin-password':ADMIN_PASS}});
+    await loadReminders();
+  } catch(e) { alert('Error deleting reminder'); }
 }
 </script>
 </body>
