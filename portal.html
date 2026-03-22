@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Documents — TradeDeskNI</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#F5F4EF;color:#1C1C14;min-height:100vh}
+.topbar{background:#1C1C14;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between}
+.brand{color:#fff;font-family:'Playfair Display',serif;font-size:18px;text-decoration:none}
+.green-rule{height:3px;background:#2D6A3F}
+.main{max-width:860px;margin:0 auto;padding:40px 20px}
+.card{background:#fff;border-radius:12px;border:1.5px solid #e0dfd8;padding:40px;max-width:440px;margin:80px auto}
+.card h1{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;color:#1C1C14}
+.card p{color:#6B6B5E;font-size:14px;line-height:1.6;margin-bottom:24px}
+.input{width:100%;border:1.5px solid #e0dfd8;border-radius:8px;padding:12px 16px;font-size:15px;font-family:'DM Sans',sans-serif;background:#fff;color:#1C1C14;outline:none;transition:border .2s}
+.input:focus{border-color:#2D6A3F}
+.btn{background:#1C1C14;color:#fff;border:none;border-radius:8px;padding:13px 28px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;width:100%;margin-top:12px;transition:background .2s}
+.btn:hover{background:#2D6A3F}
+.btn:disabled{background:#ccc;cursor:not-allowed}
+.msg{font-size:13px;margin-top:12px;padding:10px 14px;border-radius:6px;display:none}
+.msg.success{background:#e8f4ec;color:#2D6A3F;display:block}
+.msg.error{background:#fdecea;color:#c0392b;display:block}
+/* PORTAL MAIN */
+.portal-header{margin-bottom:32px}
+.portal-header h1{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:4px}
+.portal-header p{color:#6B6B5E;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+.stat{background:#fff;border-radius:10px;padding:16px 20px;border:1.5px solid #e0dfd8}
+.stat-label{font-size:11px;color:#6B6B5E;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.stat-value{font-family:'Playfair Display',serif;font-size:26px}
+.filter-row{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.filter-btn{background:#fff;border:1.5px solid #e0dfd8;border-radius:6px;padding:6px 14px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;color:#6B6B5E;font-weight:500;transition:all .2s}
+.filter-btn.active{background:#1C1C14;color:#fff;border-color:#1C1C14}
+.doc-grid{display:grid;gap:12px}
+.doc-card{background:#fff;border-radius:10px;border:1.5px solid #e0dfd8;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;transition:border .2s;cursor:pointer}
+.doc-card:hover{border-color:#2D6A3F}
+.doc-left{display:flex;align-items:center;gap:14px}
+.doc-icon{width:40px;height:40px;border-radius:8px;background:#f0efe8;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.doc-name{font-weight:600;font-size:14px;margin-bottom:2px}
+.doc-date{font-size:12px;color:#6B6B5E}
+.doc-excerpt{font-size:12px;color:#9B9B8E;margin-top:2px;max-width:380px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc-right{display:flex;align-items:center;gap:8px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-green{background:#e8f4ec;color:#2D6A3F}
+.badge-orange{background:#fff3e0;color:#e67e22}
+.view-btn{background:#1C1C14;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
+.view-btn:hover{background:#2D6A3F}
+.empty{text-align:center;padding:60px 20px;color:#9B9B8E;font-size:14px}
+.logout-btn{background:transparent;border:1.5px solid rgba(255,255,255,.3);color:rgba(255,255,255,.7);border-radius:6px;padding:6px 14px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer}
+.logout-btn:hover{border-color:#fff;color:#fff}
+#login-view{display:block}
+#portal-view{display:none}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="/">TradeDeskNI</a>
+  <button class="logout-btn" id="logout-btn" style="display:none" onclick="logout()">Sign out</button>
+</div>
+<div class="green-rule"></div>
+
+<!-- LOGIN VIEW -->
+<div id="login-view">
+  <div class="card">
+    <h1>My Documents</h1>
+    <p>Enter your email address and we'll send you a secure link to access your document portal.</p>
+    <input class="input" type="email" id="email-input" placeholder="your@email.com" />
+    <button class="btn" id="login-btn" onclick="requestAccess()">Send access link</button>
+    <div class="msg" id="login-msg"></div>
+  </div>
+</div>
+
+<!-- PORTAL VIEW -->
+<div id="portal-view">
+  <div class="main">
+    <div class="portal-header">
+      <h1 id="biz-name">My Documents</h1>
+      <p id="biz-sub">All your TradeDeskNI documents in one place</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Total Docs</div><div class="stat-value" id="s-total">0</div></div>
+      <div class="stat"><div class="stat-label">This Month</div><div class="stat-value" id="s-month">0</div></div>
+      <div class="stat"><div class="stat-label">Invoices</div><div class="stat-value" id="s-invoices">0</div></div>
+    </div>
+    <div class="filter-row" id="filter-row">
+      <button class="filter-btn active" onclick="filterDocs('all')">All</button>
+      <button class="filter-btn" onclick="filterDocs('quote')">Quotes</button>
+      <button class="filter-btn" onclick="filterDocs('invoice')">Invoices</button>
+      <button class="filter-btn" onclick="filterDocs('rams')">RAMS</button>
+      <button class="filter-btn" onclick="filterDocs('gas_safety')">Gas Safety</button>
+      <button class="filter-btn" onclick="filterDocs('other')">Other</button>
+    </div>
+    <div class="doc-grid" id="doc-grid"><div class="empty">Loading your documents...</div></div>
+  </div>
+</div>
+
+<script>
+const BACKEND='https://tradedeskni-backend-production.up.railway.app';
+let allDocs=[], currentClient=null, currentFilter='all';
+
+const icons={quote:'📋',invoice:'🧾',rams:'⚠️',gas_safety:'🔥',coshh:'☣️',job_report:'📝',payslip:'💷',debt_chaser:'📬',completion_cert:'🏆',variation_order:'🔄'};
+const labels={quote:'Quote',invoice:'Invoice',rams:'RAMS',gas_safety:'Gas Safety Record',coshh:'COSHH',job_report:'Job Report',payslip:'Payslip',debt_chaser:'Debt Chaser',completion_cert:'Completion Certificate',variation_order:'Variation Order'};
+
+// Check for token in URL on load
+window.addEventListener('load',()=>{
+  const params=new URLSearchParams(window.location.search);
+  const token=params.get('token');
+  if(token) verifyToken(token);
+  // Check localStorage for existing session
+  const saved=localStorage.getItem('tdni_client');
+  if(saved && !token){
+    try{
+      currentClient=JSON.parse(saved);
+      showPortal(currentClient);
+    }catch(e){localStorage.removeItem('tdni_client');}
+  }
+});
+
+async function requestAccess(){
+  const email=document.getElementById('email-input').value.trim();
+  if(!email) return showMsg('Please enter your email address','error');
+  const btn=document.getElementById('login-btn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span>Sending...';
+  try{
+    await fetch(BACKEND+'/portal/request-access',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    showMsg('Access link sent! Check your email — it expires in 30 minutes.','success');
+  }catch(e){
+    showMsg('Something went wrong. Please try again.','error');
+  }finally{
+    btn.disabled=false;btn.innerHTML='Send access link';
+  }
+}
+
+async function verifyToken(token){
+  try{
+    const r=await fetch(BACKEND+'/portal/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token})});
+    const d=await r.json();
+    if(!d.success) return showMsg('This link has expired or already been used. Please request a new one.','error');
+    localStorage.setItem('tdni_client',JSON.stringify(d.client));
+    currentClient=d.client;
+    // Clean URL
+    window.history.replaceState({},'','/portal.html');
+    showPortal(d.client);
+  }catch(e){showMsg('Error verifying link. Please try again.','error');}
+}
+
+function showPortal(client){
+  document.getElementById('login-view').style.display='none';
+  document.getElementById('portal-view').style.display='block';
+  document.getElementById('logout-btn').style.display='block';
+  document.getElementById('biz-name').textContent=client.business_name;
+  document.getElementById('biz-sub').textContent=client.contact_name+' · '+client.trade+' · '+(client.region==='ROI'?'Republic of Ireland':'Northern Ireland');
+  loadDocs(client.id);
+}
+
+async function loadDocs(clientId){
+  try{
+    const r=await fetch(BACKEND+'/portal/docs/'+clientId);
+    allDocs=await r.json();
+    updateStats();
+    renderDocs();
+  }catch(e){document.getElementById('doc-grid').innerHTML='<div class="empty">Could not load documents. Please refresh the page.</div>';}
+}
+
+function updateStats(){
+  const now=new Date();
+  const thisMonth=allDocs.filter(d=>{const dt=new Date(d.created_at);return dt.getMonth()===now.getMonth()&&dt.getFullYear()===now.getFullYear();});
+  const invoices=allDocs.filter(d=>d.doc_type==='invoice');
+  document.getElementById('s-total').textContent=allDocs.length;
+  document.getElementById('s-month').textContent=thisMonth.length;
+  document.getElementById('s-invoices').textContent=invoices.length;
+}
+
+function filterDocs(type){
+  currentFilter=type;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderDocs();
+}
+
+function renderDocs(){
+  const filtered=currentFilter==='all'?allDocs:currentFilter==='other'?allDocs.filter(d=>!['quote','invoice','rams','gas_safety'].includes(d.doc_type)):allDocs.filter(d=>d.doc_type===currentFilter);
+  if(!filtered.length){
+    document.getElementById('doc-grid').innerHTML='<div class="empty">No documents found.</div>';
+    return;
+  }
+  document.getElementById('doc-grid').innerHTML=filtered.map(d=>`
+    <div class="doc-card" onclick="viewDoc('${d.id}')">
+      <div class="doc-left">
+        <div class="doc-icon">${icons[d.doc_type]||'📄'}</div>
+        <div>
+          <div class="doc-name">${labels[d.doc_type]||d.doc_type}</div>
+          <div class="doc-date">${new Date(d.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</div>
+          <div class="doc-excerpt">${d.job_details?.substring(0,80)||''}...</div>
+        </div>
+      </div>
+      <div class="doc-right">
+        ${d.doc_type==='invoice'?`<span class="badge ${d.paid?'badge-green':'badge-orange'}">${d.paid?'Paid':'Unpaid'}</span>`:''}
+        <button class="view-btn" onclick="event.stopPropagation();viewDoc('${d.id}')">View</button>
+      </div>
+    </div>`).join('');
+}
+
+function viewDoc(id){
+  const doc=allDocs.find(d=>d.id===id);
+  if(!doc||!doc.doc_html) return alert('Document not available.');
+  const w=window.open('','_blank');
+  w.document.write(doc.doc_html);
+  w.document.close();
+}
+
+function logout(){
+  localStorage.removeItem('tdni_client');
+  currentClient=null;
+  allDocs=[];
+  document.getElementById('login-view').style.display='block';
+  document.getElementById('portal-view').style.display='none';
+  document.getElementById('logout-btn').style.display='none';
+  document.getElementById('email-input').value='';
+  document.getElementById('login-msg').style.display='none';
+}
+
+function showMsg(text,type){
+  const el=document.getElementById('login-msg');
+  el.textContent=text;
+  el.className='msg '+type;
+}
+
+document.getElementById('email-input').addEventListener('keydown',e=>{if(e.key==='Enter') requestAccess();});
+</script>
+</body>
+</html>
