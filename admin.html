@@ -163,7 +163,7 @@ tr:last-child td{border:none}tr:hover td{background:#F5F4EF}
       <div class="page" id="page-jobs">
         <h2>Job History</h2>
         <div class="tw">
-          <table><thead><tr><th>#</th><th>Client</th><th>Document</th><th>Status</th><th>Date</th></tr></thead>
+          <table><thead><tr><th>#</th><th>Client</th><th>Document</th><th>Status</th><th>Date</th><th>Doc</th></tr></thead>
           <tbody id="jobs-table"><tr><td colspan="5" style="text-align:center;padding:32px;color:#6B6B5E">Loading...</td></tr></tbody></table>
         </div>
       </div>
@@ -246,7 +246,16 @@ function renderJobs() {
     <td><strong>${j.clients?.business_name||'—'}</strong></td>
     <td>${dl(j.doc_type)}</td>
     <td><span class="badge">✓ completed</span></td>
-    <td style="color:#6B6B5E;font-size:12px">${dt(j.created_at)}</td></tr>`).join('');
+    <td style="color:#6B6B5E;font-size:12px">${dt(j.created_at)}</td>
+    <td>${j.doc_html?`<button onclick="viewDoc('${j.id}')" class="btn btn-outline" style="font-size:11px;padding:5px 12px">&#128065; View</button>`:'<span style="color:#ccc;font-size:11px">—</span>'}</td></tr>`).join('');
+}
+
+function viewDoc(jobId) {
+  const job = window._jobs.find(j=>j.id===jobId);
+  if(!job||!job.doc_html) return;
+  const w = window.open('','_blank');
+  w.document.write(job.doc_html);
+  w.document.close();
 }
 
 function toggleAddClient() {
