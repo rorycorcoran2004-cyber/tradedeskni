@@ -178,7 +178,7 @@ nav{background:#1C1C14;padding:0 40px;height:52px;display:flex;align-items:cente
     </div>
     <div class="side-divider"></div>
     <div class="side-price">
-      <div class="side-price-val" id="priceDisplay">£250</div>
+      <div class="side-price-val" id="priceDisplay">£149</div>
       <div class="side-price-lbl">per month after free trial</div>
       <div class="side-free">First 2 weeks completely free</div>
     </div>
@@ -253,6 +253,11 @@ function submitForm(){
   });
 }
 
+  const TIER_PRICES = {
+    starter: {ni:'£79', roi:'€79'},
+    pro: {ni:'£149', roi:'€149'},
+    unlimited: {ni:'£249', roi:'€249'}
+  };
   function selectTier(tier) {
     document.getElementById('f-tier').value = tier;
     document.querySelectorAll('.tier-option').forEach(el => {
@@ -262,6 +267,11 @@ function submitForm(){
       const nameEl = el.querySelector('div:first-child');
       if(nameEl) nameEl.style.color = sel ? '#2D6A3F' : '#1C1C14';
     });
+    // Update side price panel
+    const roi = document.getElementById('f-region') && document.getElementById('f-region').value === 'ROI';
+    const p = TIER_PRICES[tier] || TIER_PRICES.pro;
+    const pd = document.getElementById('priceDisplay');
+    if(pd) pd.textContent = roi ? p.roi : p.ni;
   }
   function updateTierPrices(roi) {
     document.getElementById('tp-starter').textContent = roi ? '€79/mo' : '£79/mo';
