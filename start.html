@@ -230,7 +230,8 @@ function submitForm(){
       currency: region === 'ROI' ? '€' : '£',
       address: addr,
       registration: reg,
-      notes: 'Self-signup via tradedeskni.com/start — ' + new Date().toLocaleDateString('en-GB')
+      notes: 'Self-signup via tradedeskni.com/start — ' + new Date().toLocaleDateString('en-GB'),
+      tier: (document.getElementById('f-tier') && document.getElementById('f-tier').value) || 'pro'
     })
   })
   .then(r => r.json())
