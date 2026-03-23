@@ -112,12 +112,23 @@ window.addEventListener('load',()=>{
   const token=params.get('token');
   if(token) verifyToken(token);
   // Check localStorage for existing session
+  // Check localStorage first, then cookie fallback
   const saved=localStorage.getItem('tdni_client');
-  if(saved && !token){
+  const cookieMatch = document.cookie.split(';').find(c=>c.trim().startsWith('tdni_client='));
+  const cookieVal = cookieMatch ? decodeURIComponent(cookieMatch.split('=').slice(1).join('=')) : null;
+  const sessionData = saved || cookieVal;
+  if(sessionData && !token){
     try{
-      currentClient=JSON.parse(saved);
+      currentClient=JSON.parse(sessionData);
+      // Sync both storage methods
+      localStorage.setItem('tdni_client', sessionData);
+      const exp = new Date(Date.now()+365*24*60*60*1000).toUTCString();
+      document.cookie = 'tdni_client='+encodeURIComponent(sessionData)+';expires='+exp+';path=/;SameSite=Lax';
       showPortal(currentClient);
-    }catch(e){localStorage.removeItem('tdni_client');}
+    }catch(e){
+      localStorage.removeItem('tdni_client');
+      document.cookie='tdni_client=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+    }
   }
 });
 
@@ -143,6 +154,9 @@ async function verifyToken(token){
     const d=await r.json();
     if(!d.success) return showMsg('This link has expired or already been used. Please request a new one.','error');
     localStorage.setItem('tdni_client',JSON.stringify(d.client));
+    // Also set a 1-year cookie for cross-browser persistence
+    const exp = new Date(Date.now()+365*24*60*60*1000).toUTCString();
+    document.cookie = 'tdni_client='+encodeURIComponent(JSON.stringify(d.client))+';expires='+exp+';path=/;SameSite=Lax';
     currentClient=d.client;
     // Clean URL
     window.history.replaceState({},'','/portal.html');
@@ -217,6 +231,7 @@ function viewDoc(id){
 
 function logout(){
   localStorage.removeItem('tdni_client');
+  document.cookie='tdni_client=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
   currentClient=null;
   allDocs=[];
   document.getElementById('login-view').style.display='block';
