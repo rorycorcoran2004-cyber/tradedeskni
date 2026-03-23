@@ -120,6 +120,30 @@ nav{background:#1C1C14;padding:0 40px;height:52px;display:flex;align-items:cente
 
       <div class="divider"></div>
 
+      <div class="field">
+        <label>Your Plan</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px" id="tier-selector">
+          <div class="tier-option" data-tier="starter" onclick="selectTier('starter')" style="border:1.5px solid #e0dfd8;border-radius:8px;padding:12px;cursor:pointer;text-align:center;transition:all .2s">
+            <div style="font-weight:600;font-size:14px;color:#1C1C14">Starter</div>
+            <div style="font-size:12px;color:#6B6B5E" id="tp-starter">£79/mo</div>
+            <div style="font-size:11px;color:#9B9B8E;margin-top:2px">10 docs/month</div>
+          </div>
+          <div class="tier-option" data-tier="pro" onclick="selectTier('pro')" style="border:2px solid #2D6A3F;border-radius:8px;padding:12px;cursor:pointer;text-align:center;background:#f0f9f2;transition:all .2s">
+            <div style="font-weight:600;font-size:14px;color:#2D6A3F">Pro ⭐</div>
+            <div style="font-size:12px;color:#2D6A3F" id="tp-pro">£149/mo</div>
+            <div style="font-size:11px;color:#2D6A3F;margin-top:2px">Unlimited</div>
+          </div>
+          <div class="tier-option" data-tier="unlimited" onclick="selectTier('unlimited')" style="border:1.5px solid #e0dfd8;border-radius:8px;padding:12px;cursor:pointer;text-align:center;transition:all .2s">
+            <div style="font-weight:600;font-size:14px;color:#1C1C14">Unlimited</div>
+            <div style="font-size:12px;color:#6B6B5E" id="tp-unlimited">£249/mo</div>
+            <div style="font-size:11px;color:#9B9B8E;margin-top:2px">+ WhatsApp</div>
+          </div>
+        </div>
+        <input type="hidden" id="f-tier" value="pro">
+      </div>
+
+      <div class="divider"></div>
+
       <button class="submit-btn" id="f-btn" onclick="submitForm()">Start my free trial →</button>
       <p class="fine">No card required · No contract · First 2 weeks completely free</p>
       <div class="status" id="f-status"></div>
@@ -227,6 +251,28 @@ function submitForm(){
     btn.textContent = 'Start my free trial →';
   });
 }
+
+  function selectTier(tier) {
+    document.getElementById('f-tier').value = tier;
+    document.querySelectorAll('.tier-option').forEach(el => {
+      const sel = el.dataset.tier === tier;
+      el.style.border = sel ? '2px solid #2D6A3F' : '1.5px solid #e0dfd8';
+      el.style.background = sel ? '#f0f9f2' : '';
+      const nameEl = el.querySelector('div:first-child');
+      if(nameEl) nameEl.style.color = sel ? '#2D6A3F' : '#1C1C14';
+    });
+  }
+  function updateTierPrices(roi) {
+    document.getElementById('tp-starter').textContent = roi ? '€79/mo' : '£79/mo';
+    document.getElementById('tp-pro').textContent = roi ? '€149/mo' : '£149/mo';
+    document.getElementById('tp-unlimited').textContent = roi ? '€249/mo' : '£249/mo';
+  }
+  // Pre-select tier from URL
+  window.addEventListener('load', () => {
+    const t = new URLSearchParams(window.location.search).get('tier');
+    if(t && ['starter','pro','unlimited'].includes(t)) selectTier(t);
+    else selectTier('pro');
+  });
 </script>
 </body>
 </html>
