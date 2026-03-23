@@ -485,47 +485,95 @@ footer{background:#111209;padding:28px 40px;display:flex;justify-content:space-b
 </section>
 
 <!-- PRICING -->
-<section class="pricing-section" id="pricing">
-  <div class="section-label" style="color:#2D6A3F;">Pricing</div>
-  <h2 class="pricing-title">One flat fee.<br>Unlimited documents.</h2>
-  <p class="pricing-sub">No setup fees. No per-document charges. No contract.</p>
-  <div class="pricing-grid">
-    <div class="pc">
-      <div class="pc-flag">🇬🇧</div>
-      <div class="pc-reg">Northern Ireland</div>
-      <div class="pc-price">£250</div>
-      <div class="pc-per">per month · no contract</div>
-      <ul class="pc-feats">
-        <li>Unlimited quotes, invoices &amp; RAMS</li>
-        <li>Gas Safe NI recognised</li>
-        <li>NICEIC electrical compliance</li>
-        <li>Documents in seconds</li>
-        <li>Your branding on every document</li>
-        <li>Cancel anytime</li>
-      </ul>
-      <a href="/start.html" class="pc-btn">Start free trial →</a>
-      <p class="pc-note">First 2 weeks free — no card needed</p>
-    </div>
-    <div class="pc">
-      <div class="pc-flag">🇮🇪</div>
-      <div class="pc-reg">Republic of Ireland</div>
-      <div class="pc-price">€250</div>
-      <div class="pc-per">per month · no contract</div>
-      <ul class="pc-feats">
-        <li>Unlimited quotes, invoices &amp; RAMS</li>
-        <li>RGI &amp; RECI recognised</li>
-        <li>VAT 23% applied automatically</li>
-        <li>Documents in seconds</li>
-        <li>Your branding on every document</li>
-        <li>Cancel anytime</li>
-      </ul>
-      <a href="/start.html" class="pc-btn">Start free trial →</a>
-      <p class="pc-note">First 2 weeks free — no card needed</p>
-    </div>
-  </div>
-</section>
+  <section id="pricing" style="background:#F5F4EF;padding:80px 24px">
+    <div style="max-width:1060px;margin:0 auto;text-align:center">
+      <p style="color:#2D6A3F;font-size:12px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px">Pricing</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:38px;color:#1C1C14;margin-bottom:12px">Simple, honest pricing.</h2>
+      <p style="color:#6B6B5E;font-size:16px;margin-bottom:48px">First 2 weeks free on any plan. No contract, cancel anytime.</p>
 
-<!-- FAQ -->
+      <!-- Region toggle -->
+      <div style="display:inline-flex;background:#e0dfd8;border-radius:8px;padding:4px;margin-bottom:40px">
+        <button onclick="setPriceRegion('ni')" id="btn-ni" style="background:#1C1C14;color:#fff;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer">🇬🇧 NI — £</button>
+        <button onclick="setPriceRegion('roi')" id="btn-roi" style="background:transparent;color:#6B6B5E;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer">🇮🇪 ROI — €</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:1000px;margin:0 auto">
+
+        <!-- STARTER -->
+        <div style="background:#fff;border-radius:14px;border:1.5px solid #e0dfd8;padding:32px 28px;text-align:left">
+          <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#6B6B5E;margin-bottom:8px">Starter</p>
+          <div style="margin-bottom:4px"><span class="price-ni" style="font-family:'Playfair Display',serif;font-size:42px;color:#1C1C14">£79</span><span class="price-roi" style="font-family:'Playfair Display',serif;font-size:42px;color:#1C1C14;display:none">€79</span><span style="color:#6B6B5E;font-size:14px">/month</span></div>
+          <p style="color:#6B6B5E;font-size:13px;margin-bottom:24px">Up to 10 documents a month</p>
+          <a href="/start.html?tier=starter" style="display:block;background:#1C1C14;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;margin-bottom:24px">Start free trial</a>
+          <div style="border-top:1px solid #e0dfd8;padding-top:20px">
+            <p style="font-size:12px;color:#1C1C14;font-weight:600;margin-bottom:12px">INCLUDES</p>
+            <ul style="list-style:none;padding:0;margin:0">
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Up to 10 documents/month</li>
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Quotes &amp; invoices</li>
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Job reports &amp; certs</li>
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Email delivery</li>
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Client portal</li>
+              <li style="font-size:13px;color:#9B9B8E;padding:5px 0">✗ RAMS &amp; gas certs</li>
+              <li style="font-size:13px;color:#9B9B8E;padding:5px 0">✗ Auto invoice chasers</li>
+              <li style="font-size:13px;color:#9B9B8E;padding:5px 0">✗ Service reminders</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- PRO — highlighted -->
+        <div style="background:#1C1C14;border-radius:14px;border:2px solid #2D6A3F;padding:32px 28px;text-align:left;position:relative">
+          <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#2D6A3F;color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:20px">MOST POPULAR</div>
+          <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px">Pro</p>
+          <div style="margin-bottom:4px"><span class="price-ni" style="font-family:'Playfair Display',serif;font-size:42px;color:#fff">£149</span><span class="price-roi" style="font-family:'Playfair Display',serif;font-size:42px;color:#fff;display:none">€149</span><span style="color:rgba(255,255,255,.5);font-size:14px">/month</span></div>
+          <p style="color:rgba(255,255,255,.5);font-size:13px;margin-bottom:24px">Unlimited documents</p>
+          <a href="/start.html?tier=pro" style="display:block;background:#2D6A3F;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;margin-bottom:24px">Start free trial</a>
+          <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:20px">
+            <p style="font-size:12px;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:12px">INCLUDES</p>
+            <ul style="list-style:none;padding:0;margin:0">
+              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ Unlimited documents</li>
+              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ All 10 document types</li>
+              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ RAMS &amp; gas safety certs</li>
+              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ COSHH &amp; payslips</li>
+              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ Auto invoice chasers</li>
+              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ Recurring reminders</li>
+              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ Client portal</li>
+              <li style="font-size:13px;color:rgba(255,255,255,.5);padding:5px 0">✗ WhatsApp automation</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- UNLIMITED -->
+        <div style="background:#fff;border-radius:14px;border:1.5px solid #e0dfd8;padding:32px 28px;text-align:left">
+          <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#6B6B5E;margin-bottom:8px">Unlimited</p>
+          <div style="margin-bottom:4px"><span class="price-ni" style="font-family:'Playfair Display',serif;font-size:42px;color:#1C1C14">£249</span><span class="price-roi" style="font-family:'Playfair Display',serif;font-size:42px;color:#1C1C14;display:none">€249</span><span style="color:#6B6B5E;font-size:14px">/month</span></div>
+          <p style="color:#6B6B5E;font-size:13px;margin-bottom:24px">Everything, no limits</p>
+          <a href="/start.html?tier=unlimited" style="display:block;background:#1C1C14;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;margin-bottom:24px">Start free trial</a>
+          <div style="border-top:1px solid #e0dfd8;padding-top:20px">
+            <p style="font-size:12px;color:#1C1C14;font-weight:600;margin-bottom:12px">INCLUDES</p>
+            <ul style="list-style:none;padding:0;margin:0">
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Everything in Pro</li>
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ WhatsApp automation</li>
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Same-day guarantee</li>
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ First in queue</li>
+              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Dedicated support line</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <p style="color:#9B9B8E;font-size:13px;margin-top:32px">All plans include a 14-day free trial. No card required. NI prices in £, ROI prices in €.</p>
+    </div>
+  </section>
+  <script>
+  function setPriceRegion(r){
+    document.querySelectorAll('.price-ni').forEach(el=>el.style.display=r==='ni'?'':'none');
+    document.querySelectorAll('.price-roi').forEach(el=>el.style.display=r==='roi'?'':'none');
+    document.getElementById('btn-ni').style.cssText=r==='ni'?'background:#1C1C14;color:#fff;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer':'background:transparent;color:#6B6B5E;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer';
+    document.getElementById('btn-roi').style.cssText=r==='roi'?'background:#1C1C14;color:#fff;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer':'background:transparent;color:#6B6B5E;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer';
+  }
+  </script>
+  <!-- FAQ -->
 <section class="faq-section">
   <div class="section-label">Questions</div>
   <h2 class="faq-title">Common questions</h2>
