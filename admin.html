@@ -169,7 +169,390 @@ tr:last-child td{border:none}tr:hover td{background:#F5F4EF}
       </div>
 
     </div>
+  
+  <!-- PROSPECTS TAB -->
+  <div id="tab-prospects" class="tab-content" style="display:none">
+    <div style="background:#fff;border-radius:12px;border:1px solid #e0dfd8;padding:24px;margin-bottom:20px">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:16px">🎯 Prospect Scanner</h3>
+      <p style="color:#6B6B5E;font-size:13px;margin-bottom:16px">Search Google Maps for tradespeople in NI — pulls name, phone, email, website automatically.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;margin-bottom:12px;align-items:end">
+        <div>
+          <label style="font-size:11px;color:#6B6B5E;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:4px">Trade</label>
+          <select id="ps-trade" style="width:100%;padding:9px 12px;border:1.5px solid #e0dfd8;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif">
+            <option value="electrician">Electrician</option>
+            <option value="plumber">Plumber</option>
+            <option value="gas engineer">Gas Engineer</option>
+            <option value="roofer">Roofer</option>
+            <option value="bricklayer">Bricklayer</option>
+            <option value="carpenter joiner">Carpenter / Joiner</option>
+            <option value="landscaper">Landscaper</option>
+            <option value="painter decorator">Painter / Decorator</option>
+            <option value="plasterer">Plasterer</option>
+            <option value="tiler">Tiler</option>
+            <option value="boiler engineer">Boiler Engineer</option>
+            <option value="solar panel installer">Solar Panel Installer</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px;color:#6B6B5E;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:4px">Town</label>
+          <select id="ps-town" style="width:100%;padding:9px 12px;border:1.5px solid #e0dfd8;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif">
+            <option value="Belfast">Belfast</option>
+            <option value="Derry">Derry / Londonderry</option>
+            <option value="Newry">Newry</option>
+            <option value="Armagh">Armagh</option>
+            <option value="Ballymena">Ballymena</option>
+            <option value="Lisburn">Lisburn</option>
+            <option value="Antrim">Antrim</option>
+            <option value="Bangor">Bangor</option>
+            <option value="Omagh">Omagh</option>
+            <option value="Enniskillen">Enniskillen</option>
+            <option value="Cookstown">Cookstown</option>
+            <option value="Dungannon">Dungannon</option>
+            <option value="Strabane">Strabane</option>
+            <option value="Coleraine">Coleraine</option>
+            <option value="Larne">Larne</option>
+            <option value="Downpatrick">Downpatrick</option>
+            <option value="Portadown">Portadown</option>
+            <option value="Lurgan">Lurgan</option>
+            <option value="Fermanagh">Fermanagh</option>
+            <option value="Monaghan">Monaghan</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px;color:#6B6B5E;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:4px">Max Results</label>
+          <select id="ps-limit" style="width:100%;padding:9px 12px;border:1.5px solid #e0dfd8;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="40">40</option>
+          </select>
+        </div>
+        <button onclick="scanProspects()" id="ps-btn" style="background:#2D6A3F;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap">Scan Now</button>
+      </div>
+
+      <div id="ps-status" style="font-size:13px;color:#6B6B5E;min-height:20px;margin-bottom:8px"></div>
+      <div id="ps-preview" style="display:none;margin-bottom:12px">
+        <div id="ps-preview-list" style="max-height:300px;overflow-y:auto;border:1px solid #e0dfd8;border-radius:8px"></div>
+        <div style="margin-top:10px;display:flex;gap:10px">
+          <button onclick="saveAllProspects()" style="background:#1C1C14;color:#fff;border:none;border-radius:7px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer">Save All to Prospects</button>
+          <button onclick="exportProspectsCSV()" style="background:#fff;color:#1C1C14;border:1.5px solid #e0dfd8;border-radius:7px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer">Export CSV</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saved Prospects List -->
+    <div style="background:#fff;border-radius:12px;border:1px solid #e0dfd8;padding:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h3 style="font-family:'Playfair Display',serif;font-size:18px;margin:0">Saved Prospects</h3>
+        <div style="display:flex;gap:8px">
+          <select id="pf-status" onchange="filterProspects()" style="padding:7px 10px;border:1.5px solid #e0dfd8;border-radius:6px;font-size:13px">
+            <option value="">All</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="replied">Replied</option>
+            <option value="converted">Converted</option>
+            <option value="not_interested">Not Interested</option>
+          </select>
+          <button onclick="exportSavedProspectsCSV()" style="background:#fff;color:#1C1C14;border:1.5px solid #e0dfd8;border-radius:6px;padding:7px 14px;font-size:13px;cursor:pointer">Export CSV</button>
+        </div>
+      </div>
+      <div id="prospects-list">
+        <p style="color:#9B9B8E;font-size:13px">Loading prospects...</p>
+      </div>
+    </div>
   </div>
+
+  <!-- Message Modal -->
+  <div id="msg-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center">
+    <div style="background:#fff;border-radius:14px;padding:28px;max-width:520px;width:90%;position:relative">
+      <button onclick="document.getElementById('msg-modal').style.display='none'" style="position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:#6B6B5E">×</button>
+      <h3 style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:6px">WhatsApp Message</h3>
+      <p id="msg-prospect-name" style="color:#6B6B5E;font-size:13px;margin-bottom:16px"></p>
+      <div id="msg-loading" style="color:#6B6B5E;font-size:13px;padding:20px 0;text-align:center">Generating message...</div>
+      <textarea id="msg-text" style="display:none;width:100%;min-height:140px;padding:12px;border:1.5px solid #e0dfd8;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;resize:vertical;box-sizing:border-box;line-height:1.6"></textarea>
+      <div id="msg-actions" style="display:none;margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="copyMessage()" style="background:#2D6A3F;color:#fff;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer">Copy Message</button>
+        <button onclick="regenerateMessage()" style="background:#fff;color:#1C1C14;border:1.5px solid #e0dfd8;border-radius:7px;padding:9px 18px;font-size:13px;cursor:pointer">Regenerate</button>
+        <button onclick="markContacted()" style="background:#fff;color:#2D6A3F;border:1.5px solid #2D6A3F;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer">Mark as Contacted</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ── PROSPECT SCANNER ──────────────────────────────────────────────────────
+  let scannedProspects = [];
+  let currentProspectId = null;
+
+  async function scanProspects() {
+    const trade = document.getElementById('ps-trade').value;
+    const town = document.getElementById('ps-town').value;
+    const limit = parseInt(document.getElementById('ps-limit').value);
+    const btn = document.getElementById('ps-btn');
+    const status = document.getElementById('ps-status');
+
+    btn.disabled = true;
+    btn.textContent = 'Scanning...';
+    status.textContent = `Scanning Google Maps for ${trade}s in ${town}...`;
+    scannedProspects = [];
+
+    // Open a hidden iframe to scrape Google Maps
+    const query = encodeURIComponent(`${trade} ${town} Northern Ireland`);
+    const url = `https://www.google.com/maps/search/${query}`;
+
+    // Use fetch via background script approach — scrape via Maps embed
+    try {
+      const results = await scrapeGoogleMaps(trade, town, limit);
+      scannedProspects = results;
+
+      if (results.length === 0) {
+        status.textContent = 'No results found. Try a different trade or town.';
+      } else {
+        status.textContent = `Found ${results.length} prospects. Review below then save.`;
+        renderPreview(results);
+        document.getElementById('ps-preview').style.display = 'block';
+      }
+    } catch(e) {
+      status.textContent = 'Scan error: ' + e.message;
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Scan Now';
+  }
+
+  async function scrapeGoogleMaps(trade, town, limit) {
+    return new Promise((resolve, reject) => {
+      const status = document.getElementById('ps-status');
+      // Navigate the main page in background — use a new window approach
+      const w = window.open(`https://www.google.com/maps/search/${encodeURIComponent(trade+' '+town+' Northern Ireland')}`, '_gmaps_scrape', 'width=1,height=1,left=-1000,top=-1000');
+      
+      let attempts = 0;
+      const poll = setInterval(() => {
+        attempts++;
+        status.textContent = `Scanning Google Maps... (${attempts}s)`;
+        try {
+          if (!w || w.closed) { clearInterval(poll); reject(new Error('Window closed')); return; }
+          
+          const results = [];
+          try {
+            const items = w.document.querySelectorAll('.Nv2PK');
+            items.forEach(el => {
+              const name = el.querySelector('.qBF1Pd')?.innerText?.trim() || '';
+              const phone = el.innerText.match(/07[\d ]{9,10}/)?.[0]?.trim() || '';
+              const website = el.querySelector('a[href*="http"]')?.href || '';
+              const rating = el.innerText.match(/(\d\.\d)/)?.[1] || '';
+              const reviews = el.innerText.match(/\((\d+)\)/)?.[1] || '';
+              const addr = el.querySelector('.W4Efsd span')?.innerText?.trim() || '';
+              if (name) results.push({
+                business_name: name, phone, website: website.includes('google.com') ? '' : website,
+                rating: rating ? parseFloat(rating) : null, review_count: reviews ? parseInt(reviews) : null,
+                trade, town, email: '', address: addr
+              });
+            });
+          } catch(e) {}
+
+          if (results.length >= 3 || attempts >= 12) {
+            clearInterval(poll);
+            w.close();
+            resolve(results.slice(0, limit));
+          }
+        } catch(e) {
+          // CORS — try waiting more
+          if(attempts >= 15) { clearInterval(poll); w.close(); reject(new Error('Google Maps blocked cross-origin access. Use the manual scan button instead.')); }
+        }
+      }, 1000);
+    });
+  }
+
+  function renderPreview(results) {
+    const list = document.getElementById('ps-preview-list');
+    list.innerHTML = results.map((p, i) => `
+      <div style="padding:10px 14px;border-bottom:1px solid #f0efe9;display:flex;align-items:center;gap:12px">
+        <input type="checkbox" id="pc-${i}" checked style="width:16px;height:16px;cursor:pointer">
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:13px;color:#1C1C14">${p.business_name}</div>
+          <div style="font-size:12px;color:#6B6B5E;margin-top:2px">
+            ${p.phone ? '📞 '+p.phone : '<span style="color:#ccc">No phone</span>'}
+            ${p.website ? ' · 🌐 <a href="'+p.website+'" target="_blank" style="color:#2D6A3F;text-decoration:none">website</a>' : ''}
+            ${p.rating ? ' · ⭐ '+p.rating : ''}
+            ${p.review_count ? ' ('+p.review_count+')' : ''}
+          </div>
+        </div>
+        <span style="font-size:11px;background:#f0efe9;padding:3px 8px;border-radius:10px;color:#6B6B5E">${p.trade}</span>
+      </div>
+    `).join('');
+  }
+
+  async function saveAllProspects() {
+    const checked = scannedProspects.filter((_, i) => document.getElementById(`pc-${i}`)?.checked);
+    if (!checked.length) return alert('No prospects selected');
+
+    const res = await fetch(BACKEND + '/prospects/bulk', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prospects: checked })
+    });
+    const data = await res.json();
+    document.getElementById('ps-status').textContent = `✅ Saved ${data.saved || checked.length} prospects.`;
+    document.getElementById('ps-preview').style.display = 'none';
+    loadProspects();
+  }
+
+  function exportProspectsCSV() {
+    if (!scannedProspects.length) return;
+    const headers = ['Business Name', 'Phone', 'Email', 'Website', 'Trade', 'Town', 'Rating', 'Reviews'];
+    const rows = scannedProspects.map(p => [p.business_name, p.phone, p.email, p.website, p.trade, p.town, p.rating, p.review_count]);
+    downloadCSV(headers, rows, 'prospects_scan.csv');
+  }
+
+  // ── SAVED PROSPECTS ───────────────────────────────────────────────────────
+  let allProspects = [];
+
+  async function loadProspects() {
+    const res = await fetch(BACKEND + '/prospects');
+    allProspects = await res.json();
+    renderProspects(allProspects);
+  }
+
+  function filterProspects() {
+    const status = document.getElementById('pf-status').value;
+    const filtered = status ? allProspects.filter(p => p.status === status) : allProspects;
+    renderProspects(filtered);
+  }
+
+  const STATUS_COLORS = {
+    new: '#e0dfd8', contacted: '#FFF3CD', replied: '#CCE5FF', 
+    converted: '#D4EDDA', not_interested: '#F8D7DA'
+  };
+  const STATUS_TEXT = {
+    new: '#6B6B5E', contacted: '#856404', replied: '#004085',
+    converted: '#155724', not_interested: '#721C24'
+  };
+
+  function renderProspects(prospects) {
+    const el = document.getElementById('prospects-list');
+    if (!prospects.length) { el.innerHTML = '<p style="color:#9B9B8E;font-size:13px">No prospects yet. Use the scanner above to find tradespeople.</p>'; return; }
+
+    el.innerHTML = `
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="border-bottom:2px solid #e0dfd8">
+            <th style="text-align:left;padding:8px 10px;color:#6B6B5E;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px">Business</th>
+            <th style="text-align:left;padding:8px 10px;color:#6B6B5E;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px">Phone</th>
+            <th style="text-align:left;padding:8px 10px;color:#6B6B5E;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px">Email</th>
+            <th style="text-align:left;padding:8px 10px;color:#6B6B5E;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px">Trade</th>
+            <th style="text-align:left;padding:8px 10px;color:#6B6B5E;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px">Town</th>
+            <th style="text-align:left;padding:8px 10px;color:#6B6B5E;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px">Status</th>
+            <th style="text-align:left;padding:8px 10px;color:#6B6B5E;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${prospects.map(p => `
+          <tr style="border-bottom:1px solid #f0efe9">
+            <td style="padding:10px 10px">
+              <div style="font-weight:600;color:#1C1C14">${p.business_name}</div>
+              ${p.rating ? '<div style="font-size:11px;color:#9B9B8E">⭐ '+p.rating+(p.review_count?' ('+p.review_count+')':'')+'</div>' : ''}
+              ${p.website ? '<a href="'+p.website+'" target="_blank" style="font-size:11px;color:#2D6A3F">website</a>' : ''}
+            </td>
+            <td style="padding:10px">${p.phone || '<span style="color:#ccc">—</span>'}</td>
+            <td style="padding:10px">${p.email ? '<a href="mailto:'+p.email+'" style="color:#2D6A3F">'+p.email+'</a>' : '<span style="color:#ccc">—</span>'}</td>
+            <td style="padding:10px">${p.trade || '—'}</td>
+            <td style="padding:10px">${p.town || '—'}</td>
+            <td style="padding:10px">
+              <select onchange="updateProspectStatus('${p.id}', this.value)" style="padding:4px 8px;border-radius:12px;border:none;font-size:11px;font-weight:600;background:${STATUS_COLORS[p.status]||'#e0dfd8'};color:${STATUS_TEXT[p.status]||'#6B6B5E'};cursor:pointer">
+                <option value="new" ${p.status==='new'?'selected':''}>New</option>
+                <option value="contacted" ${p.status==='contacted'?'selected':''}>Contacted</option>
+                <option value="replied" ${p.status==='replied'?'selected':''}>Replied</option>
+                <option value="converted" ${p.status==='converted'?'selected':''}>Converted ✅</option>
+                <option value="not_interested" ${p.status==='not_interested'?'selected':''}>Not Interested</option>
+              </select>
+            </td>
+            <td style="padding:10px">
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <button onclick="generateMessage('${p.id}','${p.business_name.replace(/'/g,"\'")}','${p.phone||''}')" style="background:#2D6A3F;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer">💬 Message</button>
+                ${p.phone ? '<a href="https://wa.me/44'+p.phone.replace(/\D/g,'').replace(/^0/,'')+'" target="_blank" style="background:#25D366;color:#fff;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;text-decoration:none">WhatsApp</a>' : ''}
+                ${p.email ? '<a href="mailto:'+p.email+'" style="background:#1C1C14;color:#fff;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;text-decoration:none">Email</a>' : ''}
+                <button onclick="deleteProspect('${p.id}')" style="background:none;border:1px solid #e0dfd8;color:#9B9B8E;border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer">🗑</button>
+              </div>
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  async function updateProspectStatus(id, status) {
+    await fetch(BACKEND + '/prospects/' + id, {
+      method: 'PATCH', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ status })
+    });
+    loadProspects();
+  }
+
+  async function deleteProspect(id) {
+    if (!confirm('Delete this prospect?')) return;
+    await fetch(BACKEND + '/prospects/' + id, { method: 'DELETE' });
+    loadProspects();
+  }
+
+  async function generateMessage(id, name, phone) {
+    currentProspectId = id;
+    const modal = document.getElementById('msg-modal');
+    modal.style.display = 'flex';
+    document.getElementById('msg-prospect-name').textContent = name + (phone ? ' · ' + phone : '');
+    document.getElementById('msg-loading').style.display = 'block';
+    document.getElementById('msg-text').style.display = 'none';
+    document.getElementById('msg-actions').style.display = 'none';
+
+    const res = await fetch(BACKEND + '/prospects/' + id + '/message', { method: 'POST' });
+    const data = await res.json();
+
+    document.getElementById('msg-loading').style.display = 'none';
+    document.getElementById('msg-text').style.display = 'block';
+    document.getElementById('msg-text').value = data.message || 'Error generating message';
+    document.getElementById('msg-actions').style.display = 'flex';
+  }
+
+  async function regenerateMessage() {
+    if (currentProspectId) generateMessage(currentProspectId, document.getElementById('msg-prospect-name').textContent.split(' · ')[0], '');
+  }
+
+  function copyMessage() {
+    const text = document.getElementById('msg-text').value;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('#msg-actions button');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy Message', 2000);
+    });
+  }
+
+  async function markContacted() {
+    if (currentProspectId) {
+      await updateProspectStatus(currentProspectId, 'contacted');
+      document.getElementById('msg-modal').style.display = 'none';
+    }
+  }
+
+  function exportSavedProspectsCSV() {
+    const headers = ['Business Name','Phone','Email','Website','Trade','Town','Rating','Reviews','Status'];
+    const rows = allProspects.map(p => [p.business_name,p.phone,p.email,p.website,p.trade,p.town,p.rating,p.review_count,p.status]);
+    downloadCSV(headers, rows, 'tradedeskni_prospects.csv');
+  }
+
+  function downloadCSV(headers, rows, filename) {
+    const csv = [headers, ...rows].map(r => r.map(v => '"'+(v||'').toString().replace(/"/g,'""')+'"').join(',')).join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = filename;
+    a.click();
+  }
+
+  // Load prospects when tab is switched to
+  const origSwitch = window.switchTab;
+  window.switchTab = function(tab) {
+    if (origSwitch) origSwitch(tab);
+    if (tab === 'prospects') loadProspects();
+  };
+  </script>
+
+</div>
 </div>
 
 <script>
