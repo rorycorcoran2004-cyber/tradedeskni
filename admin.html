@@ -713,53 +713,40 @@ async function scanProspects() {
   const btn = document.getElementById('ps-btn');
   const status = document.getElementById('ps-status');
   btn.disabled = true; btn.textContent = 'Scanning...';
-  status.innerHTML = `Scanning Google Maps for <strong>${trade}s in ${town}</strong>...`;
+  status.innerHTML = `Scanning for <strong>${trade}s in ${town}</strong>...`;
   scannedProspects = [];
+  document.getElementById('ps-preview').style.display = 'none';
 
-  const url = `https://www.google.com/maps/search/${encodeURIComponent(trade+' '+town+' Northern Ireland')}`;
-  const w = window.open(url, '_gmaps', 'width=900,height=600,left=100,top=100');
-  if (!w) { status.textContent = 'Popup blocked — please allow popups for admin.tradedeskni.com'; btn.disabled=false; btn.textContent='Scan Now'; return; }
+  try {
+    const res = await fetch(BACKEND + '/prospects/scan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASS },
+      body: JSON.stringify({ trade, town, limit })
+    });
+    const data = await res.json();
 
-  let attempts = 0;
-  const poll = setInterval(() => {
-    attempts++;
-    status.innerHTML = `Scanning... <span style="color:#9B9B8E">(${attempts}s)</span>`;
-    try {
-      const items = w.document.querySelectorAll('.Nv2PK');
-      const results = [];
-      items.forEach(el => {
-        const name = el.querySelector('.qBF1Pd')?.innerText?.trim() || '';
-        const phone = (el.innerText.match(/07[\d ]{9,10}/) || [])[0]?.trim() || '';
-        const links = [...el.querySelectorAll('a[href]')].map(a => a.href).filter(h => !h.includes('google.com') && h.startsWith('http'));
-        const website = links[0] || '';
-        const rating = (el.innerText.match(/(\d\.\d)/) || [])[1] || '';
-        const reviews = (el.innerText.match(/\((\d+)\)/) || [])[1] || '';
-        if (name) results.push({business_name:name, phone, website, email:'',
-          rating: rating ? parseFloat(rating) : null, review_count: reviews ? parseInt(reviews) : null,
-          trade, town, region:'NI'});
-      });
-      if (results.length >= 3 || attempts >= 15) {
-        clearInterval(poll);
-        try { w.close(); } catch(e){}
-        scannedProspects = results.slice(0, limit);
-        if (!scannedProspects.length) {
-          status.textContent = 'No results found. Make sure popups are allowed and try again.';
-        } else {
-          status.innerHTML = `Found <strong>${scannedProspects.length} prospects</strong>. Review and save below.`;
-          renderPreview(scannedProspects);
-          document.getElementById('ps-preview').style.display = 'block';
-        }
-        btn.disabled=false; btn.textContent='Scan Now';
+    if (!res.ok) {
+      if (data.setup_url) {
+        status.innerHTML = `⚠️ Google Places API key needed. <a href="${data.setup_url}" target="_blank" style="color:#2D6A3F">Set it up here</a> then add <strong>GOOGLE_PLACES_API_KEY</strong> to Railway environment variables.`;
+      } else {
+        status.textContent = 'Error: ' + (data.error || 'Unknown error');
       }
-    } catch(e) {
-      if(attempts >= 18) {
-        clearInterval(poll);
-        try { w.close(); } catch(ex){}
-        status.textContent = 'Scan timed out. Google Maps may have blocked the request — try again in a minute.';
-        btn.disabled=false; btn.textContent='Scan Now';
-      }
+      btn.disabled = false; btn.textContent = 'Scan Now';
+      return;
     }
-  }, 1000);
+
+    scannedProspects = data.results || [];
+    if (!scannedProspects.length) {
+      status.textContent = 'No results found. Try a different trade or town.';
+    } else {
+      status.innerHTML = `Found <strong>${scannedProspects.length} prospects</strong>. Review and save below.`;
+      renderPreview(scannedProspects);
+      document.getElementById('ps-preview').style.display = 'block';
+    }
+  } catch(e) {
+    status.textContent = 'Scan failed: ' + e.message;
+  }
+  btn.disabled = false; btn.textContent = 'Scan Now';
 }
 
 function renderPreview(results) {
