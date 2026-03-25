@@ -431,7 +431,7 @@ function renderJobs() {
     <td>${dl(j.doc_type)}</td>
     <td><span class="badge">✓ completed</span></td>
     <td style="color:#6B6B5E;font-size:12px">${dt(j.created_at)}</td>
-    <td>${j.doc_html?`<button onclick="viewDoc('${j.id}')" class="btn btn-outline" style="font-size:11px;padding:5px 12px">&#128065; View</button>`:'<span style="color:#ccc;font-size:11px">—</span>'}</td>
+    <td>${j.doc_html?`<button onclick="viewDoc('${j.id}')" class="btn btn-outline" style="font-size:11px;padding:5px 12px">&#128065; View</button> <a href="${BACKEND}/jobs/${j.id}/pdf" target="_blank" download style="background:#2D6A3F;color:#fff;border-radius:5px;padding:5px 10px;font-size:11px;text-decoration:none;display:inline-block">⬇ PDF</a>`:'<span style="color:#ccc;font-size:11px">—</span>'}</td>
     <td>${j.doc_type==='invoice'?(j.paid?'<span style="color:#2D6A3F;font-size:12px;font-weight:600">✓ Paid</span>':`<button onclick="markPaid('${j.id}')" class="btn btn-outline" style="font-size:11px;padding:5px 12px;border-color:#e0dfd8;color:#6B6B5E">Mark Paid</button>`):'<span style="color:#e0dfd8;font-size:11px">—</span>'}</td></tr>`).join('');
 }
 
