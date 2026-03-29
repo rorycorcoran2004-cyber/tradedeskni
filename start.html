@@ -190,8 +190,8 @@ nav{background:#1C1C14;padding:0 40px;height:52px;display:flex;align-items:cente
 const BACKEND = 'https://tradedeskni-backend-production.up.railway.app';
 
 function updateCurrency(){
-  const region = document.getElementById('f-region').value;
-  document.getElementById('priceDisplay').textContent = region === 'ROI' ? '€250' : '£250';
+  const tier = document.getElementById('f-tier').value || 'pro';
+  selectTier(tier);
 }
 
 function submitForm(){
