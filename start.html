@@ -191,6 +191,8 @@ const BACKEND = 'https://tradedeskni-backend-production.up.railway.app';
 
 function updateCurrency(){
   const tier = document.getElementById('f-tier').value || 'pro';
+  const roi = document.getElementById('f-region').value === 'ROI';
+  updateTierPrices(roi);
   selectTier(tier);
 }
 
