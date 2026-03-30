@@ -4,260 +4,782 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TradeDeskNI — Trades Paperwork, Done For You</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;color:#1C1C14;background:#F5F4EF;}
-a{text-decoration:none;color:inherit;}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: #F5F4EF; color: #1C1C14; }
+a { text-decoration: none; color: inherit; }
 
-nav{background:#1C1C14;padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.nav-brand{font-family:'Playfair Display',serif;font-size:20px;color:#fff;}
-.nav-links{display:flex;align-items:center;gap:28px;}
-.nav-links a{font-size:13px;color:rgba(255,255,255,.5);transition:color .2s;}
-.nav-links a:hover{color:#fff;}
-.nav-cta{background:#2D6A3F;color:#fff!important;padding:8px 20px;border-radius:6px;font-weight:600;}
-.green-bar{height:3px;background:#2D6A3F;}
+/* ─── NAV ─── */
+nav {
+  background: #1C1C14;
+  padding: 0 48px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.nav-brand { font-family: 'Playfair Display', serif; font-size: 20px; color: #fff; letter-spacing: -.3px; }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a { font-size: 13px; color: rgba(255,255,255,.45); transition: color .2s; }
+.nav-links a:hover { color: #fff; }
+.nav-cta {
+  background: #2D6A3F;
+  color: #fff !important;
+  padding: 9px 22px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background .2s;
+}
+.nav-cta:hover { background: #245733; }
+.green-bar { height: 3px; background: #2D6A3F; }
 
-/* HERO */
-.hero{background:#1C1C14;padding:96px 40px 80px;text-align:center;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(45,106,63,.18) 0%,transparent 65%);}
-.hero-tag{font-size:11px;letter-spacing:3px;color:#2D6A3F;text-transform:uppercase;font-weight:600;margin-bottom:20px;position:relative;}
-.hero h1{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;color:#fff;line-height:1.06;max-width:780px;margin:0 auto 20px;position:relative;}
-.hero h1 span{color:#2D6A3F;}
-.hero p{font-size:18px;color:rgba(255,255,255,.45);max-width:500px;margin:0 auto 34px;font-weight:300;line-height:1.65;position:relative;}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
-.btn-green{background:#2D6A3F;color:#fff;padding:15px 32px;border-radius:7px;font-size:14px;font-weight:600;transition:background .2s;}
-.btn-green:hover{background:#245733;}
-.btn-outline{background:rgba(255,255,255,.07);color:#fff;padding:15px 32px;border-radius:7px;font-size:14px;border:1px solid rgba(255,255,255,.18);}
-.hero-trust{display:flex;justify-content:center;gap:28px;margin-top:38px;flex-wrap:wrap;position:relative;}
-.ti{font-size:13px;color:rgba(255,255,255,.38);display:flex;align-items:center;gap:6px;}
-.ti::before{content:'✓';color:#2D6A3F;font-weight:700;}
+/* ─── HERO ─── */
+.hero {
+  background: #1C1C14;
+  padding: 120px 48px 110px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(45,106,63,.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,.3);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  position: relative;
+  animation: fadeUp .7s ease both;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 90px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.02;
+  max-width: 900px;
+  margin: 0 auto 28px;
+  position: relative;
+  letter-spacing: -2px;
+  animation: fadeUp .7s .1s ease both;
+}
+.hero h1 em {
+  font-style: italic;
+  color: #2D6A3F;
+}
+.hero-sub {
+  font-size: 17px;
+  color: rgba(255,255,255,.38);
+  max-width: 440px;
+  margin: 0 auto 44px;
+  font-weight: 300;
+  line-height: 1.7;
+  position: relative;
+  animation: fadeUp .7s .2s ease both;
+}
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  position: relative;
+  animation: fadeUp .7s .3s ease both;
+}
+.btn-primary {
+  background: #2D6A3F;
+  color: #fff;
+  padding: 15px 34px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background .2s, transform .15s;
+}
+.btn-primary:hover { background: #245733; transform: translateY(-1px); }
+.btn-ghost {
+  font-size: 14px;
+  color: rgba(255,255,255,.45);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .2s;
+}
+.btn-ghost:hover { color: #fff; }
+.btn-ghost::after { content: '↓'; }
+.hero-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+  position: relative;
+  animation: fadeUp .7s .4s ease both;
+}
+.hm { font-size: 12px; color: rgba(255,255,255,.28); display: flex; align-items: center; gap: 7px; }
+.hm::before { content: '✓'; color: #2D6A3F; font-size: 11px; font-weight: 700; }
 
-/* CHAT MOCK */
-.chat-section{background:#F5F4EF;padding:80px 40px;}
-.chat-inner{max-width:1020px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
-.chat-text h2{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;line-height:1.2;margin-bottom:14px;}
-.chat-text h2 span{color:#2D6A3F;}
-.chat-text p{font-size:15px;color:#6B6B5E;line-height:1.7;margin-bottom:28px;}
-.chat-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.cs{background:#fff;border-radius:10px;padding:18px;border:1.5px solid #e0dfd8;}
-.csv{font-family:'Playfair Display',serif;font-size:30px;color:#2D6A3F;font-weight:700;}
-.csl{font-size:11px;color:#9B9B8E;margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
-.chat-mock{background:#fff;border-radius:16px;padding:20px;box-shadow:0 8px 40px rgba(0,0,0,.08);border:1.5px solid #e0dfd8;}
-.ch{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid #f0efe8;margin-bottom:16px;}
-.chav{width:36px;height:36px;border-radius:50%;background:#2D6A3F;display:flex;align-items:center;justify-content:center;font-size:14px;}
-.chn{font-size:13px;font-weight:600;}
-.chs{font-size:10px;color:#2D6A3F;}
-.cb{border-radius:12px;padding:11px 15px;font-size:13px;line-height:1.6;max-width:86%;margin-bottom:7px;}
-.cb-in{background:#f0efe8;border-radius:12px 12px 12px 0;}
-.cb-out{background:#2D6A3F;color:#fff;margin-left:auto;border-radius:12px 12px 0 12px;}
-.cbt{font-size:9px;color:#9B9B8E;text-align:right;margin-top:2px;}
-.cb-tag{display:inline-flex;align-items:center;gap:5px;background:#e8f4ec;color:#2D6A3F;padding:7px 12px;border-radius:7px;font-size:11px;font-weight:600;margin-top:5px;}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-/* INTERACTIVE DEMO */
-.demo-section{background:#1C1C14;padding:80px 40px;}
-.section-label{font-size:11px;letter-spacing:3px;color:#2D6A3F;text-transform:uppercase;font-weight:600;text-align:center;margin-bottom:12px;}
-.section-title{font-family:'Playfair Display',serif;font-size:40px;color:#fff;text-align:center;margin-bottom:10px;}
-.section-sub{font-size:15px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:40px;}
+/* ─── MARQUEE ─── */
+.marquee-wrap {
+  background: #1C1C14;
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 16px 0;
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 0 28px;
+  font-size: 12px;
+  color: rgba(255,255,255,.35);
+  white-space: nowrap;
+  letter-spacing: .5px;
+}
+.marquee-item span {
+  color: #2D6A3F;
+  font-size: 8px;
+  flex-shrink: 0;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 
-/* SLIDE DECK */
-.deck{max-width:940px;margin:0 auto;}
-.deck-slides{position:relative;background:#111209;border-radius:14px;border:1.5px solid rgba(45,106,63,.3);overflow:hidden;height:420px;}
-.ds{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .6s ease;padding:40px;}
-.ds.active{opacity:1;}
-/* Slide 1 */
-.ds1{flex-direction:column;text-align:center;}
-.ds1-title{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:#fff;line-height:1.05;}
-.ds1-title span{color:#2D6A3F;}
-.ds1-sub{font-size:16px;color:rgba(255,255,255,.4);margin-top:14px;font-weight:300;}
-.ds1-pains{margin-top:28px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
-.dp{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:6px 14px;font-size:12px;color:rgba(255,255,255,.5);}
-.dp::before{content:'✕ ';color:#e74c3c;font-size:10px;}
-/* Slide 2 */
-.ds2{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;}
-.ds2-side{display:flex;flex-direction:column;justify-content:center;padding:40px;}
-.ds2-side.l{background:#160a0a;border-right:1px solid rgba(231,76,60,.15);}
-.ds2-side.r{background:#0a160a;}
-.dslbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;font-weight:600;}
-.dslbl.red{color:#e74c3c;}.dslbl.grn{color:#4a9e60;}
-.ds2-title{font-family:'Playfair Display',serif;font-size:26px;color:#fff;line-height:1.25;margin-bottom:20px;}
-.ds2-list{list-style:none;}
-.ds2-list li{font-size:12px;color:rgba(255,255,255,.6);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;gap:8px;}
-.ds2-stat{font-family:'Playfair Display',serif;font-size:68px;font-weight:900;color:#2D6A3F;line-height:1;margin:12px 0 4px;}
-.ds2-stlbl{font-size:12px;color:rgba(255,255,255,.4);}
-/* Slide 3 */
-.ds3{flex-direction:column;}
-.ds3-title{font-family:'Playfair Display',serif;font-size:36px;color:#fff;text-align:center;margin-bottom:36px;}
-.ds3-steps{display:flex;align-items:center;justify-content:center;gap:0;width:100%;}
-.ds3-box{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:11px;padding:24px 18px;text-align:center;width:160px;flex-shrink:0;position:relative;}
-.ds3-box.hi{background:rgba(45,106,63,.12);border-color:#2D6A3F;}
-.ds3-ico{font-size:28px;margin-bottom:10px;}
-.ds3-ttl{font-size:11px;font-weight:600;color:#fff;margin-bottom:4px;}
-.ds3-sub{font-size:10px;color:rgba(255,255,255,.35);line-height:1.4;}
-.ds3-arr{font-size:20px;color:#2D6A3F;width:28px;text-align:center;flex-shrink:0;}
-.ds3-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#2D6A3F;color:#fff;font-size:9px;padding:2px 8px;border-radius:14px;white-space:nowrap;}
-/* Slide 4 */
-.ds4{display:grid;grid-template-columns:1fr 50px 1fr;gap:0;align-items:start;padding:32px 40px;}
-.wa-m{background:#0a180a;border:1.5px solid rgba(45,106,63,.25);border-radius:13px;padding:16px;}
-.wa-h{display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:12px;}
-.wa-av{width:32px;height:32px;border-radius:50%;background:#2D6A3F;display:flex;align-items:center;justify-content:center;font-size:13px;}
-.wa-n{font-size:12px;font-weight:600;color:#fff;}
-.wa-s{font-size:10px;color:#4a9e60;}
-.wa-b{background:#182e18;border-radius:10px 10px 10px 0;padding:10px 13px;font-size:11px;color:rgba(255,255,255,.7);line-height:1.55;border:1px solid rgba(45,106,63,.15);}
-.wa-t{font-size:9px;color:rgba(255,255,255,.25);text-align:right;margin-top:3px;}
-.da-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
-.da-ico{font-size:24px;color:#2D6A3F;animation:pa 1.5s infinite;}
-@keyframes pa{0%,100%{opacity:.3}50%{opacity:1}}
-.da-t{font-size:9px;color:#4a9e60;font-family:monospace;}
-.doc-m{background:#fff;border-radius:10px;padding:16px;}
-.doc-h{background:#1C1C14;padding:10px 13px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.doc-br{color:#fff;font-family:'Playfair Display',serif;font-size:12px;font-weight:700;}
-.doc-ty{background:#2D6A3F;color:#fff;font-size:8px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:1px;}
-.doc-r{height:2px;background:#2D6A3F;margin-bottom:10px;}
-.doc-rw{display:flex;justify-content:space-between;margin-bottom:7px;}
-.doc-l{font-size:8px;color:#999;text-transform:uppercase;letter-spacing:.5px;}
-.doc-v{font-size:10px;color:#333;font-weight:600;}
-.doc-tb{width:100%;border-collapse:collapse;font-size:9px;margin:8px 0;}
-.doc-tb th{background:#1C1C14;color:#fff;padding:4px 6px;text-align:left;}
-.doc-tb td{padding:3px 6px;border-bottom:1px solid #eee;color:#444;}
-.doc-tot{display:flex;justify-content:flex-end;margin-top:7px;}
-.doc-totb{background:#2D6A3F;color:#fff;padding:5px 12px;border-radius:4px;font-size:11px;font-weight:700;}
-/* Slide 5 */
-.ds5{flex-direction:column;}
-.ds5-title{font-family:'Playfair Display',serif;font-size:34px;color:#fff;text-align:center;margin-bottom:6px;}
-.ds5-sub{font-size:13px;color:rgba(255,255,255,.35);text-align:center;margin-bottom:28px;}
-.ds5-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:100%;}
-.dc{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.07);border-radius:9px;padding:16px 10px;text-align:center;}
-.dci{font-size:22px;margin-bottom:7px;}
-.dcn{font-size:10px;font-weight:600;color:#fff;margin-bottom:2px;}
-.dcd{font-size:9px;color:rgba(255,255,255,.3);line-height:1.3;}
-/* Slide 6 */
-.ds6{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;}
-.ds6-side{display:flex;flex-direction:column;justify-content:center;padding:40px;}
-.ds6-side.l{background:#090e09;border-right:1px solid rgba(255,255,255,.06);}
-.ds6-side.r{background:#09090e;}
-.ds6-flag{font-size:36px;margin-bottom:10px;}
-.ds6-reg{font-family:'Playfair Display',serif;font-size:26px;color:#fff;margin-bottom:4px;}
-.ds6-price{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:#2D6A3F;line-height:1;margin:14px 0 4px;}
-.ds6-per{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:20px;}
-.ds6-feats{list-style:none;}
-.ds6-feats li{font-size:12px;color:rgba(255,255,255,.6);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:8px;}
-.ds6-feats li::before{content:'✓';color:#2D6A3F;font-weight:700;}
+/* ─── CHAT SECTION ─── */
+.chat-section {
+  background: #F5F4EF;
+  padding: 112px 48px;
+}
+.chat-inner {
+  max-width: 1060px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.chat-text {}
+.chat-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #2D6A3F;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.chat-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  letter-spacing: -.5px;
+}
+.chat-text h2 em { font-style: italic; color: #2D6A3F; }
+.chat-text p {
+  font-size: 15px;
+  color: #6B6B5E;
+  line-height: 1.75;
+  margin-bottom: 36px;
+  max-width: 380px;
+}
+.chat-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.cs {
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px 20px;
+  border: 1.5px solid #e8e7df;
+}
+.csv {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: #2D6A3F;
+  font-weight: 700;
+  line-height: 1;
+}
+.csl {
+  font-size: 10px;
+  color: #9B9B8E;
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
 
-/* Deck controls */
-.deck-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:20px;}
-.deck-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:9px 22px;border-radius:6px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
-.deck-btn:hover{background:rgba(255,255,255,.14);}
-.deck-dots{display:flex;gap:7px;}
-.ddot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:all .3s;}
-.ddot.active{background:#2D6A3F;width:22px;border-radius:4px;}
-.deck-counter{font-size:11px;color:rgba(255,255,255,.3);font-family:monospace;letter-spacing:1px;}
+/* Chat mock */
+.chat-mock {
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 12px 48px rgba(0,0,0,.07), 0 2px 8px rgba(0,0,0,.04);
+  border: 1.5px solid #e8e7df;
+}
+.ch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f2f1ea;
+  margin-bottom: 18px;
+}
+.chav {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #2D6A3F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.chn { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.chs { font-size: 10px; color: #2D6A3F; }
+.cb {
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.65;
+  max-width: 88%;
+  margin-bottom: 8px;
+}
+.cb-in { background: #f2f1ea; border-radius: 14px 14px 14px 0; }
+.cb-out {
+  background: #2D6A3F;
+  color: #fff;
+  margin-left: auto;
+  border-radius: 14px 14px 0 14px;
+}
+.cbt { font-size: 9px; color: rgba(0,0,0,.25); text-align: right; margin-top: 3px; }
+.cb-out .cbt { color: rgba(255,255,255,.4); }
+.cb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.15);
+  padding: 6px 12px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 6px;
+}
 
-/* HOW IT WORKS */
-.how-section{padding:80px 40px;background:#F5F4EF;}
-.how-title{font-family:'Playfair Display',serif;font-size:38px;text-align:center;margin-bottom:48px;color:#1C1C14;}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:860px;margin:0 auto;}
-.step{background:#fff;border:1.5px solid #e0dfd8;border-radius:12px;padding:32px 26px;text-align:center;}
-.step-n{font-family:'Playfair Display',serif;font-size:42px;color:rgba(45,106,63,.25);font-weight:700;line-height:1;margin-bottom:14px;}
-.step-i{font-size:28px;margin-bottom:12px;}
-.step h3{font-size:15px;font-weight:600;margin-bottom:8px;}
-.step p{font-size:13px;color:#6B6B5E;line-height:1.6;}
+/* ─── HOW IT WORKS ─── */
+.how-section {
+  background: #1C1C14;
+  padding: 112px 48px;
+}
+.section-eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.section-eyebrow.light { color: rgba(255,255,255,.3); }
+.section-eyebrow.dark { color: #2D6A3F; }
+.how-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 44px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 64px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  line-height: 1.15;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.step {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  padding: 40px 32px;
+  position: relative;
+}
+.step:first-child { border-radius: 14px 0 0 14px; }
+.step:last-child { border-radius: 0 14px 14px 0; }
+.step-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  color: rgba(45,106,63,.2);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.step-i { font-size: 26px; margin-bottom: 14px; }
+.step h3 { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+.step p { font-size: 13px; color: rgba(255,255,255,.38); line-height: 1.7; }
 
-/* DOCS */
-.docs-section{background:#1C1C14;padding:80px 40px;}
-.docs-title{font-family:'Playfair Display',serif;font-size:38px;color:#fff;text-align:center;margin-bottom:8px;}
-.docs-sub{font-size:14px;color:rgba(255,255,255,.35);text-align:center;margin-bottom:40px;}
-.docs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;max-width:1060px;margin:0 auto;}
-.doc-card{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:11px;padding:22px 14px;text-align:center;transition:border-color .2s;}
-.doc-card:hover{border-color:#2D6A3F;}
-.doc-card-i{font-size:28px;margin-bottom:9px;}
-.doc-card-n{font-size:11px;font-weight:600;color:#fff;margin-bottom:3px;}
-.doc-card-d{font-size:9px;color:rgba(255,255,255,.3);line-height:1.4;}
+/* ─── DOCS ─── */
+.docs-section { background: #F5F4EF; padding: 112px 48px; }
+.docs-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 44px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+}
+.docs-sub { font-size: 14px; color: #6B6B5E; text-align: center; margin-bottom: 56px; }
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.doc-card {
+  background: #fff;
+  border: 1.5px solid #e8e7df;
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: border-color .2s, transform .2s;
+  cursor: default;
+}
+.doc-card:hover { border-color: #2D6A3F; transform: translateY(-2px); }
+.doc-card-i { font-size: 26px; margin-bottom: 10px; }
+.doc-card-n { font-size: 11px; font-weight: 600; color: #1C1C14; margin-bottom: 4px; }
+.doc-card-d { font-size: 9px; color: #9B9B8E; line-height: 1.4; }
 
-/* PRICING */
-.pricing-section{padding:80px 40px;background:#F5F4EF;}
-.pricing-title{font-family:'Playfair Display',serif;font-size:38px;text-align:center;margin-bottom:8px;color:#1C1C14;}
-.pricing-sub{font-size:14px;color:#6B6B5E;text-align:center;margin-bottom:40px;}
-.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:720px;margin:0 auto;}
-.pc{background:#fff;border:1.5px solid #e0dfd8;border-radius:14px;padding:36px 30px;}
-.pc-flag{font-size:34px;margin-bottom:10px;}
-.pc-reg{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px;}
-.pc-price{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:#2D6A3F;line-height:1;margin:14px 0 5px;}
-.pc-per{font-size:12px;color:#9B9B8E;margin-bottom:22px;}
-.pc-feats{list-style:none;margin-bottom:24px;}
-.pc-feats li{font-size:13px;color:#4a4a40;padding:7px 0;border-bottom:1px solid #f0efe8;display:flex;gap:9px;}
-.pc-feats li::before{content:'✓';color:#2D6A3F;font-weight:700;flex-shrink:0;}
-.pc-btn{display:block;width:100%;padding:13px;background:#2D6A3F;color:#fff;border-radius:7px;text-align:center;font-size:14px;font-weight:600;}
-.pc-note{font-size:11px;color:#9B9B8E;text-align:center;margin-top:10px;}
+/* ─── PRICING ─── */
+.pricing-section { background: #1C1C14; padding: 112px 48px; }
+.pricing-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 44px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+}
+.pricing-sub { font-size: 14px; color: rgba(255,255,255,.35); text-align: center; margin-bottom: 40px; }
+.region-toggle {
+  display: inline-flex;
+  background: rgba(255,255,255,.08);
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 48px;
+}
+.rtb {
+  background: transparent;
+  color: rgba(255,255,255,.4);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 24px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .2s;
+}
+.rtb.active { background: #fff; color: #1C1C14; }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.pc {
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 36px 30px;
+}
+.pc-featured {
+  background: #fff;
+  border-color: transparent;
+  position: relative;
+}
+.pc-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2D6A3F;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 4px 14px;
+  border-radius: 20px;
+}
+.pc-name { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 10px; }
+.pc-featured .pc-name { color: #9B9B8E; }
+.pc-price-row { margin-bottom: 6px; }
+.pc-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+.pc-featured .pc-price { color: #1C1C14; }
+.pc-per { font-size: 13px; color: rgba(255,255,255,.3); margin-bottom: 6px; }
+.pc-featured .pc-per { color: #9B9B8E; }
+.pc-desc { font-size: 13px; color: rgba(255,255,255,.35); margin-bottom: 28px; }
+.pc-featured .pc-desc { color: #6B6B5E; }
+.pc-cta {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 28px;
+  transition: opacity .2s, transform .15s;
+}
+.pc-cta:hover { opacity: .88; transform: translateY(-1px); }
+.pc-cta-dark { background: rgba(255,255,255,.1); color: #fff; }
+.pc-cta-green { background: #2D6A3F; color: #fff; }
+.pc-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin-bottom: 20px; }
+.pc-featured .pc-divider { border-color: #e8e7df; }
+.pc-feat-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.3); letter-spacing: 1px; margin-bottom: 14px; }
+.pc-featured .pc-feat-label { color: #9B9B8E; }
+.pc-feats { list-style: none; }
+.pc-feats li {
+  font-size: 13px;
+  color: rgba(255,255,255,.6);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  display: flex;
+  gap: 9px;
+}
+.pc-feats li:last-child { border-bottom: none; }
+.pc-featured .pc-feats li { color: #4a4a40; border-color: #f2f1ea; }
+.pc-feats li.off { color: rgba(255,255,255,.2); }
+.pc-featured .pc-feats li.off { color: #bbb; }
+.feat-yes { color: #2D6A3F; font-weight: 700; flex-shrink: 0; }
+.feat-no { color: rgba(255,255,255,.2); flex-shrink: 0; }
+.pc-featured .feat-no { color: #ccc; }
+.pricing-note { font-size: 12px; color: rgba(255,255,255,.25); text-align: center; margin-top: 28px; }
 
-/* FAQ */
-.faq-section{background:#1C1C14;padding:80px 40px;}
-.faq-title{font-family:'Playfair Display',serif;font-size:38px;color:#fff;text-align:center;margin-bottom:40px;}
-.faq-list{max-width:660px;margin:0 auto;}
-.faq-item{border-bottom:1px solid rgba(255,255,255,.08);}
-.faq-q{padding:18px 0;font-size:14px;font-weight:500;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
-.faq-q::after{content:'+';font-size:18px;color:#2D6A3F;}
-.faq-item.open .faq-q::after{content:'−';}
-.faq-a{display:none;padding:0 0 18px;font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;}
-.faq-item.open .faq-a{display:block;}
+/* ─── FAQ ─── */
+.faq-section { background: #F5F4EF; padding: 112px 48px; }
+.faq-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 44px;
+  text-align: center;
+  margin-bottom: 56px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+}
+.faq-list { max-width: 640px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid #e0dfd8; }
+.faq-q {
+  padding: 20px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1C1C14;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: color .2s;
+}
+.faq-q:hover { color: #2D6A3F; }
+.faq-icon { font-size: 20px; color: #2D6A3F; flex-shrink: 0; line-height: 1; }
+.faq-a { display: none; padding: 0 0 20px; font-size: 14px; color: #6B6B5E; line-height: 1.75; }
+.faq-item.open .faq-a { display: block; }
+.faq-item.open .faq-icon::before { content: '−'; }
+.faq-icon::before { content: '+'; }
 
-/* CTA */
-.cta-section{background:#2D6A3F;padding:80px 40px;text-align:center;}
-.cta-section h2{font-family:'Playfair Display',serif;font-size:44px;color:#fff;margin-bottom:12px;}
-.cta-section p{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:30px;max-width:400px;margin-left:auto;margin-right:auto;}
-.cta-btn-white{background:#fff;color:#2D6A3F;padding:15px 34px;border-radius:7px;font-size:14px;font-weight:600;display:inline-block;}
+/* ─── CTA ─── */
+.cta-section {
+  background: #2D6A3F;
+  padding: 112px 48px;
+  text-align: center;
+}
+.cta-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  color: #fff;
+  margin-bottom: 14px;
+  font-weight: 900;
+  letter-spacing: -.5px;
+}
+.cta-section p {
+  font-size: 16px;
+  color: rgba(255,255,255,.6);
+  margin-bottom: 36px;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.65;
+}
+.cta-btn {
+  display: inline-block;
+  background: #fff;
+  color: #2D6A3F;
+  padding: 16px 38px;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: opacity .2s, transform .15s;
+}
+.cta-btn:hover { opacity: .92; transform: translateY(-1px); }
 
-footer{background:#111209;padding:28px 40px;display:flex;justify-content:space-between;align-items:center;}
-.fb{font-family:'Playfair Display',serif;font-size:16px;color:#fff;}
-.fl{display:flex;gap:22px;}
-.fl a{font-size:12px;color:rgba(255,255,255,.3);}
-.fc{font-size:12px;color:rgba(255,255,255,.2);}
+/* ─── PORTAL LOGIN ─── */
+.portal-section {
+  background: #1C1C14;
+  padding: 80px 48px;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.portal-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.portal-section p {
+  font-size: 14px;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+.portal-form {
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+}
+.portal-input {
+  flex: 1;
+  background: rgba(255,255,255,.07);
+  border: 1.5px solid rgba(255,255,255,.12);
+  border-radius: 8px;
+  padding: 13px 16px;
+  font-size: 14px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color .2s;
+}
+.portal-input:focus { border-color: #2D6A3F; }
+.portal-input::placeholder { color: rgba(255,255,255,.25); }
+.portal-btn {
+  background: #2D6A3F;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 13px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s;
+}
+.portal-btn:hover { background: #245733; }
+.portal-note { font-size: 11px; color: rgba(255,255,255,.2); margin-top: 14px; }
+#portal-msg { font-size: 13px; margin-top: 12px; }
 
-@media(max-width:768px){
-  .hero h1{font-size:38px;}
-  .chat-inner,.ds2,.ds4,.ds6,.pricing-grid{grid-template-columns:1fr;}
-  .steps,.docs-grid,.ds5-grid,.ds3-steps{grid-template-columns:repeat(2,1fr);}
-  .ds3-arr{display:none;}
+/* ─── FOOTER ─── */
+footer {
+  background: #0f0f09;
+  padding: 28px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+.fb { font-family: 'Playfair Display', serif; font-size: 16px; color: rgba(255,255,255,.6); }
+.fl { display: flex; gap: 24px; }
+.fl a { font-size: 12px; color: rgba(255,255,255,.2); transition: color .2s; }
+.fl a:hover { color: rgba(255,255,255,.5); }
+.fc { font-size: 11px; color: rgba(255,255,255,.15); }
+
+/* ─── WHATSAPP FLOAT ─── */
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  width: 54px;
+  height: 54px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,.4);
+  transition: transform .2s, box-shadow .2s;
+}
+.wa-float:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,.5); }
+.wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+/* ─── MOBILE STICKY CTA ─── */
+.mobile-cta {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+  background: #1C1C14;
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 12px 20px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mobile-cta-text strong { display: block; font-size: 13px; color: #fff; }
+.mobile-cta-text span { font-size: 11px; color: rgba(255,255,255,.35); }
+.mobile-cta-btn {
+  background: #2D6A3F;
+  color: #fff;
+  padding: 11px 22px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .hero h1 { font-size: 52px; letter-spacing: -1px; }
+  .chat-inner { grid-template-columns: 1fr; gap: 48px; }
+  .chat-text p { max-width: none; }
+  .steps { grid-template-columns: 1fr; gap: 2px; }
+  .step:first-child { border-radius: 14px 14px 0 0; }
+  .step:last-child { border-radius: 0 0 14px 14px; }
+  .docs-grid { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+  .pc-featured { order: -1; }
+}
+@media (max-width: 640px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { padding: 80px 24px 72px; }
+  .hero h1 { font-size: 40px; letter-spacing: -.5px; }
+  .hero-meta { gap: 16px; }
+  .chat-section, .how-section, .docs-section,
+  .pricing-section, .faq-section, .cta-section { padding: 80px 24px; }
+  .cta-section h2 { font-size: 36px; }
+  .docs-grid { grid-template-columns: repeat(2, 1fr); }
+  .chat-stats { grid-template-columns: 1fr 1fr; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+  .mobile-cta { display: flex; }
+  body { padding-bottom: 64px; }
+  .wa-float { bottom: 80px; right: 20px; width: 48px; height: 48px; }
+  .portal-form { flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <div class="nav-brand">TradeDeskNI</div>
   <div class="nav-links">
     <a href="#how">How it works</a>
     <a href="#docs">Documents</a>
     <a href="#pricing">Pricing</a>
-    <a href="/admin.html">Admin</a>
-    <a href="/portal.html" style="font-size:13px;color:rgba(255,255,255,.6);text-decoration:none;">Client login</a><a href="/start.html" class="nav-cta">Start free →</a>
+    <a href="/portal.html">Client login</a>
+    <a href="/start.html" class="nav-cta">Start free →</a>
   </div>
 </nav>
 <div class="green-bar"></div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-tag">For sole traders across NI &amp; ROI</div>
-  <h1>Trades paperwork,<br><span>handled for you.</span></h1>
-  <p>Send the job details. Get a professional quote, invoice, RAMS or gas safety record back within seconds. No software to learn.</p>
-  <div class="hero-btns">
-    <a href="/start.html" class="btn-green">Start free trial — 2 weeks free</a>
-    <a href="#demo" class="btn-outline">See how it works</a>
+  <p class="hero-eyebrow">For sole traders across NI &amp; ROI</p>
+  <h1>Trades paperwork,<br><em>handled for you.</em></h1>
+  <p class="hero-sub">Send the job details on WhatsApp. Get a professional document back in seconds. No software, no forms, no hassle.</p>
+  <div class="hero-actions">
+    <a href="/start.html" class="btn-primary">Start free — 2 weeks free</a>
+    <a href="#how" class="btn-ghost">See how it works</a>
   </div>
-  <div class="hero-trust">
-    <span class="ti">No contract</span>
-    <span class="ti">First 2 weeks free</span>
-    <span class="ti">NI &amp; ROI</span>
-    <span class="ti">Documents in seconds</span>
+  <div class="hero-meta">
+    <span class="hm">No contract</span>
+    <span class="hm">First 2 weeks free</span>
+    <span class="hm">No card required</span>
+    <span class="hm">Documents in 17 seconds</span>
   </div>
 </section>
 
-<!-- CHAT MOCK -->
-<section class="chat-section">
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <!-- Set 1 -->
+    <div class="marquee-item">Quotes &amp; Estimates <span>◆</span></div>
+    <div class="marquee-item">Invoices <span>◆</span></div>
+    <div class="marquee-item">RAMS <span>◆</span></div>
+    <div class="marquee-item">Gas Safety Records <span>◆</span></div>
+    <div class="marquee-item">COSHH Assessments <span>◆</span></div>
+    <div class="marquee-item">Job Reports <span>◆</span></div>
+    <div class="marquee-item">Payslips <span>◆</span></div>
+    <div class="marquee-item">Debt Chasers <span>◆</span></div>
+    <div class="marquee-item">Certificates of Completion <span>◆</span></div>
+    <div class="marquee-item">Variation Orders <span>◆</span></div>
+    <div class="marquee-item">17-second turnaround <span>◆</span></div>
+    <div class="marquee-item">Voice notes accepted <span>◆</span></div>
+    <div class="marquee-item">NI &amp; Republic of Ireland <span>◆</span></div>
+    <div class="marquee-item">No contract, cancel anytime <span>◆</span></div>
+    <!-- Set 2 (duplicate for seamless loop) -->
+    <div class="marquee-item">Quotes &amp; Estimates <span>◆</span></div>
+    <div class="marquee-item">Invoices <span>◆</span></div>
+    <div class="marquee-item">RAMS <span>◆</span></div>
+    <div class="marquee-item">Gas Safety Records <span>◆</span></div>
+    <div class="marquee-item">COSHH Assessments <span>◆</span></div>
+    <div class="marquee-item">Job Reports <span>◆</span></div>
+    <div class="marquee-item">Payslips <span>◆</span></div>
+    <div class="marquee-item">Debt Chasers <span>◆</span></div>
+    <div class="marquee-item">Certificates of Completion <span>◆</span></div>
+    <div class="marquee-item">Variation Orders <span>◆</span></div>
+    <div class="marquee-item">17-second turnaround <span>◆</span></div>
+    <div class="marquee-item">Voice notes accepted <span>◆</span></div>
+    <div class="marquee-item">NI &amp; Republic of Ireland <span>◆</span></div>
+    <div class="marquee-item">No contract, cancel anytime <span>◆</span></div>
+  </div>
+</div>
+
+<!-- CHAT SECTION -->
+<section class="chat-section" id="how">
   <div class="chat-inner">
     <div class="chat-text">
-      <h2>Send a message.<br><span>Document comes back.</span></h2>
-      <p>WhatsApp the job details — customer name, address, what you did, what you're charging. A professional branded document comes back in seconds, ready to forward.</p>
+      <p class="chat-label">How it works</p>
+      <h2>Send a message.<br><em>Document comes back.</em></h2>
+      <p>WhatsApp the job details — customer name, address, what you did, what you're charging. A professional branded document comes back in seconds, ready to forward. Voice note works fine.</p>
       <div class="chat-stats">
         <div class="cs"><div class="csv">17s</div><div class="csl">Average turnaround</div></div>
         <div class="cs"><div class="csv">10</div><div class="csl">Document types</div></div>
@@ -268,7 +790,10 @@ footer{background:#111209;padding:28px 40px;display:flex;justify-content:space-b
     <div class="chat-mock">
       <div class="ch">
         <div class="chav">🔧</div>
-        <div><div class="chn">Brennan Heating & Plumbing</div><div class="chs">● Active now</div></div>
+        <div>
+          <div class="chn">Brennan Heating &amp; Plumbing</div>
+          <div class="chs">● Active now</div>
+        </div>
       </div>
       <div class="cb cb-in">
         Quote for Mr Murphy, 22 Church St, Sligo.<br>
@@ -279,176 +804,22 @@ footer{background:#111209;padding:28px 40px;display:flex;justify-content:space-b
       <div class="cb cb-out">
         Done ✓ Quote attached, ready to forward.
         <div class="cb-tag">📋 TDNI-QT-2026-0047 · €1,570 · Ready</div>
-        <div class="cbt" style="color:rgba(255,255,255,.4)">17:23 · 17 seconds later</div>
+        <div class="cbt">17:23 · 17 seconds later</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- INTERACTIVE SLIDES DEMO -->
-<section class="demo-section" id="demo">
-  <div class="section-label">Interactive overview</div>
-  <h2 class="section-title">See the full picture</h2>
-  <p class="section-sub">Click through the slides to understand exactly how TradeDeskNI works</p>
-
-  <div class="deck">
-    <div class="deck-slides" id="deckSlides">
-
-      <!-- Slide 1: Hook -->
-      <div class="ds ds1 active" id="deck-1">
-        <div style="font-family:'Playfair Display',serif;font-size:13px;color:#2D6A3F;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">TradeDeskNI</div>
-        <div class="ds1-title">Your paperwork,<br><span>done in seconds.</span></div>
-        <div class="ds1-sub">Professional documents for tradespeople across NI and ROI</div>
-        <div class="ds1-pains">
-          <span class="dp">Typing quotes by hand</span>
-          <span class="dp">Chasing invoices</span>
-          <span class="dp">Late-night admin</span>
-          <span class="dp">RAMS holding up jobs</span>
-        </div>
-      </div>
-
-      <!-- Slide 2: Problem vs Solution -->
-      <div class="ds ds2" id="deck-2">
-        <div class="ds2-side l">
-          <div class="dslbl red">The Problem</div>
-          <div class="ds2-title">Tradespeople are brilliant on the tools.<br>Drowning in admin.</div>
-          <ul class="ds2-list">
-            <li><span>&#8987;</span> 4–6 hours per week on paperwork</li>
-            <li><span>&#128184;</span> Unprofessional quotes cost jobs</li>
-            <li><span>&#128565;</span> RAMS and COSHH holding up contracts</li>
-          </ul>
-        </div>
-        <div class="ds2-side r">
-          <div class="dslbl grn">The Solution</div>
-          <div class="ds2-title">TradeDeskNI handles all of it. Automatically.</div>
-          <div class="ds2-stat">17s</div>
-          <div class="ds2-stlbl">Average document generation time</div>
-        </div>
-      </div>
-
-      <!-- Slide 3: How It Works -->
-      <div class="ds ds3" id="deck-3">
-        <div class="ds3-title">How it works</div>
-        <div class="ds3-steps">
-          <div class="ds3-box"><div class="ds3-ico">📱</div><div class="ds3-ttl">Send job details</div><div class="ds3-sub">Plain English, no forms</div></div>
-          <div class="ds3-arr">→</div>
-          <div class="ds3-box"><div class="ds3-ico">⚡</div><div class="ds3-ttl">System receives it</div><div class="ds3-sub">Auto detected</div></div>
-          <div class="ds3-arr">→</div>
-          <div class="ds3-box hi"><div class="ds3-badge">~17 seconds</div><div class="ds3-ico">⚙️</div><div class="ds3-ttl">Document built</div><div class="ds3-sub">Branded &amp; complete</div></div>
-          <div class="ds3-arr">→</div>
-          <div class="ds3-box"><div class="ds3-ico">📧</div><div class="ds3-ttl">Emailed to client</div><div class="ds3-sub">Straight to inbox</div></div>
-          <div class="ds3-arr">→</div>
-          <div class="ds3-box"><div class="ds3-ico">✅</div><div class="ds3-ttl">You get on with work</div><div class="ds3-sub">Logged and done</div></div>
-        </div>
-      </div>
-
-      <!-- Slide 4: Live Demo Mock -->
-      <div class="ds ds4" id="deck-4">
-        <div class="wa-m">
-          <div class="wa-h">
-            <div class="wa-av">🔧</div>
-            <div><div class="wa-n">Brennan Heating & Plumbing</div><div class="wa-s">● Online</div></div>
-          </div>
-          <div class="wa-b">
-            Quote for Mr Murphy, 22 Church St.<br>
-            Worcester 30i combi — remove back boiler, full flush, stat.<br>
-            Labour 2 days, boiler €950, materials €120.
-            <div class="wa-t">17:23 ✓✓</div>
-          </div>
-        </div>
-        <div class="da-mid">
-          <div class="da-ico">⚡</div>
-          <div class="da-t" id="demoT">0.0s</div>
-        </div>
-        <div class="doc-m">
-          <div class="doc-h"><div class="doc-br">TradeDeskNI</div><div class="doc-ty">QUOTE</div></div>
-          <div class="doc-r"></div>
-          <div class="doc-rw">
-            <div><div class="doc-l">From</div><div class="doc-v">Brennan Heating & Plumbing</div></div>
-            <div><div class="doc-l">Ref</div><div class="doc-v">TDNI-QT-2026-0047</div></div>
-          </div>
-          <div class="doc-rw" style="margin-top:5px">
-            <div><div class="doc-l">For</div><div class="doc-v">Mr Murphy, Church St</div></div>
-            <div><div class="doc-l">Date</div><div class="doc-v">21 Mar 2026</div></div>
-          </div>
-          <table class="doc-tb">
-            <tr><th>Description</th><th>Qty</th><th>Amt</th></tr>
-            <tr><td>Labour – 2 days</td><td>2</td><td>€500</td></tr>
-            <tr><td>Worcester Bosch 30i</td><td>1</td><td>€950</td></tr>
-            <tr><td>Materials</td><td>1</td><td>€120</td></tr>
-          </table>
-          <div class="doc-tot"><div class="doc-totb">TOTAL: €1,570</div></div>
-        </div>
-      </div>
-
-      <!-- Slide 5: Document Types -->
-      <div class="ds ds5" id="deck-5">
-        <div class="ds5-title">10 document types. All included.</div>
-        <div class="ds5-sub">Every piece of paperwork your trade could need</div>
-        <div class="ds5-grid">
-          <div class="dc"><div class="dci">📋</div><div class="dcn">Quote</div><div class="dcd">Branded quotes</div></div>
-          <div class="dc"><div class="dci">🧾</div><div class="dcn">Invoice</div><div class="dcd">Same-day invoicing</div></div>
-          <div class="dc"><div class="dci">⚠️</div><div class="dcn">RAMS</div><div class="dcd">Risk assessments</div></div>
-          <div class="dc"><div class="dci">🔥</div><div class="dcn">Gas Safety</div><div class="dcd">Gas Safe / RGI</div></div>
-          <div class="dc"><div class="dci">🧪</div><div class="dcn">COSHH</div><div class="dcd">Substance docs</div></div>
-          <div class="dc"><div class="dci">🏁</div><div class="dcn">Job Report</div><div class="dcd">Completion sign-off</div></div>
-          <div class="dc"><div class="dci">💰</div><div class="dcn">Payslip</div><div class="dcd">NI &amp; ROI subbies</div></div>
-          <div class="dc"><div class="dci">📬</div><div class="dcn">Debt Chaser</div><div class="dcd">1st, 2nd, final</div></div>
-          <div class="dc"><div class="dci">🎖️</div><div class="dcn">Cert of Completion</div><div class="dcd">With warranty</div></div>
-          <div class="dc"><div class="dci">📝</div><div class="dcn">Variation Order</div><div class="dcd">Extra works docs</div></div>
-        </div>
-      </div>
-
-      <!-- Slide 6: Pricing -->
-      <div class="ds ds6" id="deck-6">
-        <div class="ds6-side l">
-          <div class="ds6-flag">🇬🇧</div>
-          <div class="ds6-reg">Northern Ireland</div>
-          <div class="ds6-price">£250</div>
-          <div class="ds6-per">per month</div>
-          <ul class="ds6-feats">
-            <li>Gas Safe NI recognised</li>
-            <li>NICEIC electrical compliance</li>
-            <li>Sterling pricing on all docs</li>
-            <li>No contract — cancel anytime</li>
-          </ul>
-        </div>
-        <div class="ds6-side r">
-          <div class="ds6-flag">🇮🇪</div>
-          <div class="ds6-reg">Republic of Ireland</div>
-          <div class="ds6-price">€250</div>
-          <div class="ds6-per">per month</div>
-          <ul class="ds6-feats">
-            <li>RGI &amp; RECI recognised</li>
-            <li>VAT 23% applied automatically</li>
-            <li>Euro pricing on all docs</li>
-            <li>No contract — cancel anytime</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Controls -->
-    <div class="deck-controls">
-      <button class="deck-btn" id="prevBtn" onclick="deckNav(-1)">← Prev</button>
-      <div class="deck-dots" id="deckDots"></div>
-      <div class="deck-counter" id="deckCounter">01 / 06</div>
-      <button class="deck-btn" id="nextBtn" onclick="deckNav(1)">Next →</button>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how-section" id="how">
-  <div class="section-label" style="color:#2D6A3F;">Simple process</div>
+<!-- HOW IT WORKS — 3 STEPS -->
+<section class="how-section">
+  <p class="section-eyebrow light">Simple process</p>
   <h2 class="how-title">Three steps.<br>You barely notice two of them.</h2>
   <div class="steps">
     <div class="step">
       <div class="step-n">01</div>
       <div class="step-i">💬</div>
       <h3>Send the job details</h3>
-      <p>WhatsApp the basics — customer, address, what you did, what you're charging. Voice note works fine.</p>
+      <p>WhatsApp the basics — customer, address, what you did, what you're charging. Voice note is fine.</p>
     </div>
     <div class="step">
       <div class="step-n">02</div>
@@ -460,16 +831,16 @@ footer{background:#111209;padding:28px 40px;display:flex;justify-content:space-b
       <div class="step-n">03</div>
       <div class="step-i">📤</div>
       <h3>Forward and get paid</h3>
-      <p>Document goes to your client's inbox. Branded with your name, ready to sign.</p>
+      <p>Document goes to your client's inbox, branded with your name and registration number.</p>
     </div>
   </div>
 </section>
 
 <!-- DOCS -->
 <section class="docs-section" id="docs">
-  <div class="section-label">Full coverage</div>
+  <p class="section-eyebrow dark">Full coverage</p>
   <h2 class="docs-title">10 document types.<br>All included.</h2>
-  <p class="docs-sub">Every piece of paperwork a sole trader could need — covered</p>
+  <p class="docs-sub">Every piece of paperwork a sole trader could need — covered.</p>
   <div class="docs-grid">
     <div class="doc-card"><div class="doc-card-i">📋</div><div class="doc-card-n">Quote / Estimate</div><div class="doc-card-d">Professional quotes in seconds</div></div>
     <div class="doc-card"><div class="doc-card-i">🧾</div><div class="doc-card-n">Invoice</div><div class="doc-card-d">Itemised with payment terms</div></div>
@@ -479,128 +850,144 @@ footer{background:#111209;padding:28px 40px;display:flex;justify-content:space-b
     <div class="doc-card"><div class="doc-card-i">🏁</div><div class="doc-card-n">Job Completion</div><div class="doc-card-d">Sign-off with materials log</div></div>
     <div class="doc-card"><div class="doc-card-i">💰</div><div class="doc-card-n">Payslip</div><div class="doc-card-d">NI &amp; ROI subbies</div></div>
     <div class="doc-card"><div class="doc-card-i">📬</div><div class="doc-card-n">Debt Chaser</div><div class="doc-card-d">1st, 2nd and final demands</div></div>
-    <div class="doc-card"><div class="doc-card-i">🎖️</div><div class="doc-card-n">Cert of Completion</div><div class="doc-card-d">Prestige certs with warranty</div></div>
+    <div class="doc-card"><div class="doc-card-i">🎖️</div><div class="doc-card-n">Cert of Completion</div><div class="doc-card-d">Professional certs with warranty</div></div>
     <div class="doc-card"><div class="doc-card-i">📝</div><div class="doc-card-n">Variation Order</div><div class="doc-card-d">Extra works approval docs</div></div>
   </div>
 </section>
 
 <!-- PRICING -->
-  <section id="pricing" style="background:#F5F4EF;padding:80px 24px">
-    <div style="max-width:1060px;margin:0 auto;text-align:center">
-      <p style="color:#2D6A3F;font-size:12px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px">Pricing</p>
-      <h2 style="font-family:'Playfair Display',serif;font-size:38px;color:#1C1C14;margin-bottom:12px">Simple, honest pricing.</h2>
-      <p style="color:#6B6B5E;font-size:16px;margin-bottom:48px">First 2 weeks free on any plan. No contract, cancel anytime.</p>
+<section class="pricing-section" id="pricing">
+  <p class="section-eyebrow light">Pricing</p>
+  <h2 class="pricing-title">Simple, honest pricing.</h2>
+  <p class="pricing-sub">First 2 weeks free on any plan. No contract, cancel anytime.</p>
 
-      <!-- Region toggle -->
-      <div style="display:inline-flex;background:#e0dfd8;border-radius:8px;padding:4px;margin-bottom:40px">
-        <button onclick="setPriceRegion('ni')" id="btn-ni" style="background:#1C1C14;color:#fff;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer">🇬🇧 NI — £</button>
-        <button onclick="setPriceRegion('roi')" id="btn-roi" style="background:transparent;color:#6B6B5E;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer">🇮🇪 ROI — €</button>
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:1000px;margin:0 auto">
-
-        <!-- STARTER -->
-        <div style="background:#fff;border-radius:14px;border:1.5px solid #e0dfd8;padding:32px 28px;text-align:left">
-          <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#6B6B5E;margin-bottom:8px">Starter</p>
-          <div style="margin-bottom:4px"><span class="price-ni" style="font-family:'Playfair Display',serif;font-size:42px;color:#1C1C14">£79</span><span class="price-roi" style="font-family:'Playfair Display',serif;font-size:42px;color:#1C1C14;display:none">€79</span><span style="color:#6B6B5E;font-size:14px">/month</span></div>
-          <p style="color:#6B6B5E;font-size:13px;margin-bottom:24px">Up to 10 documents a month</p>
-          <a href="/start.html?tier=starter" style="display:block;background:#1C1C14;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;margin-bottom:24px">Start free trial</a>
-          <div style="border-top:1px solid #e0dfd8;padding-top:20px">
-            <p style="font-size:12px;color:#1C1C14;font-weight:600;margin-bottom:12px">INCLUDES</p>
-            <ul style="list-style:none;padding:0;margin:0">
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Up to 10 documents/month</li>
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Quotes &amp; invoices</li>
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Job reports &amp; certs</li>
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Email delivery</li>
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Client portal</li>
-              <li style="font-size:13px;color:#9B9B8E;padding:5px 0">✗ RAMS &amp; gas certs</li>
-              <li style="font-size:13px;color:#9B9B8E;padding:5px 0">✗ Auto invoice chasers</li>
-              <li style="font-size:13px;color:#9B9B8E;padding:5px 0">✗ Service reminders</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- PRO — highlighted -->
-        <div style="background:#1C1C14;border-radius:14px;border:2px solid #2D6A3F;padding:32px 28px;text-align:left;position:relative">
-          <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#2D6A3F;color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:20px">MOST POPULAR</div>
-          <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px">Pro</p>
-          <div style="margin-bottom:4px"><span class="price-ni" style="font-family:'Playfair Display',serif;font-size:42px;color:#fff">£149</span><span class="price-roi" style="font-family:'Playfair Display',serif;font-size:42px;color:#fff;display:none">€149</span><span style="color:rgba(255,255,255,.5);font-size:14px">/month</span></div>
-          <p style="color:rgba(255,255,255,.5);font-size:13px;margin-bottom:24px">Unlimited documents</p>
-          <a href="/start.html?tier=pro" style="display:block;background:#2D6A3F;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;margin-bottom:24px">Start free trial</a>
-          <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:20px">
-            <p style="font-size:12px;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:12px">INCLUDES</p>
-            <ul style="list-style:none;padding:0;margin:0">
-              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ Unlimited documents</li>
-              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ All 10 document types</li>
-              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ RAMS &amp; gas safety certs</li>
-              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ COSHH &amp; payslips</li>
-              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ Auto invoice chasers</li>
-              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ Recurring reminders</li>
-              <li style="font-size:13px;color:rgba(255,255,255,.85);padding:5px 0">✓ Client portal</li>
-              <li style="font-size:13px;color:rgba(255,255,255,.5);padding:5px 0">✗ WhatsApp automation</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- UNLIMITED -->
-        <div style="background:#fff;border-radius:14px;border:1.5px solid #e0dfd8;padding:32px 28px;text-align:left">
-          <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#6B6B5E;margin-bottom:8px">Unlimited</p>
-          <div style="margin-bottom:4px"><span class="price-ni" style="font-family:'Playfair Display',serif;font-size:42px;color:#1C1C14">£249</span><span class="price-roi" style="font-family:'Playfair Display',serif;font-size:42px;color:#1C1C14;display:none">€249</span><span style="color:#6B6B5E;font-size:14px">/month</span></div>
-          <p style="color:#6B6B5E;font-size:13px;margin-bottom:24px">Everything, no limits</p>
-          <a href="/start.html?tier=unlimited" style="display:block;background:#1C1C14;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;margin-bottom:24px">Start free trial</a>
-          <div style="border-top:1px solid #e0dfd8;padding-top:20px">
-            <p style="font-size:12px;color:#1C1C14;font-weight:600;margin-bottom:12px">INCLUDES</p>
-            <ul style="list-style:none;padding:0;margin:0">
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Everything in Pro</li>
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ WhatsApp automation</li>
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Same-day guarantee</li>
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ First in queue</li>
-              <li style="font-size:13px;color:#4a4a40;padding:5px 0">✓ Dedicated support line</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-
-      <p style="color:#9B9B8E;font-size:13px;margin-top:32px">All plans include a 14-day free trial. No card required. NI prices in £, ROI prices in €.</p>
+  <div style="text-align:center">
+    <div class="region-toggle">
+      <button class="rtb active" id="btn-ni" onclick="setPriceRegion('ni')">🇬🇧 NI — £</button>
+      <button class="rtb" id="btn-roi" onclick="setPriceRegion('roi')">🇮🇪 ROI — €</button>
     </div>
-  </section>
-  <script>
-  function setPriceRegion(r){
-    document.querySelectorAll('.price-ni').forEach(el=>el.style.display=r==='ni'?'':'none');
-    document.querySelectorAll('.price-roi').forEach(el=>el.style.display=r==='roi'?'':'none');
-    document.getElementById('btn-ni').style.cssText=r==='ni'?'background:#1C1C14;color:#fff;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer':'background:transparent;color:#6B6B5E;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer';
-    document.getElementById('btn-roi').style.cssText=r==='roi'?'background:#1C1C14;color:#fff;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer':'background:transparent;color:#6B6B5E;border:none;border-radius:6px;padding:8px 24px;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer';
-  }
-  </script>
-  <!-- FAQ -->
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- Starter -->
+    <div class="pc">
+      <p class="pc-name">Starter</p>
+      <div class="pc-price-row">
+        <span class="pc-price price-ni">£79</span>
+        <span class="pc-price price-roi" style="display:none">€79</span>
+      </div>
+      <p class="pc-per">/month</p>
+      <p class="pc-desc">Up to 10 documents a month</p>
+      <a href="/start.html?tier=starter" class="pc-cta pc-cta-dark">Start free trial</a>
+      <hr class="pc-divider">
+      <p class="pc-feat-label">INCLUDES</p>
+      <ul class="pc-feats">
+        <li><span class="feat-yes">✓</span> Up to 10 documents/month</li>
+        <li><span class="feat-yes">✓</span> Quotes &amp; invoices</li>
+        <li><span class="feat-yes">✓</span> Job reports &amp; certs</li>
+        <li><span class="feat-yes">✓</span> Email delivery</li>
+        <li><span class="feat-yes">✓</span> Client portal</li>
+        <li class="off"><span class="feat-no">✗</span> RAMS &amp; gas certs</li>
+        <li class="off"><span class="feat-no">✗</span> Auto invoice chasers</li>
+      </ul>
+    </div>
+
+    <!-- Pro (featured) -->
+    <div class="pc pc-featured">
+      <div class="pc-badge">MOST POPULAR</div>
+      <p class="pc-name">Pro</p>
+      <div class="pc-price-row">
+        <span class="pc-price price-ni">£149</span>
+        <span class="pc-price price-roi" style="display:none">€149</span>
+      </div>
+      <p class="pc-per">/month</p>
+      <p class="pc-desc">Unlimited documents</p>
+      <a href="/start.html?tier=pro" class="pc-cta pc-cta-green">Start free trial</a>
+      <hr class="pc-divider">
+      <p class="pc-feat-label">INCLUDES</p>
+      <ul class="pc-feats">
+        <li><span class="feat-yes">✓</span> Unlimited documents</li>
+        <li><span class="feat-yes">✓</span> All 10 document types</li>
+        <li><span class="feat-yes">✓</span> RAMS &amp; gas safety certs</li>
+        <li><span class="feat-yes">✓</span> COSHH &amp; payslips</li>
+        <li><span class="feat-yes">✓</span> Auto invoice chasers</li>
+        <li><span class="feat-yes">✓</span> Recurring reminders</li>
+        <li><span class="feat-yes">✓</span> Client portal</li>
+      </ul>
+    </div>
+
+    <!-- Unlimited -->
+    <div class="pc">
+      <p class="pc-name">Unlimited</p>
+      <div class="pc-price-row">
+        <span class="pc-price price-ni">£249</span>
+        <span class="pc-price price-roi" style="display:none">€249</span>
+      </div>
+      <p class="pc-per">/month</p>
+      <p class="pc-desc">Everything, no limits</p>
+      <a href="/start.html?tier=unlimited" class="pc-cta pc-cta-dark">Start free trial</a>
+      <hr class="pc-divider">
+      <p class="pc-feat-label">INCLUDES</p>
+      <ul class="pc-feats">
+        <li><span class="feat-yes">✓</span> Everything in Pro</li>
+        <li><span class="feat-yes">✓</span> WhatsApp automation</li>
+        <li><span class="feat-yes">✓</span> Same-day guarantee</li>
+        <li><span class="feat-yes">✓</span> First in queue</li>
+        <li><span class="feat-yes">✓</span> Dedicated support line</li>
+      </ul>
+    </div>
+
+  </div>
+  <p class="pricing-note">All plans include a 14-day free trial. No card required. NI prices in £, ROI prices in €.</p>
+</section>
+
+<!-- FAQ -->
 <section class="faq-section">
-  <div class="section-label">Questions</div>
-  <h2 class="faq-title">Common questions</h2>
+  <p class="section-eyebrow dark">Questions</p>
+  <h2 class="faq-title">Common questions.</h2>
   <div class="faq-list">
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this.parentElement)">What information do I need to provide?</div>
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">
+        What information do I need to send?
+        <span class="faq-icon"></span>
+      </div>
       <div class="faq-a">Customer name, address, what you did, what you're charging. A voice note works fine — most clients send one on the drive home and the document is waiting when they get back.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this.parentElement)">How fast do I actually get the document?</div>
-      <div class="faq-a">Around 17 seconds on average. The system runs continuously so documents come back at any time of day.</div>
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">
+        How fast do I actually get the document?
+        <span class="faq-icon"></span>
+      </div>
+      <div class="faq-a">Around 17 seconds on average. The system runs continuously so documents come back at any time of day or night.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this.parentElement)">Will it look like I produced it myself?</div>
-      <div class="faq-a">Yes. Every document goes out with your business name and contact details. Your customers won't know we're involved.</div>
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">
+        Will it look like I produced it myself?
+        <span class="faq-icon"></span>
+      </div>
+      <div class="faq-a">Yes. Every document goes out with your business name, contact details and registration number. Your customers won't know we're involved.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this.parentElement)">What trades do you cover?</div>
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">
+        What trades do you cover?
+        <span class="faq-icon"></span>
+      </div>
       <div class="faq-a">Plumbers, gas engineers, electricians, roofers, plasterers, painters and decorators, joiners — any trade that generates quotes, invoices and compliance paperwork.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this.parentElement)">Is there a limit on documents?</div>
-      <div class="faq-a">No limit. The monthly fee covers everything — no caps, no extra charges for a busy month.</div>
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">
+        What happens after the free trial?
+        <span class="faq-icon"></span>
+      </div>
+      <div class="faq-a">After 2 weeks it's £79–£249/month in NI or €79–€249/month in the Republic depending on your plan. No contract — cancel any time with a single message.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this.parentElement)">What happens after the free trial?</div>
-      <div class="faq-a">After 2 weeks it's £250/month in NI or €250/month in the Republic. No contract — cancel any time with a single message.</div>
+      <div class="faq-q" onclick="toggleFaq(this.parentElement)">
+        Can I cancel any time?
+        <span class="faq-icon"></span>
+      </div>
+      <div class="faq-a">Yes. No contract, no notice period. Send a message and you're done. Your documents stay in your portal for 90 days after cancellation.</div>
     </div>
   </div>
 </section>
@@ -609,92 +996,94 @@ footer{background:#111209;padding:28px 40px;display:flex;justify-content:space-b
 <section class="cta-section">
   <h2>Start your free trial today.</h2>
   <p>Two weeks free. No card required. No contract.</p>
-  <a href="/start.html" class="cta-btn-white">Get started →</a>
+  <a href="/start.html" class="cta-btn">Get started →</a>
 </section>
 
+<!-- CLIENT PORTAL LOGIN -->
+<section class="portal-section">
+  <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#2D6A3F;margin-bottom:14px">Client Access</p>
+  <h2>Access your documents</h2>
+  <p>All your quotes, invoices and compliance docs in one place.<br>Enter your email and we'll send a secure link — no password needed.</p>
+  <div class="portal-form">
+    <input type="email" id="portal-email" class="portal-input" placeholder="Your email address">
+    <button onclick="requestPortalAccess()" class="portal-btn">Send link</button>
+  </div>
+  <p id="portal-msg" style="display:none"></p>
+  <p class="portal-note">Secure link expires after 30 minutes.</p>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <div class="fb">TradeDeskNI</div>
-  <div class="fl"><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="/admin.html">Admin</a></div>
+  <div class="fl">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="/admin.html">Admin</a>
+  </div>
   <div class="fc">© 2026 TradeDeskNI · NI &amp; ROI</div>
 </footer>
 
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/447775696701" target="_blank" rel="noopener" class="wa-float" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- MOBILE STICKY CTA -->
+<div class="mobile-cta">
+  <div class="mobile-cta-text">
+    <strong>2 weeks free — no card needed</strong>
+    <span>Cancel anytime · NI &amp; ROI</span>
+  </div>
+  <a href="/start.html" class="mobile-cta-btn">Start free →</a>
+</div>
+
 <script>
-// Deck
-let cur = 0;
-const total = 6;
-const dotsEl = document.getElementById('deckDots');
-for(let i=0;i<total;i++){
-  const d=document.createElement('div');
-  d.className='ddot'+(i===0?' active':'');
-  d.onclick=()=>goDeck(i);
-  dotsEl.appendChild(d);
-}
-function goDeck(idx){
-  document.getElementById('deck-'+(cur+1)).classList.remove('active');
-  document.querySelectorAll('.ddot')[cur].classList.remove('active');
-  cur=idx;
-  document.getElementById('deck-'+(cur+1)).classList.add('active');
-  document.querySelectorAll('.ddot')[cur].classList.add('active');
-  document.getElementById('deckCounter').textContent=(cur+1<10?'0'+(cur+1):cur+1)+' / 06';
-  if(cur===3) startDemoTimer();
-}
-function deckNav(dir){
-  const n=(cur+dir+total)%total;
-  goDeck(n);
-}
-document.addEventListener('keydown',e=>{
-  const sec=document.getElementById('demo');
-  const rect=sec.getBoundingClientRect();
-  if(rect.top<window.innerHeight&&rect.bottom>0){
-    if(e.key==='ArrowRight') deckNav(1);
-    if(e.key==='ArrowLeft') deckNav(-1);
-  }
-});
-let dti;
-function startDemoTimer(){
-  let t=0; clearInterval(dti);
-  dti=setInterval(()=>{
-    t+=0.1;
-    const el=document.getElementById('demoT');
-    if(el) el.textContent=t.toFixed(1)+'s';
-    if(t>=17) clearInterval(dti);
-  },100);
+// Region toggle
+function setPriceRegion(r) {
+  document.querySelectorAll('.price-ni').forEach(el => el.style.display = r === 'ni' ? '' : 'none');
+  document.querySelectorAll('.price-roi').forEach(el => el.style.display = r === 'roi' ? '' : 'none');
+  document.getElementById('btn-ni').classList.toggle('active', r === 'ni');
+  document.getElementById('btn-roi').classList.toggle('active', r === 'roi');
 }
 
 // FAQ
-function toggleFaq(item){
-  const open=item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
-  if(!open) item.classList.add('open');
+function toggleFaq(item) {
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
 }
-</script>
 
-  <!-- CLIENT PORTAL SECTION -->
-  <section style="background:#1C1C14;padding:72px 24px;text-align:center">
-    <div style="max-width:520px;margin:0 auto">
-      <p style="color:#2D6A3F;font-size:12px;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px">Client Access</p>
-      <h2 style="font-family:'Playfair Display',serif;font-size:34px;color:#fff;margin-bottom:16px;line-height:1.2">Access your documents</h2>
-      <p style="color:rgba(255,255,255,.6);font-size:15px;line-height:1.7;margin-bottom:32px">All your quotes, invoices, RAMS and certificates in one place. Log in with your email to view and download any document, any time.</p>
-      <div style="background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;padding:32px">
-        <input type="email" id="portal-email" placeholder="Enter your email address" style="width:100%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:13px 16px;font-size:15px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;margin-bottom:12px">
-        <button onclick="requestPortalAccess()" style="width:100%;background:#2D6A3F;color:#fff;border:none;border-radius:8px;padding:13px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer">Send access link</button>
-        <p id="portal-msg" style="font-size:13px;margin-top:12px;display:none"></p>
-      </div>
-      <p style="color:rgba(255,255,255,.3);font-size:12px;margin-top:16px">We'll email you a secure link. No password needed.</p>
-    </div>
-  </section>
-  <script>
-  async function requestPortalAccess(){
-    const email = document.getElementById('portal-email').value.trim();
-    const msg = document.getElementById('portal-msg');
-    if(!email){ msg.style.display='block'; msg.style.color='#e74c3c'; msg.textContent='Please enter your email address.'; return; }
-    try{
-      await fetch('https://tradedeskni-backend-production.up.railway.app/portal/request-access',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
-      msg.style.display='block'; msg.style.color='#2D6A3F'; msg.textContent='Access link sent — check your email. Link expires in 30 minutes.';
-      document.getElementById('portal-email').value='';
-    }catch(e){ msg.style.display='block'; msg.style.color='#e74c3c'; msg.textContent='Something went wrong. Please try again.'; }
+// Portal
+async function requestPortalAccess() {
+  const email = document.getElementById('portal-email').value.trim();
+  const msg = document.getElementById('portal-msg');
+  if (!email) {
+    msg.style.display = 'block';
+    msg.style.color = '#e74c3c';
+    msg.textContent = 'Please enter your email address.';
+    return;
   }
-  document.getElementById('portal-email').addEventListener('keydown',e=>{ if(e.key==='Enter') requestPortalAccess(); });
-  </script>
+  try {
+    await fetch('https://tradedeskni-backend-production.up.railway.app/portal/request-access', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    msg.style.display = 'block';
+    msg.style.color = '#2D6A3F';
+    msg.textContent = 'Access link sent — check your email. Expires in 30 minutes.';
+    document.getElementById('portal-email').value = '';
+  } catch(e) {
+    msg.style.display = 'block';
+    msg.style.color = '#e74c3c';
+    msg.textContent = 'Something went wrong. Please try again.';
+  }
+}
+document.getElementById('portal-email').addEventListener('keydown', e => {
+  if (e.key === 'Enter') requestPortalAccess();
+});
+</script>
 </body>
 </html>
